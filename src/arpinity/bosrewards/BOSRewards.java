@@ -5,8 +5,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BOSRewards extends JavaPlugin {
-	
-	public static final int testing = 0;
 	 
     @Override
     public void onEnable(){
