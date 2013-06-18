@@ -1,7 +1,6 @@
 package arpinity.bosrewards;
 
-//import java.util.ArrayList;
-import org.bukkit.configuration.file.FileConfiguration;
+import java.util.List;
 
 /**
  * Data Controller abstract
@@ -18,19 +17,26 @@ abstract class DataController {
 	// Users
 	public abstract boolean getUserExists(String user);
 	public abstract int getUserPoints(String user);
+	public abstract User getUserByName(String user);
+	public abstract List<User> getUsersByPoints(int points);
 	
 	// Rewards
 	public abstract boolean getRewardExists(String id);
 	public abstract String getRewardSummary(String id);
 	public abstract int getRewardCost(String id);
-	//public abstract ArrayList<String> getRewardCommands(String id);
+	public abstract Reward getRewardById(String id);
+	//public abstract List<String> getRewardCommands(String id);
 	
 	
 	// Set Commands
+	public abstract void writeUser(User user); // changes/creates individual user info, does not necessarily write to disk
+	public abstract void writeUsers(); //writes whole user table to disk
+	public abstract void writeReward(Reward reward); // changes/creates individual reward info, does not necessarily write to disk
+	public abstract void writeRewards(); //writes whole rewards table to disk
 	
 	// Load/Reload Commands
-	public abstract FileConfiguration getRewards();
-	public abstract FileConfiguration getUsers();
+	public abstract List<Reward> getRewards();
+	public abstract List<User> getUsers();
 	public abstract void reloadRewardsTable();
 	public abstract void reloadUsersTable();
 	public abstract void initializeRewardsTable();
