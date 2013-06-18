@@ -3,9 +3,12 @@ main: arpinity.bosrewards.BOSRewards
 version: 0.0.1.1
 author: arpinity3024
 website: http://www.bhslaughter.com/
+database: true
 commands:
+  test\ command:
+    usage: |
   rewards:
-    aliases: [bosrewards,rw]
+    aliases: bosrewards
     description: "Main command for BOSRewards"
     permission: |
     permission-message: You do not have permission to use rewards.
@@ -13,4 +16,13 @@ commands:
       "/rewards [command] [args]"
       "Aliases: /bosrewards, /rw"
       "Try /rewards help or /rewards help [command] for more info."
+  rw:
+    aliases: bosrw
+    description: "Shorthand version of main command for BOSRewards"
+    permission: |
+    permission-message: You do not have permissions to use rewards.
+    usage: |
+      "/rw [command] [args]"
+      "Alias for /rewards"
+      "Try /rw help or /rw help [command] for more info."
     

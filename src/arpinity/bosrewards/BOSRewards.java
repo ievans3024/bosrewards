@@ -1,35 +1,43 @@
 package arpinity.bosrewards;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BOSRewards extends JavaPlugin {
-	 
+	
+	private DataController controller;
+	
+	public DataController getDataController(){
+		return controller;
+	}
+	
+	public void setDataController(DataController c){
+		controller = c;
+	}	
+	
     @Override
     public void onEnable(){
-    	this.saveDefaultConfig();
+    	
+    	// Configuration
+    	this.saveDefaultConfig(); //create default config file if one doesn't exist
+    	getConfig();
+    	
+    	// Database Controller Selection
+    	if (getConfig().getString("database-type") != null) {
+    		setDataController(new yamlController()); // TODO: write sql code
+    	} else {
+    		setDataController(new yamlController());
+    	}
+    	
+    	//Commands
+    	getCommand("rewards").setExecutor(new RewardsCommand(this));
+    	getCommand("rw").setExecutor(new RewardsCommand(this));
+    	
     	getLogger().info("BOSRewards Enabled!");
-        // TODO Insert logic to be performed when the plugin is enabled
     }
  
     @Override
     public void onDisable() {
     	getLogger().info("BOSRewards Disabled!");
-        // TODO Insert logic to be performed when the plugin is disabled
-    }
-    
-    
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-    	if (cmd.getName().equalsIgnoreCase("rewards")
-    			|| cmd.getName().equalsIgnoreCase("rw")
-    			|| cmd.getName().equalsIgnoreCase("bosrewards")){
-    		if (args[0].equalsIgnoreCase("reload")){
-    			getLogger().info("BOSRewards Reloaded!");
-        		//TODO: create reloadConfig() code	
-    		}
-    	}
-    	return true;
     }
 
 }
