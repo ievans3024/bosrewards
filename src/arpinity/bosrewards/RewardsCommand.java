@@ -1,5 +1,7 @@
 package arpinity.bosrewards;
 
+import java.util.Arrays;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,9 +19,22 @@ public class RewardsCommand implements CommandExecutor {
 			String label, String[] args) {    		
 		if (args.length > 0){
     		if (args[0].equalsIgnoreCase("reload")){
-    			plugin.reloadConfig();
-    			plugin.getLogger().info("BOSRewards Reloaded!");
+    			this.plugin.reloadConfig();
+    			this.plugin.getDataController().reloadRewardsTable();
+    			this.plugin.getDataController().reloadUsersTable();
+    			this.plugin.getLogger().info("BOSRewards Reloaded!");
     			return true;
+    		} else if (args[0].equalsIgnoreCase("add")){
+    			Reward newReward = new Reward();
+    			newReward.id = args[1];
+    			newReward.summary = ToolBox.arrayToString(Arrays.copyOfRange(args, 2, (args.length - 1))," ");
+    			this.plugin.getDataController().writeReward(newReward);
+    			Reward readReward = this.plugin.getDataController().getRewardById(newReward.id);
+    			this.plugin.getLogger().info(
+    					"Created Reward: "
+    					+ readReward.id
+    					+ " "
+    					+ readReward.summary);
     		}
     		return true;
 		}

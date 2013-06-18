@@ -28,7 +28,7 @@ public final class BOSRewards extends JavaPlugin {
     		setDataController(new YamlController());
     	}
     	
-    	controller.openDatabase();
+    	getDataController().openDatabase();
     	
     	//Commands
     	getCommand("rewards").setExecutor(new RewardsCommand(this));
@@ -39,7 +39,7 @@ public final class BOSRewards extends JavaPlugin {
  
     @Override
     public void onDisable() {
-    	controller.closeDatabase();
+    	getDataController().closeDatabase();
     	getLogger().info("BOSRewards Disabled!");
     }
 
