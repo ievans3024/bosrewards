@@ -35,6 +35,8 @@ abstract class DataController {
 	public abstract void writeRewards(); //writes whole rewards table to disk
 	
 	// Load/Reload Commands
+	public abstract void openDatabase();
+	public abstract void closeDatabase();
 	public abstract List<Reward> getRewards();
 	public abstract List<User> getUsers();
 	public abstract void reloadRewardsTable();

@@ -28,6 +28,8 @@ public final class BOSRewards extends JavaPlugin {
     		setDataController(new YamlController());
     	}
     	
+    	controller.openDatabase();
+    	
     	//Commands
     	getCommand("rewards").setExecutor(new RewardsCommand(this));
     	getCommand("rw").setExecutor(new RewardsCommand(this));

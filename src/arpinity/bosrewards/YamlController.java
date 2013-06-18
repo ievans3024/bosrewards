@@ -256,4 +256,16 @@ public class YamlController extends DataController {
 		        plugin.getLogger().log(Level.SEVERE, "Could not save config to " + rewardsTableFile, ex);
 		    }
 	}
+	
+	@Override
+	public void openDatabase(){
+		this.reloadRewardsTable();
+		this.reloadUsersTable();
+	}
+	
+	@Override
+	public void closeDatabase(){
+		this.writeRewards();
+		this.writeUsers();
+	}
 }
