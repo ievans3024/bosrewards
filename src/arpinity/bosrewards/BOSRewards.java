@@ -39,6 +39,7 @@ public final class BOSRewards extends JavaPlugin {
  
     @Override
     public void onDisable() {
+    	controller.closeDatabase();
     	getLogger().info("BOSRewards Disabled!");
     }
 
