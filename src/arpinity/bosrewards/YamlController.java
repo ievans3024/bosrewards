@@ -14,9 +14,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class yamlController extends DataController {
+public class YamlController extends DataController {
 	
-	yamlController() {
+	YamlController() {
 		super();
 	}
 	

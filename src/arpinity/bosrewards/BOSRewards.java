@@ -23,9 +23,9 @@ public final class BOSRewards extends JavaPlugin {
     	
     	// Database Controller Selection
     	if (getConfig().getString("database-type") != null) {
-    		setDataController(new yamlController()); // TODO: write sql code
+    		setDataController(new YamlController()); // TODO: write sql code
     	} else {
-    		setDataController(new yamlController());
+    		setDataController(new YamlController());
     	}
     	
     	//Commands

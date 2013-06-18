@@ -1,6 +1,6 @@
 name: BOSRewards
 main: arpinity.bosrewards.BOSRewards
-version: 0.0.2.0
+version: 0.0.2.1
 author: arpinity3024
 website: http://www.bhslaughter.com/
 database: true
