@@ -9,9 +9,13 @@ import java.util.List;
  * @author arpinity3024
  *
  */
-abstract class DataController { 
+abstract class DataController {
 	
-	public BOSRewards plugin;
+	public final BOSRewards plugin;
+	
+	public DataController(BOSRewards plugin){
+		this.plugin = plugin;
+	}
 
 	// Get Commands
 	// Users

@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 
 public class RewardsCommand implements CommandExecutor {
 	
-	private BOSRewards plugin;
+	private final BOSRewards plugin;
 	 
 	public RewardsCommand(BOSRewards plugin) {
 		this.plugin = plugin;

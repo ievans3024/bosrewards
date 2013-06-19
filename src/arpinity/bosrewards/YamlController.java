@@ -16,8 +16,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public class YamlController extends DataController {
 	
-	YamlController() {
-		super();
+	public YamlController(BOSRewards plugin) {
+		super(plugin);
 	}
 	
     private FileConfiguration rewardsTable = null;
@@ -200,6 +200,11 @@ public class YamlController extends DataController {
 	
 	@Override
 	public void initializeRewardsTable(){
+		if (this.plugin.getDataFolder() == null){
+			this.plugin.getLogger().info("Plugin Data Folder is null");
+		} else {
+			this.plugin.getLogger().info("Plugin Data Folder is: " + this.plugin.getDataFolder().getName());
+		}
 		if (rewardsTableFile == null) {
 		    rewardsTableFile = new File(plugin.getDataFolder(), "rewards.yml");
 		}
@@ -259,6 +264,8 @@ public class YamlController extends DataController {
 	
 	@Override
 	public void openDatabase(){
+		this.initializeRewardsTable();
+		this.initializeUsersTable();
 		this.reloadRewardsTable();
 		this.reloadUsersTable();
 	}
