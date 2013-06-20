@@ -1,14 +1,12 @@
 package arpinity.bosrewards;
 
-import java.util.Arrays;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 public class RewardsCommand implements CommandExecutor {
 	
-	private final BOSRewards plugin;
+	private BOSRewards plugin;
 	 
 	public RewardsCommand(BOSRewards plugin) {
 		this.plugin = plugin;
@@ -27,7 +25,7 @@ public class RewardsCommand implements CommandExecutor {
     		} else if (args[0].equalsIgnoreCase("add")){
     			Reward newReward = new Reward();
     			newReward.id = args[1];
-    			newReward.summary = ToolBox.arrayToString(Arrays.copyOfRange(args, 2, (args.length - 1))," ");
+    			newReward.summary = ToolBox.arrayToString(args,2,args.length);
     			this.plugin.getDataController().writeReward(newReward);
     			Reward readReward = this.plugin.getDataController().getRewardById(newReward.id);
     			this.plugin.getLogger().info(

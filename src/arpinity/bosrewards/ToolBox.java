@@ -1,18 +1,18 @@
 package arpinity.bosrewards;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-
 public class ToolBox {
-	public static String arrayToString(String[] array, String delimiter){
-		List<String> arrayList = Arrays.asList(array);
-		Iterator<String> iterator = arrayList.iterator();
-		String string = null;
-		while (iterator.hasNext()){
-			string += iterator.next();
-			string += delimiter;
+	public static final String arrayToString(String[] array, int start, int finish){
+		StringBuilder sb = new StringBuilder(array[start]);
+		if (start >= array.length || finish < start){
+			return "";
 		}
-		return string;
+		if (finish > array.length){
+			finish = array.length;
+		}
+		for(int i=start+1; i<finish; i++){
+			sb.append(" ").append(array[i]);
+		}
+		String s = sb.toString();
+		return s;
 	}
 }
