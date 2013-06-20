@@ -37,6 +37,7 @@ abstract class DataController {
 	public abstract void writeUsers(); //writes whole user table to disk
 	public abstract void writeReward(Reward reward); // changes/creates individual reward info, does not necessarily write to disk
 	public abstract void writeRewards(); //writes whole rewards table to disk
+	public abstract void removeRewardById(String id); //removes a reward from the rewards table
 	
 	// Load/Reload Commands
 	public abstract void openDatabase();

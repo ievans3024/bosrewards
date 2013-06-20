@@ -23,7 +23,8 @@ public class YamlController extends DataController {
     private FileConfiguration rewardsTable = null;
     private File rewardsTableFile = null;
     private FileConfiguration usersTable = null;
-    private File usersTableFile = null;	
+    private File usersTableFile = null;
+    
     
     private FileConfiguration getRewardsTable(){
     	if (rewardsTable == null) {
@@ -57,8 +58,8 @@ public class YamlController extends DataController {
 		}
 		ConfigurationSection userSection = getUsersTable().getConfigurationSection(user);
 		User userByName = new User();
-		userByName.name = userSection.getName();
-		userByName.points = userSection.getInt("points");
+		userByName.setName(userSection.getName());
+		userByName.setPoints(userSection.getInt("points"));
 		return userByName;		
 	}
 	
@@ -67,8 +68,7 @@ public class YamlController extends DataController {
 		if (!this.getUserExists(user)){
 			return 0; // -1 for non-existent users?
 		}
-		User userByName = this.getUserByName(user);
-		return userByName.points;
+		return this.getUserByName(user).getPoints();
 	}
 	
 	@Override
@@ -101,10 +101,10 @@ public class YamlController extends DataController {
 		}
 		ConfigurationSection rewardSection = getRewardsTable().getConfigurationSection(id);
 		Reward rewardById = new Reward();
-		rewardById.id = rewardSection.getName();
-		rewardById.summary = rewardSection.getString("summary");
-		rewardById.cost = rewardSection.getInt("cost");
-		rewardById.commands = rewardSection.getStringList("commands");
+		rewardById.setId(rewardSection.getName());
+		rewardById.setSummary(rewardSection.getString("summary"));
+		rewardById.setCost(rewardSection.getInt("cost"));
+		rewardById.setCommands(rewardSection.getStringList("commands"));
 		return rewardById;
 	}
 	
@@ -113,8 +113,7 @@ public class YamlController extends DataController {
 		if (!this.getRewardExists(id)){
 			return null;
 		}
-		Reward rewardById = this.getRewardById(id);
-		return rewardById.summary;
+		return this.getRewardById(id).getSummary();
 	}
 	
 	@Override
@@ -123,7 +122,7 @@ public class YamlController extends DataController {
 			return 0; // -1 for non-existent rewards?
 		}
 		Reward rewardById = this.getRewardById(id);
-		return rewardById.cost;
+		return rewardById.getCost();
 	}
 	
     // Users table load, reload, create
@@ -217,11 +216,11 @@ public class YamlController extends DataController {
 	
 	@Override // writes individual user info to loaded table
 	public void writeUser(User user){
-		if (!getUserExists(user.name)){
-			this.getUsersTable().createSection(user.name);
+		if (!getUserExists(user.getName())){
+			this.getUsersTable().createSection(user.getName());
 		}
-		ConfigurationSection userSection = this.getUsersTable().getConfigurationSection(user.name);
-		userSection.set("points", user.points);
+		ConfigurationSection userSection = this.getUsersTable().getConfigurationSection(user.getName());
+		userSection.set("points", user.getPoints());
 	}
 	
 	@Override // writes loaded users table to disk
@@ -239,15 +238,22 @@ public class YamlController extends DataController {
 	
 	// Reward table setters
 	
+	@Override
+	public void removeRewardById(String id){
+		if (this.getRewardExists(id)){
+			this.getRewardsTable().set(id,null);
+		}
+	}
+	
 	@Override // writes individual reward info to loaded table
 	public void writeReward(Reward reward){
-		if (!getRewardExists(reward.id)){
-			this.getRewardsTable().createSection(reward.id);
+		if (!getRewardExists(reward.getId())){
+			this.getRewardsTable().createSection(reward.getId());
 		}
-		ConfigurationSection rewardSection = getRewardsTable().getConfigurationSection(reward.id);
-		rewardSection.set("summary", reward.summary);
-		rewardSection.set("cost",reward.cost);
-		rewardSection.set("commands",reward.commands);
+		ConfigurationSection rewardSection = getRewardsTable().getConfigurationSection(reward.getId());
+		rewardSection.set("summary", reward.getSummary());
+		rewardSection.set("cost",reward.getCost());
+		rewardSection.set("commands",reward.getCommands());
 	}
 	
 	@Override // writes loaded rewards table to disk
