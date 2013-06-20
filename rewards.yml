@@ -2,6 +2,4 @@
   summary: An example reward
   cost: 1
   groups: all
-  commands: |
-    "say Somone bought a compliment!"
-    "say That person is awesome!"
+  commands: ["say Someone bought a compliment!","say That person is awesome!"]
