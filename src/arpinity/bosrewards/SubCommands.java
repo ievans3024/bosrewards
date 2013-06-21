@@ -3,11 +3,16 @@ package arpinity.bosrewards;
 import java.util.HashMap;
 
 public class SubCommands {
+	private BOSRewards plugin;
 	
-	public static HashMap<String,SubCommand> commandMap = new HashMap<String,SubCommand>();
+	public BOSRewards getPluginInstance(){
+		return this.plugin;
+	}
+	
+	public HashMap<String,SubCommand> commandMap = new HashMap<String,SubCommand>();
 	
 	public abstract class SubCommand {
-		public abstract void run(String[] args);
+		public abstract boolean run(String[] args);
 	}
 	
 	public abstract class SubCommandWithReward {
@@ -16,22 +21,35 @@ public class SubCommands {
 	
 	private class reloadCommand extends SubCommand {
 		private BOSRewards plugin;
-		public void run(String[] args){
+		
+		public reloadCommand(BOSRewards plugin){
+			this.plugin = plugin;
+		}
+		
+		public boolean run(String[] args){
 			this.plugin.reloadConfig();
 			this.plugin.getDataController().reloadRewardsTable();
 			this.plugin.getLogger().info("BOSRewards Reloaded!");
+			return true;
 		}
 	}
 	
 	private class addCommand extends SubCommand {
 		private BOSRewards plugin;
-		public void run(String[] args){
+		
+		public addCommand(BOSRewards plugin){
+			this.plugin = plugin;
+		}
+		
+		public boolean run(String[] args){
 			if (args.length > 3){
     			Reward newReward = new Reward();
     			newReward.setId(args[1]);
     			newReward.setSummary(ToolBox.arrayToString(args,2,args.length));
     			this.plugin.getDataController().writeReward(newReward);
+    			return true;
 			}
+			return false;
 		}
 	}
 	
@@ -64,7 +82,8 @@ public class SubCommands {
 			}
 		}
 		
-		public editCommand(){
+		public editCommand(BOSRewards plugin){
+			this.plugin = plugin;
 			this.editFlags.put("cost", new costFlag());
 			this.editFlags.put("commands", new commandsFlag());
 			this.editFlags.put("cmds", new commandsFlag());
@@ -73,7 +92,7 @@ public class SubCommands {
 			this.editFlags.put("summary", new summaryFlag());
 			
 		}
-		public void run(String[] args){
+		public boolean run(String[] args){
 			if (args.length > 4
 					&& this.editFlags.keySet().contains(args[2])){
 				if (this.plugin.getDataController().getRewardExists(args[1])){
@@ -81,13 +100,20 @@ public class SubCommands {
 					this.editFlags.get(args[2]).run(args,reward);
 					this.plugin.getDataController().writeReward(reward);
 				}
+				return true;
 			}
+			return false;
 		}
 	}
 	
 	private class removeCommand extends SubCommand{
 		private BOSRewards plugin;
-		public void run(String[] args){
+		
+		public removeCommand(BOSRewards plugin){
+			this.plugin = plugin;
+		}
+		
+		public boolean run(String[] args){
 			if (args.length > 2){
     			int i;
     			for (i=1;i<args.length;i++){
@@ -95,16 +121,18 @@ public class SubCommands {
 		    			this.plugin.getDataController().removeRewardById(args[i]);
 	    			}
     			}
+    			return true;
 			}
+			return false;
 		}
 	}
 	
 	public SubCommands(BOSRewards plugin) {
-		//commandMap.put() here
-		SubCommands.commandMap.put("reload", new reloadCommand());
-		SubCommands.commandMap.put("add", new addCommand());
-		SubCommands.commandMap.put("edit", new editCommand());
-		SubCommands.commandMap.put("remove", new removeCommand());
-		SubCommands.commandMap.put("rm", new removeCommand());
+		this.plugin = plugin;
+		this.commandMap.put("reload", new reloadCommand(this.getPluginInstance()));
+		this.commandMap.put("add", new addCommand(this.getPluginInstance()));
+		this.commandMap.put("edit", new editCommand(this.getPluginInstance()));
+		this.commandMap.put("remove", new removeCommand(this.getPluginInstance()));
+		this.commandMap.put("rm", new removeCommand(this.getPluginInstance()));
 	}
 }

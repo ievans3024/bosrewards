@@ -6,6 +6,8 @@ public final class BOSRewards extends JavaPlugin {
 	
 	private DataController controller;
 	
+	public String test = "Test";
+	
 	public DataController getDataController(){
 		return controller;
 	}
@@ -31,8 +33,9 @@ public final class BOSRewards extends JavaPlugin {
     	getDataController().openDatabase();
     	
     	//Commands
-    	getCommand("rewards").setExecutor(new RewardsCommand(this));
-    	getCommand("rw").setExecutor(new RewardsCommand(this));
+    	RewardsCommand commandExecutor = new RewardsCommand(this);
+    	getCommand("rewards").setExecutor(commandExecutor);
+    	getCommand("rw").setExecutor(commandExecutor);
     	
     	getLogger().info("BOSRewards Enabled!");
     }
