@@ -1,6 +1,7 @@
 package arpinity.bosrewards;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class SubCommands {
 	private BOSRewards plugin;
@@ -127,6 +128,38 @@ public class SubCommands {
 		}
 	}
 	
+	private class listCommand extends SubCommand{
+		private BOSRewards plugin;
+		
+		public listCommand(BOSRewards plugin){
+			this.plugin = plugin;
+		}
+		
+		public boolean run(String[] args){
+			int pageNumber;
+			if (args.length > 2){
+				pageNumber = Integer.parseInt(args[2]);
+			} else {
+				pageNumber = 1;
+			}
+			List<Reward> rewardsList = this.plugin.getDataController().getRewards();
+			int listStart = (pageNumber * 5) - 5;
+			int i = 0;
+			this.plugin.getLogger().info("Rewards Catalogue - Page " + pageNumber);
+			this.plugin.getLogger().info("----------------------");
+			this.plugin.getLogger().info("ID    Summary    Cost");
+			while (i < 5){
+				Reward reward = rewardsList.get(listStart + i);
+				this.plugin.getLogger().info(reward.getId() + "    " + reward.getSummary() + "    " + reward.getCost());
+				i++;
+				if (i > rewardsList.size()){
+					i = 5;
+				}
+			}
+			return true;
+		}
+	}
+	
 	public SubCommands(BOSRewards plugin) {
 		this.plugin = plugin;
 		this.commandMap.put("reload", new reloadCommand(this.getPluginInstance()));
@@ -134,5 +167,6 @@ public class SubCommands {
 		this.commandMap.put("edit", new editCommand(this.getPluginInstance()));
 		this.commandMap.put("remove", new removeCommand(this.getPluginInstance()));
 		this.commandMap.put("rm", new removeCommand(this.getPluginInstance()));
+		this.commandMap.put("list", new listCommand(this.getPluginInstance()));
 	}
 }
