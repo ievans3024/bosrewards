@@ -261,6 +261,34 @@ public class SubCommands {
 		}
 	}
 	
+	private class balanceCommand extends SubCommand{
+		private BOSRewards plugin;
+		
+		public balanceCommand(BOSRewards plugin){
+			this.plugin = plugin;
+		}
+		
+		public boolean run(CommandSender sender, String[] args){
+			User user;
+			String pointName;
+			String sentencePrefix;
+			if (args.length > 1){
+				user = this.plugin.getDataController().getUserByName(args[1]);
+				sentencePrefix = user.getName() + " has ";
+			} else {
+				user = this.plugin.getDataController().getUserByName(sender.getName());
+				sentencePrefix = "You have ";
+			}
+			if (user.getPoints() == 1){
+				pointName = this.plugin.getConfig().getString("point-name");
+			} else {
+				pointName = this.plugin.getConfig().getString("point-name-plural");
+			}
+			this.plugin.getLogger().info(sentencePrefix + user.getPoints() + pointName);
+			return true;
+		}
+	}
+	
 	public SubCommands(BOSRewards plugin) {
 		this.plugin = plugin;
 		this.commandMap.put("reload", new reloadCommand(this.getPluginInstance()));
@@ -273,5 +301,6 @@ public class SubCommands {
 		this.commandMap.put("take", new takeCommand(this.getPluginInstance()));
 		this.commandMap.put("set", new setPointsCommand(this.getPluginInstance()));
 		this.commandMap.put("redeem", new redeemCommand(this.getPluginInstance()));
+		this.commandMap.put("balance", new balanceCommand(this.getPluginInstance()));
 	}
 }
