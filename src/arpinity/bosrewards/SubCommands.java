@@ -5,8 +5,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 public class SubCommands {
@@ -253,7 +253,7 @@ public class SubCommands {
 							this.plugin.getLogger().info(user.getName() + recieptString);
 							List<String> commands = reward.getCommands();
 							while (commands.iterator().hasNext()){
-								//execute commands.iterator().next() as console command sender
+								this.plugin.getServer().dispatchCommand(Bukkit.getConsoleSender(), commands.iterator().next());
 							}
 						}
 					}
@@ -345,7 +345,7 @@ public class SubCommands {
 					String message = "There are not that many pages. There are " + maximumPages + ((maximumPages == 1) ? " page." : " pages.");
 					if (sender instanceof Player){
 						sender.sendMessage(message);
-					} else if (sender instanceof ConsoleCommandSender){
+					} else {
 						this.plugin.getLogger().info(message);						
 					}
 				}				
@@ -359,7 +359,7 @@ public class SubCommands {
 				while (i < 5){
 					if (sender instanceof Player){
 						sender.sendMessage(userReciepts.get(listStart + i));
-					} else if (sender instanceof ConsoleCommandSender){
+					} else {
 						this.plugin.getLogger().info(userReciepts.get(listStart + i));
 					}
 					i++;
