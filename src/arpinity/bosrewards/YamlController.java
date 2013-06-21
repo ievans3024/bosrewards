@@ -125,6 +125,16 @@ public class YamlController extends DataController {
 		return rewardById.getCost();
 	}
 	
+	@Override
+	public List<String> getRewardCommands(String id){
+		if (!this.getRewardExists(id)){
+			List<String> emptyList = new ArrayList<String>();
+			return emptyList;
+		}
+		Reward rewardById = this.getRewardById(id);
+		return rewardById.getCommands();
+	}
+	
     // Users table load, reload, create
     
     @Override

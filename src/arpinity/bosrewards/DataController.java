@@ -29,7 +29,7 @@ abstract class DataController {
 	public abstract String getRewardSummary(String id);
 	public abstract int getRewardCost(String id);
 	public abstract Reward getRewardById(String id);
-	//public abstract List<String> getRewardCommands(String id);
+	public abstract List<String> getRewardCommands(String id);
 	
 	
 	// Set Commands

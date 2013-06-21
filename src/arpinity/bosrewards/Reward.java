@@ -12,17 +12,16 @@ public class Reward {
 	// Getters
 
 	public final String getId(){
-		return id;
+		return this.id;
 	}
 	public final String getSummary(){
-		return summary;
+		return this.summary;
 	}
 	public final int getCost(){
-		return cost;
+		return this.cost;
 	}
 	public final List<String> getCommands(){
-		return commands;
-	
+		return this.commands;
 	}
 	
 	//Setters
@@ -37,7 +36,7 @@ public class Reward {
 		this.cost = cost;
 	}
 	public final void setFirstCommand(String command){
-		this.commands.set(0,command);
+		this.commands.add(command);
 	}
 	public final void setCommands(List<String> commands){
 		this.commands = commands;
