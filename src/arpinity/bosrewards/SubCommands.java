@@ -137,24 +137,48 @@ public class SubCommands {
 		
 		public boolean run(String[] args){
 			int pageNumber;
+			List<Reward> rewardsList = this.plugin.getDataController().getRewards();
+			int maximumPages = rewardsList.size() / 5;
+			if (rewardsList.size() % 5 != 0){
+				maximumPages += 1;
+			}
 			if (args.length > 2){
 				pageNumber = Integer.parseInt(args[2]);
+				if (pageNumber > maximumPages){
+					this.plugin.getLogger().info("Not that many pages in the catalogue. There are " + maximumPages + " pages.");
+				}
 			} else {
 				pageNumber = 1;
 			}
-			List<Reward> rewardsList = this.plugin.getDataController().getRewards();
 			int listStart = (pageNumber * 5) - 5;
 			int i = 0;
-			this.plugin.getLogger().info("Rewards Catalogue - Page " + pageNumber);
-			this.plugin.getLogger().info("----------------------");
+			this.plugin.getLogger().info("Rewards Catalogue - Page " + pageNumber + "/" + maximumPages);
+			this.plugin.getLogger().info("-----------------------------");
 			this.plugin.getLogger().info("ID    Summary    Cost");
 			while (i < 5){
 				Reward reward = rewardsList.get(listStart + i);
 				this.plugin.getLogger().info(reward.getId() + "    " + reward.getSummary() + "    " + reward.getCost());
 				i++;
-				if (i > rewardsList.size()){
+				if (listStart + i > rewardsList.size() - 1){
 					i = 5;
 				}
+			}
+			return true;
+		}
+	}
+	
+	private class giveCommand extends SubCommand{
+		private BOSRewards plugin;
+		
+		public giveCommand(BOSRewards plugin){
+			this.plugin = plugin;
+		}
+		
+		public boolean run(String[] args){
+			if (args.length > 3){
+				User user = this.plugin.getDataController().getUserByName(args[1]);
+				user.addPoints(Integer.parseInt(args[2]));
+				this.plugin.getDataController().writeUser(user);
 			}
 			return true;
 		}
@@ -168,5 +192,6 @@ public class SubCommands {
 		this.commandMap.put("remove", new removeCommand(this.getPluginInstance()));
 		this.commandMap.put("rm", new removeCommand(this.getPluginInstance()));
 		this.commandMap.put("list", new listCommand(this.getPluginInstance()));
+		this.commandMap.put("give", new giveCommand(this.getPluginInstance()));
 	}
 }
