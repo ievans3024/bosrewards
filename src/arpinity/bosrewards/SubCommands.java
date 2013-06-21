@@ -176,9 +176,49 @@ public class SubCommands {
 		
 		public boolean run(String[] args){
 			if (args.length > 3){
-				User user = this.plugin.getDataController().getUserByName(args[1]);
-				user.addPoints(Integer.parseInt(args[2]));
-				this.plugin.getDataController().writeUser(user);
+				if (this.plugin.getDataController().getUserExists(args[1])){
+					User user = this.plugin.getDataController().getUserByName(args[1]);
+					user.addPoints(Integer.parseInt(args[2]));
+					this.plugin.getDataController().writeUser(user);
+				}
+			}
+			return true;
+		}
+	}
+	
+	private class takeCommand extends SubCommand{
+		private BOSRewards plugin;
+		
+		public takeCommand(BOSRewards plugin){
+			this.plugin = plugin;
+		}
+		
+		public boolean run(String[] args){
+			if (args.length > 3){
+				if (this.plugin.getDataController().getUserExists(args[1])){
+					User user = this.plugin.getDataController().getUserByName(args[1]);
+					user.subtractPoints(Integer.parseInt(args[2]));
+					this.plugin.getDataController().writeUser(user);
+				}
+			}
+			return true;
+		}
+	}
+	
+	private class setPointsCommand extends SubCommand{
+		private BOSRewards plugin;
+		
+		public setPointsCommand(BOSRewards plugin){
+			this.plugin = plugin;
+		}
+		
+		public boolean run(String[] args){
+			if (args.length > 3){
+				if (this.plugin.getDataController().getUserExists(args[1])){
+					User user = this.plugin.getDataController().getUserByName(args[1]);
+					user.setPoints(Integer.parseInt(args[2]));
+					this.plugin.getDataController().writeUser(user);
+				}
 			}
 			return true;
 		}
@@ -193,5 +233,7 @@ public class SubCommands {
 		this.commandMap.put("rm", new removeCommand(this.getPluginInstance()));
 		this.commandMap.put("list", new listCommand(this.getPluginInstance()));
 		this.commandMap.put("give", new giveCommand(this.getPluginInstance()));
+		this.commandMap.put("take", new takeCommand(this.getPluginInstance()));
+		this.commandMap.put("set", new setPointsCommand(this.getPluginInstance()));
 	}
 }
