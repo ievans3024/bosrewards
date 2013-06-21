@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
 public class SubCommands {
 	private BOSRewards plugin;
@@ -277,12 +279,23 @@ public class SubCommands {
 				user = this.plugin.getDataController().getUserByName(args[1]);
 				sentencePrefix = user.getName() + " has ";
 			} else {
-				user = this.plugin.getDataController().getUserByName(sender.getName());
-				sentencePrefix = "You have ";
+				if (sender instanceof Player){
+					user = this.plugin.getDataController().getUserByName(sender.getName());
+					sentencePrefix = "You have ";
+				} else {
+					this.plugin.getLogger().info("Console never gets points. Console will never be rewarded.");
+					return true;
+				}
 			}
-			this.plugin.getLogger().info(sentencePrefix
-					+ user.getPoints()
-					+ ((user.getPoints() == 1) ? pointSingular : pointPlural));
+			if (sender instanceof Player){
+				sender.sendMessage(sentencePrefix
+						+ user.getPoints()
+						+ ((user.getPoints() == 1) ? pointSingular : pointPlural));
+			} else {
+				this.plugin.getLogger().info(sentencePrefix
+						+ user.getPoints()
+						+ ((user.getPoints() == 1) ? pointSingular : pointPlural));
+			}
 			return true;
 		}
 	}
@@ -296,26 +309,32 @@ public class SubCommands {
 		
 		public boolean run(CommandSender sender, String[] args){
 			User user;
-			String username;
 			String header;
 			int pageNumber = 1;
 			if (args.length > 1){
 				if (this.plugin.getDataController().getUserExists(args[1])){
-					username = args[1];
+					user = this.plugin.getDataController().getUserByName(args[1]);
 					header = "Redemption history for " + this.plugin.getDataController().getUserByName(args[1]).getName();
 					if (args.length > 2){
 						pageNumber = Integer.parseInt(args[2]);
 					}
-				} else {
-					username = sender.getName();
+				} else if (sender instanceof Player){
+					user = this.plugin.getDataController().getUserByName(sender.getName());
 					header = "Your redemption history: ";
-					pageNumber = Integer.parseInt(args[2]);
+					pageNumber = Integer.parseInt(args[1]);
+				} else {
+					this.plugin.getLogger().info("Corrupt to its core, Console has never and will never have a redemption history. Try specifying a player.");
+					return true;
 				}
 			} else {
-				username = sender.getName();
-				header = "Your redemption history: ";
+				if (sender instanceof Player){
+					user = this.plugin.getDataController().getUserByName(sender.getName());
+					header = "Your redemption history: ";
+				} else {
+					this.plugin.getLogger().info("Corrupt to its core, Console has never and will never have a redemption history. Try specifying a player.");
+					return true;
+				}
 			}
-			user = this.plugin.getDataController().getUserByName(username);
 			List<String> userReciepts = user.getReciepts();
 			if (!userReciepts.isEmpty()){
 				int maximumPages = userReciepts.size() / 5;
@@ -323,13 +342,26 @@ public class SubCommands {
 					maximumPages += 1;
 				}
 				if (pageNumber > maximumPages){
-					this.plugin.getLogger().info("There are not that many pages. There are " + maximumPages + ((maximumPages == 1) ? " page." : " pages."));
+					String message = "There are not that many pages. There are " + maximumPages + ((maximumPages == 1) ? " page." : " pages.");
+					if (sender instanceof Player){
+						sender.sendMessage(message);
+					} else if (sender instanceof ConsoleCommandSender){
+						this.plugin.getLogger().info(message);						
+					}
 				}				
 				int i = 0;
 				int listStart = (pageNumber * 5) - 5;
-				this.plugin.getLogger().info(header);
+				if (sender instanceof Player){
+					sender.sendMessage(header);
+				} else {
+					this.plugin.getLogger().info(header);
+				}
 				while (i < 5){
-					this.plugin.getLogger().info(userReciepts.get(listStart + i));
+					if (sender instanceof Player){
+						sender.sendMessage(userReciepts.get(listStart + i));
+					} else if (sender instanceof ConsoleCommandSender){
+						this.plugin.getLogger().info(userReciepts.get(listStart + i));
+					}
 					i++;
 					if ((listStart + i) > (userReciepts.size() - 1)){
 						i = 5;
