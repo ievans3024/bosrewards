@@ -5,7 +5,7 @@ import java.util.List;
 public class Reward {
 	private String id;
 	private String summary;
-	private int cost;
+	private int cost = -1;
 	private List<String> commands;
 	
 	

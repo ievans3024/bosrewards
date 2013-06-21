@@ -23,7 +23,7 @@ public class RewardsCommand implements CommandExecutor {
 			String label, String[] args) {    		
 		if (args.length > 0){
 			if (this.subcommands.commandMap.keySet().contains(args[0])){
-				return this.subcommands.commandMap.get(args[0]).run(args);
+				return this.subcommands.commandMap.get(args[0]).run(sender,args);
 			}
 			return false;
 		}

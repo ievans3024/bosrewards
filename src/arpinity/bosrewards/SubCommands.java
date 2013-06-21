@@ -1,7 +1,12 @@
 package arpinity.bosrewards;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+
+import org.bukkit.command.CommandSender;
 
 public class SubCommands {
 	private BOSRewards plugin;
@@ -13,7 +18,7 @@ public class SubCommands {
 	public HashMap<String,SubCommand> commandMap = new HashMap<String,SubCommand>();
 	
 	public abstract class SubCommand {
-		public abstract boolean run(String[] args);
+		public abstract boolean run(CommandSender sender, String[] args);
 	}
 	
 	public abstract class SubCommandWithReward {
@@ -27,7 +32,7 @@ public class SubCommands {
 			this.plugin = plugin;
 		}
 		
-		public boolean run(String[] args){
+		public boolean run(CommandSender sender, String[] args){
 			this.plugin.reloadConfig();
 			this.plugin.getDataController().reloadRewardsTable();
 			this.plugin.getLogger().info("BOSRewards Reloaded!");
@@ -42,7 +47,7 @@ public class SubCommands {
 			this.plugin = plugin;
 		}
 		
-		public boolean run(String[] args){
+		public boolean run(CommandSender sender, String[] args){
 			if (args.length > 3){
     			Reward newReward = new Reward();
     			newReward.setId(args[1]);
@@ -93,7 +98,7 @@ public class SubCommands {
 			this.editFlags.put("summary", new summaryFlag());
 			
 		}
-		public boolean run(String[] args){
+		public boolean run(CommandSender sender, String[] args){
 			if (args.length > 4
 					&& this.editFlags.keySet().contains(args[2])){
 				if (this.plugin.getDataController().getRewardExists(args[1])){
@@ -114,7 +119,7 @@ public class SubCommands {
 			this.plugin = plugin;
 		}
 		
-		public boolean run(String[] args){
+		public boolean run(CommandSender sender, String[] args){
 			if (args.length > 2){
     			int i;
     			for (i=1;i<args.length;i++){
@@ -135,7 +140,7 @@ public class SubCommands {
 			this.plugin = plugin;
 		}
 		
-		public boolean run(String[] args){
+		public boolean run(CommandSender sender, String[] args){
 			int pageNumber;
 			List<Reward> rewardsList = this.plugin.getDataController().getRewards();
 			int maximumPages = rewardsList.size() / 5;
@@ -174,7 +179,7 @@ public class SubCommands {
 			this.plugin = plugin;
 		}
 		
-		public boolean run(String[] args){
+		public boolean run(CommandSender sender, String[] args){
 			if (args.length > 3){
 				if (this.plugin.getDataController().getUserExists(args[1])){
 					User user = this.plugin.getDataController().getUserByName(args[1]);
@@ -193,7 +198,7 @@ public class SubCommands {
 			this.plugin = plugin;
 		}
 		
-		public boolean run(String[] args){
+		public boolean run(CommandSender sender, String[] args){
 			if (args.length > 3){
 				if (this.plugin.getDataController().getUserExists(args[1])){
 					User user = this.plugin.getDataController().getUserByName(args[1]);
@@ -212,12 +217,44 @@ public class SubCommands {
 			this.plugin = plugin;
 		}
 		
-		public boolean run(String[] args){
+		public boolean run(CommandSender sender, String[] args){
 			if (args.length > 3){
 				if (this.plugin.getDataController().getUserExists(args[1])){
 					User user = this.plugin.getDataController().getUserByName(args[1]);
 					user.setPoints(Integer.parseInt(args[2]));
 					this.plugin.getDataController().writeUser(user);
+				}
+			}
+			return true;
+		}
+	}
+	
+	private class redeemCommand extends SubCommand{
+		private BOSRewards plugin;
+		
+		public redeemCommand(BOSRewards plugin){
+			this.plugin = plugin;
+		}
+		
+		public boolean run(CommandSender sender, String[] args){
+			if (args.length > 1){
+				User user = this.plugin.getDataController().getUserByName(sender.getName());
+				if (this.plugin.getDataController().getRewardExists(args[1])){
+					Reward reward = this.plugin.getDataController().getRewardById(args[1]);
+					if (reward.getCost() >= 0){
+						if (user.getPoints() >= reward.getCost()){
+							Calendar calendar = Calendar.getInstance();
+							SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+							String date = dateFormat.format(calendar.getTime());
+							user.subtractPoints(reward.getCost());
+							user.addReciept(date + " " + reward.getSummary() + " " + reward.getCost());
+							List<String> commands = reward.getCommands();
+							Iterator<String> iterator = commands.iterator();
+							while (iterator.hasNext()){
+								//execute iterator.next() as console command sender
+							}
+						}
+					}
 				}
 			}
 			return true;
@@ -235,5 +272,6 @@ public class SubCommands {
 		this.commandMap.put("give", new giveCommand(this.getPluginInstance()));
 		this.commandMap.put("take", new takeCommand(this.getPluginInstance()));
 		this.commandMap.put("set", new setPointsCommand(this.getPluginInstance()));
+		this.commandMap.put("redeem", new redeemCommand(this.getPluginInstance()));
 	}
 }
