@@ -3,7 +3,6 @@ package arpinity.bosrewards;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 
 import org.bukkit.command.CommandSender;
@@ -112,7 +111,7 @@ public class SubCommands {
 		}
 	}
 	
-	private class removeCommand extends SubCommand{
+	private class removeCommand extends SubCommand {
 		private BOSRewards plugin;
 		
 		public removeCommand(BOSRewards plugin){
@@ -133,7 +132,7 @@ public class SubCommands {
 		}
 	}
 	
-	private class listCommand extends SubCommand{
+	private class listCommand extends SubCommand {
 		private BOSRewards plugin;
 		
 		public listCommand(BOSRewards plugin){
@@ -141,38 +140,38 @@ public class SubCommands {
 		}
 		
 		public boolean run(CommandSender sender, String[] args){
-			int pageNumber;
+			int pageNumber = 1;
 			List<Reward> rewardsList = this.plugin.getDataController().getRewards();
-			int maximumPages = rewardsList.size() / 5;
-			if (rewardsList.size() % 5 != 0){
-				maximumPages += 1;
-			}
-			if (args.length > 2){
-				pageNumber = Integer.parseInt(args[2]);
-				if (pageNumber > maximumPages){
-					this.plugin.getLogger().info("Not that many pages in the catalogue. There are " + maximumPages + " pages.");
+			if (!rewardsList.isEmpty()){
+				int maximumPages = rewardsList.size() / 5;
+				if (rewardsList.size() % 5 != 0){
+					maximumPages += 1;
 				}
-			} else {
-				pageNumber = 1;
-			}
-			int listStart = (pageNumber * 5) - 5;
-			int i = 0;
-			this.plugin.getLogger().info("Rewards Catalogue - Page " + pageNumber + "/" + maximumPages);
-			this.plugin.getLogger().info("-----------------------------");
-			this.plugin.getLogger().info("ID    Summary    Cost");
-			while (i < 5){
-				Reward reward = rewardsList.get(listStart + i);
-				this.plugin.getLogger().info(reward.getId() + "    " + reward.getSummary() + "    " + reward.getCost());
-				i++;
-				if (listStart + i > rewardsList.size() - 1){
-					i = 5;
+				if (args.length > 2){
+					pageNumber = Integer.parseInt(args[2]);
+					if (pageNumber > maximumPages){
+						this.plugin.getLogger().info("There are not that many pages in the catalogue. There are " + maximumPages + ((maximumPages == 1) ? " page." : " pages.") );
+					}
+				}
+				int listStart = (pageNumber * 5) - 5;
+				int i = 0;
+				this.plugin.getLogger().info("Rewards Catalogue - Page " + pageNumber + "/" + maximumPages);
+				this.plugin.getLogger().info("-----------------------------");
+				this.plugin.getLogger().info("ID    Summary    Cost");
+				while (i < 5){
+					Reward reward = rewardsList.get(listStart + i);
+					this.plugin.getLogger().info(reward.getId() + "    " + reward.getSummary() + "    " + reward.getCost());
+					i++;
+					if (listStart + i > rewardsList.size() - 1){
+						i = 5;
+					}
 				}
 			}
 			return true;
 		}
 	}
 	
-	private class giveCommand extends SubCommand{
+	private class giveCommand extends SubCommand {
 		private BOSRewards plugin;
 		
 		public giveCommand(BOSRewards plugin){
@@ -191,7 +190,7 @@ public class SubCommands {
 		}
 	}
 	
-	private class takeCommand extends SubCommand{
+	private class takeCommand extends SubCommand {
 		private BOSRewards plugin;
 		
 		public takeCommand(BOSRewards plugin){
@@ -210,7 +209,7 @@ public class SubCommands {
 		}
 	}
 	
-	private class setPointsCommand extends SubCommand{
+	private class setPointsCommand extends SubCommand {
 		private BOSRewards plugin;
 		
 		public setPointsCommand(BOSRewards plugin){
@@ -229,7 +228,7 @@ public class SubCommands {
 		}
 	}
 	
-	private class redeemCommand extends SubCommand{
+	private class redeemCommand extends SubCommand {
 		private BOSRewards plugin;
 		
 		public redeemCommand(BOSRewards plugin){
@@ -246,12 +245,13 @@ public class SubCommands {
 							Calendar calendar = Calendar.getInstance();
 							SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 							String date = dateFormat.format(calendar.getTime());
+							String recieptString = date + " " + reward.getSummary() + " " + reward.getCost();
 							user.subtractPoints(reward.getCost());
-							user.addReciept(date + " " + reward.getSummary() + " " + reward.getCost());
+							user.addReciept(recieptString);
+							this.plugin.getLogger().info(user.getName() + recieptString);
 							List<String> commands = reward.getCommands();
-							Iterator<String> iterator = commands.iterator();
-							while (iterator.hasNext()){
-								//execute iterator.next() as console command sender
+							while (commands.iterator().hasNext()){
+								//execute commands.iterator().next() as console command sender
 							}
 						}
 					}
@@ -261,7 +261,7 @@ public class SubCommands {
 		}
 	}
 	
-	private class balanceCommand extends SubCommand{
+	private class balanceCommand extends SubCommand {
 		private BOSRewards plugin;
 		
 		public balanceCommand(BOSRewards plugin){
@@ -270,8 +270,9 @@ public class SubCommands {
 		
 		public boolean run(CommandSender sender, String[] args){
 			User user;
-			String pointName;
 			String sentencePrefix;
+			String pointSingular = this.plugin.getConfig().getString("point-name");
+			String pointPlural = this.plugin.getConfig().getString("point-name-plural");
 			if (args.length > 1){
 				user = this.plugin.getDataController().getUserByName(args[1]);
 				sentencePrefix = user.getName() + " has ";
@@ -279,13 +280,63 @@ public class SubCommands {
 				user = this.plugin.getDataController().getUserByName(sender.getName());
 				sentencePrefix = "You have ";
 			}
-			if (user.getPoints() == 1){
-				pointName = this.plugin.getConfig().getString("point-name");
-			} else {
-				pointName = this.plugin.getConfig().getString("point-name-plural");
-			}
-			this.plugin.getLogger().info(sentencePrefix + user.getPoints() + pointName);
+			this.plugin.getLogger().info(sentencePrefix
+					+ user.getPoints()
+					+ ((user.getPoints() == 1) ? pointSingular : pointPlural));
 			return true;
+		}
+	}
+	
+	private class historyCommand extends SubCommand {
+		private BOSRewards plugin;
+		
+		public historyCommand(BOSRewards plugin){
+			this.plugin = plugin;
+		}
+		
+		public boolean run(CommandSender sender, String[] args){
+			User user;
+			String username;
+			String header;
+			int pageNumber = 1;
+			if (args.length > 1){
+				if (this.plugin.getDataController().getUserExists(args[1])){
+					username = args[1];
+					header = "Redemption history for " + this.plugin.getDataController().getUserByName(args[1]).getName();
+					if (args.length > 2){
+						pageNumber = Integer.parseInt(args[2]);
+					}
+				} else {
+					username = sender.getName();
+					header = "Your redemption history: ";
+					pageNumber = Integer.parseInt(args[2]);
+				}
+			} else {
+				username = sender.getName();
+				header = "Your redemption history: ";
+			}
+			user = this.plugin.getDataController().getUserByName(username);
+			List<String> userReciepts = user.getReciepts();
+			if (!userReciepts.isEmpty()){
+				int maximumPages = userReciepts.size() / 5;
+				if (maximumPages % 5 != 0){
+					maximumPages += 1;
+				}
+				if (pageNumber > maximumPages){
+					this.plugin.getLogger().info("There are not that many pages. There are " + maximumPages + ((maximumPages == 1) ? " page." : " pages."));
+				}				
+				int i = 0;
+				int listStart = (pageNumber * 5) - 5;
+				this.plugin.getLogger().info(header);
+				while (i < 5){
+					this.plugin.getLogger().info(userReciepts.get(listStart + i));
+					i++;
+					if ((listStart + i) > (userReciepts.size() - 1)){
+						i = 5;
+					}
+				}
+			}
+			return true;			
 		}
 	}
 	
@@ -302,5 +353,7 @@ public class SubCommands {
 		this.commandMap.put("set", new setPointsCommand(this.getPluginInstance()));
 		this.commandMap.put("redeem", new redeemCommand(this.getPluginInstance()));
 		this.commandMap.put("balance", new balanceCommand(this.getPluginInstance()));
+		this.commandMap.put("history", new historyCommand(this.getPluginInstance()));
+		this.commandMap.put("hist", new historyCommand(this.getPluginInstance()));
 	}
 }
