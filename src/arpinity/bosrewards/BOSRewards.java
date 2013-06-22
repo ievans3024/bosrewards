@@ -1,5 +1,7 @@
 package arpinity.bosrewards;
 
+import org.bukkit.command.CommandSender;
+import org.bukkit.help.HelpTopic;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BOSRewards extends JavaPlugin {
@@ -14,6 +16,28 @@ public final class BOSRewards extends JavaPlugin {
 	
 	public void setDataController(DataController c){
 		controller = c;
+	}	
+	
+	private class testHelpTopic extends HelpTopic {
+		
+		// TODO: help topic reference
+		// https://github.com/rmichela/HelpDemo/blob/master/src/main/java/com/ryanmichela/helpdemo/HelpPlugin.java
+		
+		private testHelpTopic() {
+			name = "test help";
+			shortText = "This is to test if spaces in the name work";
+			fullText = "If you saw this text, spaces in the name work.";
+		}
+		
+		@Override
+		public boolean canSee(CommandSender commandSender) {
+			if (amendedPermission == null){
+				return true;
+			} else {
+				return commandSender.hasPermission(amendedPermission);
+			}
+		}
+	
 	}	
 	
     @Override
@@ -36,6 +60,9 @@ public final class BOSRewards extends JavaPlugin {
     	RewardsCommand commandExecutor = new RewardsCommand(this);
     	getCommand("rewards").setExecutor(commandExecutor);
     	getCommand("rw").setExecutor(commandExecutor);
+    	
+    	// Help Topics
+    	getServer().getHelpMap().addTopic(new testHelpTopic());
     	
     	getLogger().info("BOSRewards Enabled!");
     }
