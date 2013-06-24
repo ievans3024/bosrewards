@@ -11,7 +11,7 @@ public final class BOSRewards extends JavaPlugin {
 	public String test = "Test";
 	
 	public DataController getDataController(){
-		return controller;
+		return this.controller;
 	}
 	
 	public void setDataController(DataController c){
