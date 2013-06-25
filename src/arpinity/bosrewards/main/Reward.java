@@ -8,7 +8,6 @@ public final class Reward {
 	private int cost = -1;
 	private List<String> commands;
 	
-	
 	// Getters
 
 	public String getId(){
@@ -26,25 +25,31 @@ public final class Reward {
 	
 	//Setters
 	
-	public void setId(String id){
+	public Reward setId(String id){
 		this.id = id;
+		return this;
 	}
-	public void setSummary(String summary){
+	public Reward setSummary(String summary){
 		this.summary = summary;
+		return this;
 	}
-	public void setCost(int cost){
+	public Reward setCost(int cost){
 		this.cost = cost;
+		return this;
 	}
-	public void setFirstCommand(String command){
+	public Reward setFirstCommand(String command){
 		if (this.commands.size() > 0) {
 			this.commands.clear();
 		}
 		this.commands.add(command);
+		return this;
 	}
-	public void setCommands(List<String> commands){
+	public Reward setCommands(List<String> commands){
 		this.commands = commands;
+		return this;
 	}
-	public void addCommands(String command){
+	public Reward addCommands(String command){
 		this.commands.add(command);
+		return this;
 	}
 }

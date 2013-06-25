@@ -39,6 +39,9 @@ public final class BOSRewards extends JavaPlugin {
     	getCommand("rewards").setExecutor(commandExecutor);
     	getCommand("rw").setExecutor(commandExecutor);
     	
+    	// Event Listeners
+    	getServer().getPluginManager().registerEvents(new LoginListener(this), this);
+    	
     	getLogger().info("BOSRewards Enabled!");
     }
  

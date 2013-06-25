@@ -21,19 +21,24 @@ public final class User {
 	
 	//Setters
 	
-	public void setName(String name){
+	public User setName(String name){
 		this.name = name;
+		return this;
 	}
-	public void setPoints(int points){
+	public User setPoints(int points){
 		this.points = points;
+		return this;
 	}
-	public void addPoints(int points){
+	public User addPoints(int points){
 		this.points += points;
+		return this;
 	}
-	public void subtractPoints(int points){
+	public User subtractPoints(int points){
 		this.points -= points;
+		return this;
 	}
-	public void addReceipt(String receipt){
+	public User addReceipt(String receipt){
 		this.receipts.add(receipt);
+		return this;
 	}
 }
