@@ -17,7 +17,7 @@ public final class Messages {
 	// "bad" messages
 	public static final String NO_CONSOLE = COLOR_BAD + "Console can't use this subcommand";
 	public static final String NO_PERMISSION = COLOR_BAD + "You do not have permission to use this";
-	public static void sendNoPermsError(CommandSender sender) {
+	public static final void sendNoPermsError(CommandSender sender) {
 		if (sender instanceof ConsoleCommandSender) {
 			sender.sendMessage(NO_CONSOLE);
 		} else {
