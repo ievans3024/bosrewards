@@ -1,6 +1,8 @@
 package arpinity.bosrewards.main;
 
 import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 
 public final class Messages {
 	
@@ -15,6 +17,13 @@ public final class Messages {
 	// "bad" messages
 	public static final String NO_CONSOLE = COLOR_BAD + "Console can't use this subcommand";
 	public static final String NO_PERMISSION = COLOR_BAD + "You do not have permission to use this";
+	public static void sendNoPermsError(CommandSender sender) {
+		if (sender instanceof ConsoleCommandSender) {
+			sender.sendMessage(NO_CONSOLE);
+		} else {
+			sender.sendMessage(NO_PERMISSION);
+		}
+	}
 
 	
 	// "syntax error" messages

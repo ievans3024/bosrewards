@@ -35,6 +35,7 @@ public final class RewardsCommand implements CommandExecutor {
 		
 		// register new subcommands here
 		// don't forget to set description and usage strings!
+		// create /rewards help <subcmd> that uses description/usage fields
 		this.commandMap.put("reload", new ReloadCommand(this.getPlugin(),"reload","BOSRewards.util.reload",true,0));
 		this.commandMap.put("add", new AddCommand(this.getPlugin(),"add","BOSRewards.util.createreward",true,2));
 		this.commandMap.put("edit", new EditCommand(this.getPlugin(),"edit","BOSRewards.util.editreward",true,2));
@@ -65,21 +66,21 @@ public final class RewardsCommand implements CommandExecutor {
 					} else {
 						subargs = new String[0];
 					}
-					if (this.getPlugin().getPermsHandler().getCanUseSubCommand(sender, subcommand)){
+					if (subcommand.getCanUseSubCommand(sender)){
 						if (subargs.length >= subcommand.getMinArgs()) {
 							return (subcommand.run(sender,command,label,subargs));
 						}
 						sender.sendMessage(Messages.NOT_ENOUGH_ARGS);
 						return true;
 					}
-					this.getPlugin().getPermsHandler().sendNoPermsError(sender);
+					Messages.sendNoPermsError(sender);
 					return true;
 				}
 				sender.sendMessage(Messages.NOT_A_SUBCMD);
 			}
 			return false;
 		}
-		this.getPlugin().getPermsHandler().sendNoPermsError(sender);
+		Messages.sendNoPermsError(sender);
 		return true;
 	}
 }

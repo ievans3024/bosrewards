@@ -2,6 +2,7 @@ package arpinity.bosrewards.subcommands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 
 import arpinity.bosrewards.main.BOSRewards;
 
@@ -61,6 +62,15 @@ public abstract class SubCommand {
 	
 	public String getDescription() {
 		return this.description;
+	}
+	
+	public boolean getCanUseSubCommand(CommandSender sender) {
+		if (this.isConsoleAllowed() && sender instanceof ConsoleCommandSender) {
+			return true;
+		} else if (sender.hasPermission(this.getPermNode())){
+			return true;
+		}
+		return false;
 	}
 	
 	

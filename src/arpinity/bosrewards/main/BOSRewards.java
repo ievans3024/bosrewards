@@ -15,16 +15,7 @@ public final class BOSRewards extends JavaPlugin {
 	}
 	public void setDataController(DataController c) {
 		controller = c;
-	}	
-	
-	// SubCommand Permissions Checker
-	private SubCmdPermsHandler checker;
-	public SubCmdPermsHandler getPermsHandler() {
-		return this.checker;
-	}
-	public void setPermsHandler(SubCmdPermsHandler p) {
-		checker = p;
-	}	
+	}		
 	
 	@Override public void onLoad(){
     	
@@ -44,7 +35,6 @@ public final class BOSRewards extends JavaPlugin {
     	getDataController().openDatabase();
     	
     	// Commands
-    	setPermsHandler(new SubCmdPermsHandler(this));
     	RewardsCommand commandExecutor = new RewardsCommand(this);
     	getCommand("rewards").setExecutor(commandExecutor);
     	getCommand("rw").setExecutor(commandExecutor);

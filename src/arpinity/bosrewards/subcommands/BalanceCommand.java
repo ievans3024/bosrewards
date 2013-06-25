@@ -35,7 +35,7 @@ public final class BalanceCommand extends SubCommand {
 				user = this.getPlugin().getDataController().getUserByName(sender.getName());
 				sentencePrefix = Messages.COLOR_INFO + "You have ";
 			} else {
-				this.getPlugin().getPermsHandler().sendNoPermsError(sender);
+				Messages.sendNoPermsError(sender);
 				return true;
 			}
 		}

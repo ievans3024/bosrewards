@@ -35,7 +35,7 @@ public final class HistoryCommand extends SubCommand {
 				header = Messages.COLOR_INFO + "Your redemption history: ";
 				pageNumber = Integer.parseInt(args[1]);
 			} else {
-				this.getPlugin().getPermsHandler().sendNoPermsError(sender);
+				Messages.sendNoPermsError(sender);
 				return true;
 			}
 		} else {
@@ -43,7 +43,7 @@ public final class HistoryCommand extends SubCommand {
 				user = this.getPlugin().getDataController().getUserByName(sender.getName());
 				header = Messages.COLOR_INFO + "Your redemption history: ";
 			} else {
-				this.getPlugin().getPermsHandler().sendNoPermsError(sender);
+				Messages.sendNoPermsError(sender);
 				return true;
 			}
 		}
@@ -58,15 +58,18 @@ public final class HistoryCommand extends SubCommand {
 				sender.sendMessage(message);
 				return true;
 			}				
-			int i = 1;
 			int listStart = (pageNumber * 5) - 5;
-			String[] message = new String[6];
+			String[] message = new String[7];
 			message[0] = header;
-			while (i < 6){
-				message[i] = Messages.COLOR_INFO + userReceipts.get(listStart + i);
+			message[1] = "--------------------------";
+			int i = 0;
+			int m = 2;
+			while (m < 7){
+				message[m] = Messages.COLOR_INFO + userReceipts.get(listStart + i);
+				m++;
 				i++;
 				if ((listStart + i) > (userReceipts.size() - 1)){
-					i = 6;
+					m = 7;
 				}
 			}
 			sender.sendMessage(message);
