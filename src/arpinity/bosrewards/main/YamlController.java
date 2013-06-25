@@ -1,4 +1,4 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.main;
 
 
 import java.io.File;
@@ -14,7 +14,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class YamlController extends DataController {
+public final class YamlController extends DataController {
 	
 	public YamlController(BOSRewards plugin) {
 		super(plugin);

@@ -1,10 +1,12 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.subcommands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import arpinity.bosrewards.main.BOSRewards;
 
-public class RemoveCommand extends SubCommand {
+
+public final class RemoveCommand extends SubCommand {
 
 	public RemoveCommand(BOSRewards plugin, String name, String permission,
 			boolean allowConsole, int minArgs) {

@@ -1,11 +1,14 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.subcommands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class TakeCommand extends SubCommand {
+import arpinity.bosrewards.main.BOSRewards;
+import arpinity.bosrewards.main.User;
 
-	public TakeCommand(BOSRewards plugin, String name, String permission,
+public final class GiveCommand extends SubCommand {
+
+	public GiveCommand(BOSRewards plugin, String name, String permission,
 			boolean allowConsole, int minArgs) {
 		super(plugin, name, permission, allowConsole, minArgs);
 	}
@@ -14,7 +17,7 @@ public class TakeCommand extends SubCommand {
 		if (args.length > 3){
 			if (this.getPlugin().getDataController().getUserExists(args[1])){
 				User user = this.getPlugin().getDataController().getUserByName(args[1]);
-				user.subtractPoints(Integer.parseInt(args[2]));
+				user.addPoints(Integer.parseInt(args[2]));
 				this.getPlugin().getDataController().writeUser(user);
 			}
 		}

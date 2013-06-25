@@ -1,7 +1,9 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.subcommands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+
+import arpinity.bosrewards.main.BOSRewards;
 
 public abstract class SubCommand {
 	

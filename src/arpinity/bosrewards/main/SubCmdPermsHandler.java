@@ -1,9 +1,11 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.main;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
-public class SubCmdPermsHandler {
+import arpinity.bosrewards.subcommands.SubCommand;
+
+public final class SubCmdPermsHandler {
 	
 	private final BOSRewards plugin;
 	

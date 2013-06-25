@@ -1,4 +1,4 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.subcommands;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -6,8 +6,12 @@ import java.util.HashMap;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import arpinity.bosrewards.main.BOSRewards;
+import arpinity.bosrewards.main.Reward;
+import arpinity.bosrewards.main.ToolBox;
 
-public class EditCommand extends SubCommand {
+
+public final class EditCommand extends SubCommand {
 
 	private Map<String,EditFlag> editFlags = new HashMap<String,EditFlag>();
 	

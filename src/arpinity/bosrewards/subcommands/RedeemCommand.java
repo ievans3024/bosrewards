@@ -1,4 +1,4 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.subcommands;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,6 +7,10 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+
+import arpinity.bosrewards.main.BOSRewards;
+import arpinity.bosrewards.main.Reward;
+import arpinity.bosrewards.main.User;
 
 public class RedeemCommand extends SubCommand {
 

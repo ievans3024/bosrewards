@@ -1,4 +1,4 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.main;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 
-public class MessageHandler {
+public final class MessageHandler {
 	
 	private final BOSRewards plugin;
 	

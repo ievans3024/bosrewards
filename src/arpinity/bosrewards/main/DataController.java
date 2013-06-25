@@ -1,4 +1,4 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.main;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * @author arpinity3024
  *
  */
-abstract class DataController {
+public abstract class DataController {
 	
 	public final BOSRewards plugin;
 	

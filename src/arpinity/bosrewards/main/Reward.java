@@ -1,8 +1,8 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.main;
 
 import java.util.List;
 
-public class Reward {
+public final class Reward {
 	private String id;
 	private String summary;
 	private int cost = -1;

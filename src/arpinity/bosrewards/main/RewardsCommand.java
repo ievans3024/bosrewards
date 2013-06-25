@@ -1,15 +1,27 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.main;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-public class RewardsCommand implements CommandExecutor {
+import arpinity.bosrewards.subcommands.AddCommand;
+import arpinity.bosrewards.subcommands.BalanceCommand;
+import arpinity.bosrewards.subcommands.EditCommand;
+import arpinity.bosrewards.subcommands.GiveCommand;
+import arpinity.bosrewards.subcommands.HistoryCommand;
+import arpinity.bosrewards.subcommands.ListCommand;
+import arpinity.bosrewards.subcommands.RedeemCommand;
+import arpinity.bosrewards.subcommands.ReloadCommand;
+import arpinity.bosrewards.subcommands.RemoveCommand;
+import arpinity.bosrewards.subcommands.SetCommand;
+import arpinity.bosrewards.subcommands.SubCommand;
+import arpinity.bosrewards.subcommands.TakeCommand;
+
+public final class RewardsCommand implements CommandExecutor {
 	
 	private BOSRewards plugin;
 	private Map<String,SubCommand> commandMap = new HashMap<String,SubCommand>();

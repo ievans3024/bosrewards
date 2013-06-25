@@ -1,4 +1,4 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.main;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.help.HelpTopic;
@@ -7,7 +7,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class BOSRewards extends JavaPlugin {
 	
 	// Database Controller
-	private DataController controller;
+	protected DataController controller;
 	public DataController getDataController() {
 		return this.controller;
 	}

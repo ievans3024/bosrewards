@@ -1,10 +1,14 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.subcommands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
+import arpinity.bosrewards.main.BOSRewards;
+import arpinity.bosrewards.main.Reward;
+import arpinity.bosrewards.main.ToolBox;
 
-public class AddCommand extends SubCommand {
+
+public final class AddCommand extends SubCommand {
 
 	public AddCommand(BOSRewards plugin, String name, String permission,
 			boolean allowConsole, int minArgs) {

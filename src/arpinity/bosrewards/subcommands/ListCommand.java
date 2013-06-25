@@ -1,11 +1,14 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.subcommands;
 
 import java.util.List;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-public class ListCommand extends SubCommand {
+import arpinity.bosrewards.main.BOSRewards;
+import arpinity.bosrewards.main.Reward;
+
+public final class ListCommand extends SubCommand {
 
 	public ListCommand(BOSRewards plugin, String name, String permission,
 			boolean allowConsole, int minArgs) {

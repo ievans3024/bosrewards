@@ -1,10 +1,13 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.subcommands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class BalanceCommand extends SubCommand {
+import arpinity.bosrewards.main.BOSRewards;
+import arpinity.bosrewards.main.User;
+
+public final class BalanceCommand extends SubCommand {
 
 	public BalanceCommand(BOSRewards plugin, String name, String permission,
 			boolean allowConsole, int minArgs) {

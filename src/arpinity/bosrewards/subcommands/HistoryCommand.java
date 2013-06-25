@@ -1,4 +1,4 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.subcommands;
 
 import java.util.List;
 
@@ -6,7 +6,10 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class HistoryCommand extends SubCommand {
+import arpinity.bosrewards.main.BOSRewards;
+import arpinity.bosrewards.main.User;
+
+public final class HistoryCommand extends SubCommand {
 
 	public HistoryCommand(BOSRewards plugin, String name, String permission,
 			boolean allowConsole, int minArgs) {

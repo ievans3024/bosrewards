@@ -1,8 +1,8 @@
-package arpinity.bosrewards;
+package arpinity.bosrewards.main;
 
 import java.util.List;
 
-public class User {
+public final class User {
 	private String name;
 	private int points;
 	private List<String> receipts;
