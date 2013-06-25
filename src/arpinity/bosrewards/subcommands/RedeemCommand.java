@@ -2,7 +2,10 @@ package arpinity.bosrewards.subcommands;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -37,7 +40,17 @@ public class RedeemCommand extends SubCommand {
 					this.getPlugin().getLogger().info(user.getName() + receiptString);
 					List<String> commands = reward.getCommands();
 					while (commands.iterator().hasNext()){
-						this.getPlugin().getServer().dispatchCommand(Bukkit.getConsoleSender(), commands.iterator().next());
+						String cmd = commands.iterator().next();
+						
+						//find unescaped keywords
+						cmd = cmd.replaceAll("\\Q${user}\\E",user.getName());
+						
+						//clear escape sequences
+						cmd = cmd.replaceAll("\\{", Matcher.quoteReplacement("{"));
+						cmd = cmd.replaceAll("\\}", Matcher.quoteReplacement("}"));
+						cmd = cmd.replaceAll("\\$", Matcher.quoteReplacement("$"));
+						
+						this.getPlugin().getServer().dispatchCommand(Bukkit.getConsoleSender(), cmd);
 					}
 					sender.sendMessage(Messages.COLOR_SUCCESS
 							+ "You redeemed "

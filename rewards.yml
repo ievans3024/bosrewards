@@ -5,3 +5,9 @@
   commands:
     -"say Someone bought a compliment!"
     -"say That person is awesome!"
+    
+testkw:
+  summary: Tests "${user}" keyword
+  cost: 0
+  commands:
+    -"say ${user} tested the \$\{user\} keyword!"
