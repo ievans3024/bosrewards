@@ -2,6 +2,10 @@ package arpinity.bosrewards.main;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import arpinity.bosrewards.datacontroller.DataController;
+import arpinity.bosrewards.datacontroller.YamlController;
+
+
 public final class BOSRewards extends JavaPlugin {
 	
 	// Database Controller

@@ -1,4 +1,4 @@
-package arpinity.bosrewards.main;
+package arpinity.bosrewards.datacontroller;
 
 
 import java.io.File;
@@ -13,6 +13,10 @@ import java.util.logging.Level;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+
+import arpinity.bosrewards.main.BOSRewards;
+import arpinity.bosrewards.main.Reward;
+import arpinity.bosrewards.main.User;
 
 public final class YamlController extends DataController {
 	

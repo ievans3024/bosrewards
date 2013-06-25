@@ -1,6 +1,10 @@
-package arpinity.bosrewards.main;
+package arpinity.bosrewards.datacontroller;
 
 import java.util.List;
+
+import arpinity.bosrewards.main.BOSRewards;
+import arpinity.bosrewards.main.Reward;
+import arpinity.bosrewards.main.User;
 
 /**
  * Data Controller abstract
