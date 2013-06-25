@@ -4,6 +4,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 public abstract class SubCommand {
+	
+	//TODO: use abstracts for everything except plugin
+	
 	private final BOSRewards plugin;
 	private final String name;
 	private String permissionNode;

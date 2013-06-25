@@ -6,18 +6,35 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BOSRewards extends JavaPlugin {
 	
+	// Database Controller
 	private DataController controller;
-	
-	public String test = "Test";
-	
-	public DataController getDataController(){
+	public DataController getDataController() {
 		return this.controller;
 	}
-	
-	public void setDataController(DataController c){
+	public void setDataController(DataController c) {
 		controller = c;
 	}	
 	
+	// SubCommand Permissions Checker
+	private SubCmdPermsHandler checker;
+	public SubCmdPermsHandler getPermsHandler() {
+		return this.checker;
+	}
+	public void setPermsHandler(SubCmdPermsHandler p) {
+		checker = p;
+	}
+	
+	// Message Constants
+	private MessageHandler messages;
+	public MessageHandler getMessageHandler() {
+		return this.messages;
+	}
+	public void setMessageHandler(MessageHandler m) {
+		this.messages = m;
+	}
+	
+	// Help Menu - testing
+	public String test = "Test";	
 	private class testHelpTopic extends HelpTopic {
 		
 		// TODO: help topic reference
@@ -53,10 +70,13 @@ public final class BOSRewards extends JavaPlugin {
     	} else {
     		setDataController(new YamlController(this));
     	}
-    	
     	getDataController().openDatabase();
     	
-    	//Commands
+    	// Message Constants
+    	setMessageHandler(new MessageHandler(this));
+    	
+    	// Commands
+    	setPermsHandler(new SubCmdPermsHandler(this));
     	RewardsCommand commandExecutor = new RewardsCommand(this);
     	getCommand("rewards").setExecutor(commandExecutor);
     	getCommand("rw").setExecutor(commandExecutor);
