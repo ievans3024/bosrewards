@@ -11,40 +11,40 @@ public final class Reward {
 	
 	// Getters
 
-	public final String getId(){
+	public String getId(){
 		return this.id;
 	}
-	public final String getSummary(){
+	public String getSummary(){
 		return this.summary;
 	}
-	public final int getCost(){
+	public int getCost(){
 		return this.cost;
 	}
-	public final List<String> getCommands(){
+	public List<String> getCommands(){
 		return this.commands;
 	}
 	
 	//Setters
 	
-	public final void setId(String id){
+	public void setId(String id){
 		this.id = id;
 	}
-	public final void setSummary(String summary){
+	public void setSummary(String summary){
 		this.summary = summary;
 	}
-	public final void setCost(int cost){
+	public void setCost(int cost){
 		this.cost = cost;
 	}
-	public final void setFirstCommand(String command){
+	public void setFirstCommand(String command){
 		if (this.commands.size() > 0) {
 			this.commands.clear();
 		}
 		this.commands.add(command);
 	}
-	public final void setCommands(List<String> commands){
+	public void setCommands(List<String> commands){
 		this.commands = commands;
 	}
-	public final void addCommands(String command){
+	public void addCommands(String command){
 		this.commands.add(command);
 	}
 }

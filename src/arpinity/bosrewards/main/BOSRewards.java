@@ -9,16 +9,16 @@ import arpinity.bosrewards.datacontroller.YamlController;
 public final class BOSRewards extends JavaPlugin {
 	
 	// Database Controller
-	protected DataController controller;
+	private DataController controller;
 	public DataController getDataController() {
 		return this.controller;
 	}
 	public void setDataController(DataController c) {
-		controller = c;
+		this.controller = c;
 	}		
 	
 	@Override public void onLoad(){
-    	
+		
 	}
 	
     @Override

@@ -1,7 +1,7 @@
 package arpinity.bosrewards.main;
 
 public final class ToolBox {
-	public static final String arrayToString(String[] array, int start, int finish){
+	public static String arrayToString(String[] array, int start, int finish){
 		StringBuilder sb = new StringBuilder(array[start]);
 		if (start >= array.length || finish < start){
 			return "";

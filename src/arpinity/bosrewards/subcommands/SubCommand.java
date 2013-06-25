@@ -36,35 +36,35 @@ public abstract class SubCommand {
 	
 	// Getters
 	
-	public BOSRewards getPlugin() {
+	public final BOSRewards getPlugin() {
 		return this.plugin;
 	}
 	
-	public String getName() {
+	public final String getName() {
 		return this.name;
 	}
 	
-	public String getPermNode() {
+	public final String getPermNode() {
 		return this.permissionNode;
 	}
 	
-	public boolean isConsoleAllowed() {
+	public final boolean isConsoleAllowed() {
 		return this.allowConsole;
 	}
 	
-	public int getMinArgs() {
+	public final int getMinArgs() {
 		return this.minArgs;
 	}
 	
-	public String getUsage() {
+	public final String getUsage() {
 		return this.usage;
 	}
 	
-	public String getDescription() {
+	public final String getDescription() {
 		return this.description;
 	}
 	
-	public boolean getCanUseSubCommand(CommandSender sender) {
+	public final boolean getCanUseSubCommand(CommandSender sender) {
 		if (this.isConsoleAllowed() && sender instanceof ConsoleCommandSender) {
 			return true;
 		} else if (sender.hasPermission(this.getPermNode())){
@@ -76,27 +76,27 @@ public abstract class SubCommand {
 	
 	// Setters
 	
-	public SubCommand setPermission(String permission) {
+	public final SubCommand setPermission(String permission) {
 		this.permissionNode = permission;
 		return this;
 	}	
 	
-	public SubCommand allowConsole(boolean bool) {
+	public final SubCommand allowConsole(boolean bool) {
 		this.allowConsole = bool;
 		return this;
 	}
 	
-	public SubCommand setMinArgs(int minimum) {
+	public final SubCommand setMinArgs(int minimum) {
 		this.minArgs = minimum;
 		return this;
 	}
 	
-	public SubCommand setUsage(String usage) {
+	public final SubCommand setUsage(String usage) {
 		this.usage = usage;
 		return this;
 	}
 	
-	public SubCommand setDescription(String description) {
+	public final SubCommand setDescription(String description) {
 		this.description = description;
 		return this;
 	}

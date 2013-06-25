@@ -18,7 +18,7 @@ public final class HistoryCommand extends SubCommand {
 	}
 
 	@Override
-	public boolean run(CommandSender sender, Command command, String label,
+	public final boolean run(CommandSender sender, Command command, String label,
 			String[] args) {
 		User user;
 		String header;

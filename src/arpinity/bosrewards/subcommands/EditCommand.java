@@ -31,25 +31,25 @@ public final class EditCommand extends SubCommand {
 		public void change(String[] args, Reward reward);
 	}
 	
-	private class CostFlag implements EditFlag {
+	private final class CostFlag implements EditFlag {
 		public void change(String[] args, Reward reward) {
 			reward.setCost(Integer.parseInt(args[2]));
 		}
 	}
 	
-	private class CommandsFlag implements EditFlag {
+	private final class CommandsFlag implements EditFlag {
 		public void change(String[] args, Reward reward) {
 			reward.setFirstCommand(ToolBox.arrayToString(args, 2, args.length));
 		}
 	}
 
-	private class AddCommandsFlag implements EditFlag {
+	private final class AddCommandsFlag implements EditFlag {
 		public void change(String[] args, Reward reward) {
 			reward.addCommands(ToolBox.arrayToString(args, 2, args.length));
 		}
 	}
 	
-	private class SummaryFlag implements EditFlag {
+	private final class SummaryFlag implements EditFlag {
 		public void change(String[] args, Reward reward){
 			reward.setSummary(ToolBox.arrayToString(args, 2, args.length));
 		}

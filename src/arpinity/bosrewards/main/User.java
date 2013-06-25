@@ -9,31 +9,31 @@ public final class User {
 	
 	//Getters
 	
-	public final String getName(){
+	public String getName(){
 		return this.name;
 	}
-	public final int getPoints(){
+	public int getPoints(){
 		return this.points;
 	}
-	public final List<String> getReceipts(){
+	public List<String> getReceipts(){
 		return this.receipts;
 	}
 	
 	//Setters
 	
-	public final void setName(String name){
+	public void setName(String name){
 		this.name = name;
 	}
-	public final void setPoints(int points){
+	public void setPoints(int points){
 		this.points = points;
 	}
-	public final void addPoints(int points){
+	public void addPoints(int points){
 		this.points += points;
 	}
-	public final void subtractPoints(int points){
+	public void subtractPoints(int points){
 		this.points -= points;
 	}
-	public final void addReceipt(String receipt){
+	public void addReceipt(String receipt){
 		this.receipts.add(receipt);
 	}
 }

@@ -23,7 +23,7 @@ import arpinity.bosrewards.subcommands.TakeCommand;
 
 public final class RewardsCommand implements CommandExecutor {
 	
-	private BOSRewards plugin;
+	private final BOSRewards plugin;
 	private Map<String,SubCommand> commandMap = new HashMap<String,SubCommand>();
 	
 	public BOSRewards getPlugin() {

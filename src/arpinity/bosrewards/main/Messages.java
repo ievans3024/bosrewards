@@ -7,7 +7,6 @@ import org.bukkit.command.ConsoleCommandSender;
 public final class Messages {
 	
 	// colors
-	
 	public static final ChatColor COLOR_BAD = ChatColor.RED;
 	public static final ChatColor COLOR_SYNTAX_ERROR = ChatColor.AQUA;
 	public static final ChatColor COLOR_SUCCESS = ChatColor.GREEN;
@@ -17,7 +16,7 @@ public final class Messages {
 	// "bad" messages
 	public static final String NO_CONSOLE = COLOR_BAD + "Console can't use this subcommand";
 	public static final String NO_PERMISSION = COLOR_BAD + "You do not have permission to use this";
-	public static final void sendNoPermsError(CommandSender sender) {
+	public static void sendNoPermsError(CommandSender sender) {
 		if (sender instanceof ConsoleCommandSender) {
 			sender.sendMessage(NO_CONSOLE);
 		} else {
