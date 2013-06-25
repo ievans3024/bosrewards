@@ -1,11 +1,9 @@
 name: BOSRewards
 main: arpinity.bosrewards.main.BOSRewards
-version: 0.0.5.0
+version: 0.0.6.0
 author: arpinity3024
 website: http://www.bhslaughter.com/
 commands:
-  test\ command:
-    usage: |
   rewards:
     aliases: bosrewards
     description: "Main command for BOSRewards"

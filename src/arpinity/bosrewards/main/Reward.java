@@ -36,6 +36,9 @@ public final class Reward {
 		this.cost = cost;
 	}
 	public final void setFirstCommand(String command){
+		if (this.commands.size() > 0) {
+			this.commands.clear();
+		}
 		this.commands.add(command);
 	}
 	public final void setCommands(List<String> commands){

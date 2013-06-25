@@ -5,6 +5,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import arpinity.bosrewards.main.BOSRewards;
+import arpinity.bosrewards.main.Messages;
 import arpinity.bosrewards.main.User;
 
 public final class BalanceCommand extends SubCommand {
@@ -17,31 +18,30 @@ public final class BalanceCommand extends SubCommand {
 	@Override
 	public boolean run(CommandSender sender, Command command, String label,
 			String[] args) {
+		
 		User user;
 		String sentencePrefix;
-		String pointSingular = this.getPlugin().getConfig().getString("point-name");
-		String pointPlural = this.getPlugin().getConfig().getString("point-name-plural");
-		if (args.length > 1){
-			user = this.getPlugin().getDataController().getUserByName(args[1]);
-			sentencePrefix = user.getName() + " has ";
+		
+		if (args.length > 0) {
+			if (this.getPlugin().getDataController().getUserExists(args[0])) {
+				user = this.getPlugin().getDataController().getUserByName(args[0]);
+				sentencePrefix = Messages.COLOR_INFO + user.getName() + " has ";
+			} else {
+				sender.sendMessage(Messages.INVALID_ARGUMENT + args[0] + " not in rewards database");
+				return true;
+			}
 		} else {
 			if (sender instanceof Player){
 				user = this.getPlugin().getDataController().getUserByName(sender.getName());
-				sentencePrefix = "You have ";
+				sentencePrefix = Messages.COLOR_INFO + "You have ";
 			} else {
-				this.getPlugin().getLogger().info("Console never gets points. Console will never be rewarded.");
+				this.getPlugin().getPermsHandler().sendNoPermsError(sender);
 				return true;
 			}
 		}
-		if (sender instanceof Player){
-			sender.sendMessage(sentencePrefix
+		sender.sendMessage(sentencePrefix
 					+ user.getPoints()
-					+ ((user.getPoints() == 1) ? pointSingular : pointPlural));
-		} else {
-			this.getPlugin().getLogger().info(sentencePrefix
-					+ user.getPoints()
-					+ ((user.getPoints() == 1) ? pointSingular : pointPlural));
-		}
+					+ ((user.getPoints() == 1) ? this.pointSingular : this.pointPlural));
 		return true;
 	}
 

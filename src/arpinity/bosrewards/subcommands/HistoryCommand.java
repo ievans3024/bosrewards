@@ -7,6 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import arpinity.bosrewards.main.BOSRewards;
+import arpinity.bosrewards.main.Messages;
 import arpinity.bosrewards.main.User;
 
 public final class HistoryCommand extends SubCommand {
@@ -25,24 +26,24 @@ public final class HistoryCommand extends SubCommand {
 		if (args.length > 1){
 			if (this.getPlugin().getDataController().getUserExists(args[1])){
 				user = this.getPlugin().getDataController().getUserByName(args[1]);
-				header = "Redemption history for " + this.getPlugin().getDataController().getUserByName(args[1]).getName();
+				header =  Messages.COLOR_INFO + "Redemption history for " + user.getName();
 				if (args.length > 2){
 					pageNumber = Integer.parseInt(args[2]);
 				}
 			} else if (sender instanceof Player){
 				user = this.getPlugin().getDataController().getUserByName(sender.getName());
-				header = "Your redemption history: ";
+				header = Messages.COLOR_INFO + "Your redemption history: ";
 				pageNumber = Integer.parseInt(args[1]);
 			} else {
-				this.getPlugin().getLogger().info("Corrupt to its core, Console has never and will never have a redemption history. Try specifying a player.");
+				this.getPlugin().getPermsHandler().sendNoPermsError(sender);
 				return true;
 			}
 		} else {
 			if (sender instanceof Player){
 				user = this.getPlugin().getDataController().getUserByName(sender.getName());
-				header = "Your redemption history: ";
+				header = Messages.COLOR_INFO + "Your redemption history: ";
 			} else {
-				this.getPlugin().getLogger().info("Corrupt to its core, Console has never and will never have a redemption history. Try specifying a player.");
+				this.getPlugin().getPermsHandler().sendNoPermsError(sender);
 				return true;
 			}
 		}
@@ -53,31 +54,22 @@ public final class HistoryCommand extends SubCommand {
 				maximumPages += 1;
 			}
 			if (pageNumber > maximumPages){
-				String message = "There are not that many pages. There are " + maximumPages + ((maximumPages == 1) ? " page." : " pages.");
-				if (sender instanceof Player){
-					sender.sendMessage(message);
-				} else {
-					this.getPlugin().getLogger().info(message);						
-				}
+				String message = Messages.COLOR_SYNTAX_ERROR + "There are not that many pages. There are " + maximumPages + ((maximumPages == 1) ? " page." : " pages.");
+				sender.sendMessage(message);
+				return true;
 			}				
-			int i = 0;
+			int i = 1;
 			int listStart = (pageNumber * 5) - 5;
-			if (sender instanceof Player){
-				sender.sendMessage(header);
-			} else {
-				this.getPlugin().getLogger().info(header);
-			}
-			while (i < 5){
-				if (sender instanceof Player){
-					sender.sendMessage(userReceipts.get(listStart + i));
-				} else {
-					this.getPlugin().getLogger().info(userReceipts.get(listStart + i));
-				}
+			String[] message = new String[6];
+			message[0] = header;
+			while (i < 6){
+				message[i] = Messages.COLOR_INFO + userReceipts.get(listStart + i);
 				i++;
 				if ((listStart + i) > (userReceipts.size() - 1)){
-					i = 5;
+					i = 6;
 				}
 			}
+			sender.sendMessage(message);
 		}
 		return true;
 	}

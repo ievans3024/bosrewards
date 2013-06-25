@@ -43,6 +43,8 @@ public final class RewardsCommand implements CommandExecutor {
 		this.commandMap.put("list", new ListCommand(this.getPlugin(),"list","BOSRewards.user.list",true,0));
 		this.commandMap.put("give", new GiveCommand(this.getPlugin(),"give","BOSRewards.admin.givepoints",true,2));
 		this.commandMap.put("take", new TakeCommand(this.getPlugin(),"take","BOSRewards.admin.takepoints",true,2));
+		this.commandMap.put("subtract", this.commandMap.get("take"));
+		this.commandMap.put("sub", this.commandMap.get("take"));
 		this.commandMap.put("set", new SetCommand(this.getPlugin(),"set","BOSRewards.admin.setpoints",true,2));
 		this.commandMap.put("redeem", new RedeemCommand(this.getPlugin(),"redeem","BOSRewards.user.redeem",false,1));
 		this.commandMap.put("balance", new BalanceCommand(this.getPlugin(),"balance","BOSRewards.user.balance",false,0));
@@ -57,16 +59,23 @@ public final class RewardsCommand implements CommandExecutor {
 			if (args.length > 0){
 				if (this.commandMap.containsKey(args[0])){
 					SubCommand subcommand = this.commandMap.get(args[0]);
-					String[] subargs = Arrays.copyOfRange(args,1,(args.length - 1));
+					String[] subargs;
+					if (args.length > 1) {
+						subargs = Arrays.copyOfRange(args,1,args.length);
+					} else {
+						subargs = new String[0];
+					}
 					if (this.getPlugin().getPermsHandler().getCanUseSubCommand(sender, subcommand)){
 						if (subargs.length >= subcommand.getMinArgs()) {
 							return (subcommand.run(sender,command,label,subargs));
 						}
+						sender.sendMessage(Messages.NOT_ENOUGH_ARGS);
+						return true;
 					}
 					this.getPlugin().getPermsHandler().sendNoPermsError(sender);
 					return true;
 				}
-				this.getPlugin().getMessageHandler().sendMessage(sender, "nosubcmd");
+				sender.sendMessage(Messages.NOT_A_SUBCMD);
 			}
 			return false;
 		}

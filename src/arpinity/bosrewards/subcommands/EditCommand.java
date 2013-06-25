@@ -7,6 +7,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import arpinity.bosrewards.main.BOSRewards;
+import arpinity.bosrewards.main.Messages;
 import arpinity.bosrewards.main.Reward;
 import arpinity.bosrewards.main.ToolBox;
 
@@ -32,39 +33,44 @@ public final class EditCommand extends SubCommand {
 	
 	private class CostFlag implements EditFlag {
 		public void change(String[] args, Reward reward) {
-			reward.setCost(Integer.parseInt(args[3]));
+			reward.setCost(Integer.parseInt(args[2]));
 		}
 	}
 	
 	private class CommandsFlag implements EditFlag {
 		public void change(String[] args, Reward reward) {
-			reward.setFirstCommand(ToolBox.arrayToString(args, 3, args.length));
+			reward.setFirstCommand(ToolBox.arrayToString(args, 2, args.length));
 		}
 	}
 
 	private class AddCommandsFlag implements EditFlag {
 		public void change(String[] args, Reward reward) {
-			reward.addCommands(ToolBox.arrayToString(args, 3, args.length));
+			reward.addCommands(ToolBox.arrayToString(args, 2, args.length));
 		}
 	}
 	
 	private class SummaryFlag implements EditFlag {
 		public void change(String[] args, Reward reward){
-			reward.setSummary(ToolBox.arrayToString(args, 3, args.length));
+			reward.setSummary(ToolBox.arrayToString(args, 2, args.length));
 		}
 	}
 	
 	public boolean run(CommandSender sender, Command command, String label, String[] args){
-		if (args.length > 4
-				&& this.editFlags.keySet().contains(args[2])){
-			if (this.getPlugin().getDataController().getRewardExists(args[1])){
-				Reward reward = this.getPlugin().getDataController().getRewardById(args[1]);
-				this.editFlags.get(args[2]).change(args,reward);
+		sender.sendMessage(args);
+		if (args.length > 2
+				&& this.editFlags.containsKey(args[1])){
+			if (this.getPlugin().getDataController().getRewardExists(args[0])){
+				Reward reward = this.getPlugin().getDataController().getRewardById(args[0]);
+				this.editFlags.get(args[1]).change(args,reward);
 				this.getPlugin().getDataController().writeReward(reward);
+				sender.sendMessage(Messages.SUCCESS_EDIT + reward.getId());
+				return true;
 			}
+			sender.sendMessage(Messages.INVALID_ARGUMENT + "the reward " + args[0] + "does not exist.");
 			return true;
 		}
-		return false;
+		sender.sendMessage(Messages.NOT_ENOUGH_ARGS);
+		return true;
 	};
 
 }

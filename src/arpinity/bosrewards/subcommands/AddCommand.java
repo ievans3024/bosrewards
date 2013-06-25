@@ -4,6 +4,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
 import arpinity.bosrewards.main.BOSRewards;
+import arpinity.bosrewards.main.Messages;
 import arpinity.bosrewards.main.Reward;
 import arpinity.bosrewards.main.ToolBox;
 
@@ -16,14 +17,12 @@ public final class AddCommand extends SubCommand {
 	}
 	
 	public boolean run(CommandSender sender, Command command, String label, String[] args){
-		if (args.length > this.getMinArgs()){
-			Reward newReward = new Reward();
-			newReward.setId(args[1]);
-			newReward.setSummary(ToolBox.arrayToString(args,2,args.length));
-			this.getPlugin().getDataController().writeReward(newReward);
-			return true;
-		}
-		return false;
+		Reward newReward = new Reward();
+		newReward.setId(args[0]);
+		newReward.setSummary(ToolBox.arrayToString(args,1,args.length));
+		this.getPlugin().getDataController().writeReward(newReward);
+		sender.sendMessage(Messages.SUCCESS_ADD + newReward.getId());
+		return true;
 	};
 
 }

@@ -28,9 +28,9 @@ public final class SubCmdPermsHandler {
 	
 	public void sendNoPermsError(CommandSender sender) {
 		if (sender instanceof ConsoleCommandSender) {
-			this.getPlugin().getMessageHandler().sendMessage(sender, "noconsole");
+			sender.sendMessage(Messages.NO_CONSOLE);
 		} else {
-			this.getPlugin().getMessageHandler().sendMessage(sender, "noperms");
+			sender.sendMessage(Messages.NO_PERMISSION);
 		}
 	}
 }
