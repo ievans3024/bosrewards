@@ -1,12 +1,7 @@
 save-interval: 60
 user-default-points: 0
-edit-rewards-ingame: true
 point-name: point
 point-name-plural: points
-
-
-# these are optional, and should not be present in the generated config.yml
-debug-level: 3
 database-type: yaml
 database-host:
 database-name:
