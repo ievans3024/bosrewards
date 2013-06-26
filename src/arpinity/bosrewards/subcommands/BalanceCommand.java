@@ -2,6 +2,7 @@ package arpinity.bosrewards.subcommands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import arpinity.bosrewards.main.BOSRewards;
@@ -23,11 +24,16 @@ public final class BalanceCommand extends SubCommand {
 		String sentencePrefix;
 		
 		if (args.length > 0) {
-			if (this.getPlugin().getDataController().getUserExists(args[0])) {
-				user = this.getPlugin().getDataController().getUserByName(args[0]);
-				sentencePrefix = Messages.COLOR_INFO + user.getName() + " has ";
+			if (sender instanceof ConsoleCommandSender || sender.hasPermission("BOSRewards.admin.seebalance")) {
+				if (this.getPlugin().getDataController().getUserExists(args[0])) {
+					user = this.getPlugin().getDataController().getUserByName(args[0]);
+					sentencePrefix = Messages.COLOR_INFO + user.getName() + " has ";
+				} else {
+					sender.sendMessage(Messages.INVALID_ARGUMENT + args[0] + " not in rewards database");
+					return true;
+				}
 			} else {
-				sender.sendMessage(Messages.INVALID_ARGUMENT + args[0] + " not in rewards database");
+				Messages.sendNoPermsError(sender);
 				return true;
 			}
 		} else {

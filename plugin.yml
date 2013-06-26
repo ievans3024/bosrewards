@@ -22,4 +22,36 @@ commands:
       "/rw [command] [args]"
       "Alias for /rewards"
       "Try /rw help or /rw help [command] for more info."
-    
+permissions:
+  BOSRewards.*:
+    description: All BOSRewards permissions
+    default: false
+    children:
+      BOSRewards.admin.*: true
+      BOSRewards.user.*: true
+      BOSRewards.util.*: true
+  BOSRewards.admin.*:
+    description: All BOSRewards admin permissions
+    default: false
+    children:
+      BOSRewards.admin.givepoints: true
+      BOSRewards.admin.takepoints: true
+      BOSRewards.admin.setpoints: true
+      BOSRewards.admin.seebalance: true
+      BOSRewards.admin.seehistory: true
+  BOSRewards.user.*:
+    description: All normal user permissions
+    default: true
+    children:
+      BOSRewards.user.list: true
+      BOSRewards.user.redeem: true
+  BOSRewards.util.*:
+    description: All utility permissions
+    default: false
+    children:
+      BOSRewards.util.reload: true
+      BOSRewards.util.dumpsql: true
+      BOSRewards.util.createreward: true
+      BOSRewards.util.removereward: true
+      BOSRewards.util.editreward: true
+      
