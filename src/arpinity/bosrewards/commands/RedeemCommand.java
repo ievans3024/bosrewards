@@ -6,7 +6,6 @@ import java.util.regex.Matcher;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import arpinity.bosrewards.main.BOSRewards;
 import arpinity.bosrewards.main.Messages;
