@@ -39,6 +39,7 @@ permissions:
       BOSRewards.admin.setpoints: true
       BOSRewards.admin.seebalance: true
       BOSRewards.admin.seehistory: true
+      BOSRewards.admin.bypass: true
   BOSRewards.user.*:
     description: All normal user permissions
     default: true

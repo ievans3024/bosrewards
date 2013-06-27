@@ -9,10 +9,6 @@ public final class LoginListener implements Listener {
 	
 	private final BOSRewards plugin;
 	
-	public BOSRewards getPlugin(){
-		return this.plugin;
-	}
-	
 	public LoginListener(BOSRewards plugin){
 		this.plugin = plugin;
 	}
@@ -20,12 +16,20 @@ public final class LoginListener implements Listener {
 	@EventHandler (priority = EventPriority.MONITOR)
 	public void onPlayerLogin(PlayerLoginEvent event){
 		String username = event.getPlayer().getName();
-		if (!this.getPlugin().getDataController().getUserExists(username)){
+		boolean userExists = plugin.getDataController().getUserExists(username);
+		String lastOnline = plugin.getDateFormat().format(plugin.getCalendar().getTime());
+		if (!userExists){
 			User user = new User()
 			.setName(username)
-			.setPoints(this.getPlugin().getConfig().getInt("user-default-points"));
-			this.getPlugin().getDataController().writeUser(user);
-			this.getPlugin().getLogger().info("New user added to BOSRewards user database: " + username);
+			.setPoints(plugin.getConfig().getInt("user-default-points"))
+			.setLastOnline(lastOnline);
+			plugin.getDataController().writeUser(user);
+			plugin.getLogger().info("New user added to BOSRewards user database: " + username);
+		} else if (userExists) {
+			User user = plugin.getDataController().getUserByName(username).setLastOnline(lastOnline);
+			plugin.getDataController()
+			.writeUser(user);
+			
 		}
 	}
 

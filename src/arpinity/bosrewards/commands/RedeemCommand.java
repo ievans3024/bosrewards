@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import arpinity.bosrewards.main.BOSRewards;
 import arpinity.bosrewards.main.Messages;
@@ -22,11 +23,12 @@ public class RedeemCommand extends SubCommand {
 	@Override
 	public boolean run(CommandSender sender, Command command, String label,
 			String[] args) {
+		boolean hasByPass = (sender.hasPermission("BOSRewards.admin.bypass"));
 		User user = plugin.getDataController().getUserByName(sender.getName());
 		if (plugin.getDataController().getRewardExists(args[1])){
 			Reward reward = plugin.getDataController().getRewardById(args[1]);
-			if (reward.getCost() >= 0){
-				if (user.getPoints() >= reward.getCost()){
+			if (hasByPass || reward.getCost() >= 0){
+				if (hasByPass || user.getPoints() >= reward.getCost()){
 					String date = plugin.getDateFormat().format(plugin.getCalendar().getTime());
 					String receiptString = date + " " + reward.getSummary() + " " + reward.getCost();
 					user.subtractPoints(reward.getCost());

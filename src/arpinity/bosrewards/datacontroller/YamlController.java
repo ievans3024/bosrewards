@@ -48,31 +48,31 @@ public final class YamlController extends DataController {
     // Users table getters
     
     @Override
-	public boolean getUserExists(String user){
-		if (this.getUsersTable().getConfigurationSection(user) != null){
+	public boolean getUserExists(String username){
+		if (this.getUsersTable().getConfigurationSection(username) != null){
 			return true;
 		}
 		return false;
 	}
     
     @Override
-	public User getUserByName(String user){
-		if (!this.getUserExists(user)){
+	public User getUserByName(String username){
+		if (!this.getUserExists(username)){
 			return null;
 		}
-		ConfigurationSection userSection = getUsersTable().getConfigurationSection(user);
-		User userByName = new User();
-		userByName.setName(userSection.getName());
-		userByName.setPoints(userSection.getInt("points"));
-		return userByName;		
+		ConfigurationSection userSection = getUsersTable().getConfigurationSection(username);
+		return new User()
+		.setName(userSection.getName())
+		.setPoints(userSection.getInt("points"))
+		.setLastOnline(userSection.getString("last-online"));	
 	}
 	
 	@Override
-	public int getUserPoints(String user){
-		if (!this.getUserExists(user)){
+	public int getUserPoints(String username){
+		if (!this.getUserExists(username)){
 			return 0; // -1 for non-existent users?
 		}
-		return this.getUserByName(user).getPoints();
+		return this.getUserByName(username).getPoints();
 	}
 	
 	@Override
@@ -104,12 +104,11 @@ public final class YamlController extends DataController {
 			return null;
 		}
 		ConfigurationSection rewardSection = getRewardsTable().getConfigurationSection(id);
-		Reward rewardById = new Reward();
-		rewardById.setId(rewardSection.getName());
-		rewardById.setSummary(rewardSection.getString("summary"));
-		rewardById.setCost(rewardSection.getInt("cost"));
-		rewardById.setCommands(rewardSection.getStringList("commands"));
-		return rewardById;
+		return new Reward()
+		.setId(rewardSection.getName())
+		.setSummary(rewardSection.getString("summary"))
+		.setCost(rewardSection.getInt("cost"))
+		.setCommands(rewardSection.getStringList("commands"));
 	}
 	
 	@Override
@@ -123,10 +122,9 @@ public final class YamlController extends DataController {
 	@Override
 	public int getRewardCost(String id){
 		if (!this.getRewardExists(id)){
-			return 0; // -1 for non-existent rewards?
+			return -1;
 		}
-		Reward rewardById = this.getRewardById(id);
-		return rewardById.getCost();
+		return this.getRewardById(id).getCost();
 	}
 	
 	@Override
@@ -135,8 +133,7 @@ public final class YamlController extends DataController {
 			List<String> emptyList = new ArrayList<String>();
 			return emptyList;
 		}
-		Reward rewardById = this.getRewardById(id);
-		return rewardById.getCommands();
+		return this.getRewardById(id).getCommands();
 	}
 	
     // Users table load, reload, create
@@ -176,7 +173,7 @@ public final class YamlController extends DataController {
 		    usersTableFile = new File(plugin.getDataFolder(), "users.yml");
 		}
 		if (!usersTableFile.exists()) {            
-		     this.plugin.saveResource("users.yml", false);
+		     plugin.saveResource("users.yml", false);
 		}
 	}
 	
@@ -213,16 +210,16 @@ public final class YamlController extends DataController {
 	
 	@Override
 	public void initializeRewardsTable(){
-		if (this.plugin.getDataFolder() == null){
-			this.plugin.getLogger().info("Plugin Data Folder is null");
+		if (plugin.getDataFolder() == null){
+			plugin.getLogger().info("Plugin Data Folder is null");
 		} else {
-			this.plugin.getLogger().info("Plugin Data Folder is: " + this.plugin.getDataFolder().getName());
+			plugin.getLogger().info("Plugin Data Folder is: " + plugin.getDataFolder().getName());
 		}
 		if (rewardsTableFile == null) {
 		    rewardsTableFile = new File(plugin.getDataFolder(), "rewards.yml");
 		}
 		if (!rewardsTableFile.exists()) {            
-		     this.plugin.saveResource("rewards.yml", false);
+		     plugin.saveResource("rewards.yml", false);
 		}
 	}
 	
@@ -235,6 +232,7 @@ public final class YamlController extends DataController {
 		}
 		ConfigurationSection userSection = this.getUsersTable().getConfigurationSection(user.getName());
 		userSection.set("points", user.getPoints());
+		userSection.set("last-online",user.getLastOnline());
 	}
 	
 	@Override // writes loaded users table to disk
