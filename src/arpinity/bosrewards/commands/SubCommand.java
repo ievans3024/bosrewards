@@ -1,4 +1,4 @@
-package arpinity.bosrewards.subcommands;
+package arpinity.bosrewards.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -11,10 +11,7 @@ public abstract class SubCommand {
 	// strings set in config file
 	protected final String pointSingular;
 	protected final String pointPlural;
-	
-	//TODO: use abstracts for everything except plugin
-	
-	private final BOSRewards plugin;
+	protected final BOSRewards plugin;
 	private final String name;
 	private String permissionNode;
 	private boolean allowConsole = false;
@@ -28,17 +25,13 @@ public abstract class SubCommand {
 		this.permissionNode = permission;
 		this.allowConsole = allowConsole;
 		this.minArgs = minArgs;
-		this.pointSingular = this.getPlugin().getConfig().getString("point-name");
-		this.pointPlural = this.getPlugin().getConfig().getString("point-name-plural");
+		this.pointSingular = plugin.getConfig().getString("point-name");
+		this.pointPlural = plugin.getConfig().getString("point-name-plural");
 	}
 	
 	public abstract boolean run(CommandSender sender, Command command, String label, String[] args);
 	
 	// Getters
-	
-	public final BOSRewards getPlugin() {
-		return this.plugin;
-	}
 	
 	public final String getName() {
 		return this.name;

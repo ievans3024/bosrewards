@@ -1,4 +1,4 @@
-package arpinity.bosrewards.subcommands;
+package arpinity.bosrewards.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -16,11 +16,11 @@ public final class ReloadCommand extends SubCommand {
 	}
 	
 	public boolean run(CommandSender sender, Command command, String label, String[] args) {
-		this.getPlugin().reloadConfig();
-		this.getPlugin().getDataController().reloadRewardsTable();
+		plugin.reloadConfig();
+		plugin.getDataController().reloadRewardsTable();
 		sender.sendMessage(Messages.COLOR_INFO + "BOSRewards Reloaded!");
 		if (sender instanceof Player) {
-			this.getPlugin().getLogger().info("BOSRewards Reloaded!");
+			plugin.getLogger().info("BOSRewards Reloaded!");
 		}
 		return true;
 	}

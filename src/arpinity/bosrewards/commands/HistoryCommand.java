@@ -1,4 +1,4 @@
-package arpinity.bosrewards.subcommands;
+package arpinity.bosrewards.commands;
 
 import java.util.List;
 
@@ -25,9 +25,9 @@ public final class HistoryCommand extends SubCommand {
 		String header;
 		int pageNumber = 1;
 		if (args.length > 0){
-			if (this.getPlugin().getDataController().getUserExists(args[0])){
+			if (plugin.getDataController().getUserExists(args[0])){
 				if (sender instanceof ConsoleCommandSender || sender.hasPermission("BOSRewards.admin.seehistory")) {
-					user = this.getPlugin().getDataController().getUserByName(args[0]);
+					user = plugin.getDataController().getUserByName(args[0]);
 					header =  Messages.COLOR_INFO + "Redemption history for " + user.getName();
 					if (args.length > 2){
 						pageNumber = Integer.parseInt(args[1]);
@@ -37,7 +37,7 @@ public final class HistoryCommand extends SubCommand {
 					return true;
 				}
 			} else if (sender instanceof Player){
-				user = this.getPlugin().getDataController().getUserByName(sender.getName());
+				user = plugin.getDataController().getUserByName(sender.getName());
 				header = Messages.COLOR_INFO + "Your redemption history: ";
 				pageNumber = Integer.parseInt(args[0]);
 			} else {
@@ -46,7 +46,7 @@ public final class HistoryCommand extends SubCommand {
 			}
 		} else {
 			if (sender instanceof Player){
-				user = this.getPlugin().getDataController().getUserByName(sender.getName());
+				user = plugin.getDataController().getUserByName(sender.getName());
 				header = Messages.COLOR_INFO + "Your redemption history: ";
 			} else {
 				Messages.sendNoPermsError(sender);

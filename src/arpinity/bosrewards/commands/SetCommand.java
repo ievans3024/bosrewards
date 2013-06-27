@@ -1,4 +1,4 @@
-package arpinity.bosrewards.subcommands;
+package arpinity.bosrewards.commands;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -9,37 +9,37 @@ import arpinity.bosrewards.main.BOSRewards;
 import arpinity.bosrewards.main.Messages;
 import arpinity.bosrewards.main.User;
 
-public final class TakeCommand extends SubCommand {
+public final class SetCommand extends SubCommand {
 
-	public TakeCommand(BOSRewards plugin, String name, String permission,
+	public SetCommand(BOSRewards plugin, String name, String permission,
 			boolean allowConsole, int minArgs) {
 		super(plugin, name, permission, allowConsole, minArgs);
 	}
 	
-	public boolean run(CommandSender sender, Command command, String label, String[] args){
-		if (this.getPlugin().getDataController().getUserExists(args[0])){
-			User user = this.getPlugin().getDataController().getUserByName(args[0]);
+	public boolean run(CommandSender sender, Command command, String label, String[] args) {
+		if (plugin.getDataController().getUserExists(args[0])) {
+			User user = plugin.getDataController().getUserByName(args[0]);
 			int pointsvalue = Integer.parseInt(args[1]);
 			String pointword = ((pointsvalue == 1) ? this.pointSingular : this.pointPlural);
-			String havehas = ((pointsvalue == 1) ? "has" : "have");
-			user.subtractPoints(pointsvalue);
-			this.getPlugin().getDataController().writeUser(user);
+			user.setPoints(pointsvalue);
+			plugin.getDataController().writeUser(user);
 			sender.sendMessage(Messages.COLOR_SUCCESS 
-					+ args[1]
-					+ pointword 
-					+ " " + havehas 
-					+ " been taken from " 
-					+ args[0]);
+					+ args[0] + "'s"
+					+ this.pointPlural
+					+ "have been set to "
+					+ args[1]);
 			Player target = Bukkit.getServer().getPlayer(args[0]);
 			if (target != null) {
 				target.sendMessage(Messages.COLOR_SUCCESS
+						+ "Your "
+						+ this.pointPlural
+						+ "have been set to "
 						+ args[1] + " "
-						+ pointword + " "
-						+ havehas + " been subtracted from your balance.");
+						+ pointword);
 			}
 		}
 		sender.sendMessage(Messages.INVALID_ARGUMENT + "The user " + args[0] + " is not in the database.");
 		return true;
-	}
+	};
 
 }

@@ -1,4 +1,4 @@
-package arpinity.bosrewards.subcommands;
+package arpinity.bosrewards.commands;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -59,10 +59,10 @@ public final class EditCommand extends SubCommand {
 		sender.sendMessage(args);
 		if (args.length > 2
 				&& this.editFlags.containsKey(args[1])){
-			if (this.getPlugin().getDataController().getRewardExists(args[0])){
-				Reward reward = this.getPlugin().getDataController().getRewardById(args[0]);
+			if (plugin.getDataController().getRewardExists(args[0])){
+				Reward reward = plugin.getDataController().getRewardById(args[0]);
 				this.editFlags.get(args[1]).change(args,reward);
-				this.getPlugin().getDataController().writeReward(reward);
+				plugin.getDataController().writeReward(reward);
 				sender.sendMessage(Messages.SUCCESS_EDIT + reward.getId());
 				return true;
 			}

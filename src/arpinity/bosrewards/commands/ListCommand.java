@@ -1,4 +1,4 @@
-package arpinity.bosrewards.subcommands;
+package arpinity.bosrewards.commands;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public final class ListCommand extends SubCommand {
 	
 	public boolean run(CommandSender sender, Command command, String label, String[] args){
 		int pageNumber = 1;
-		List<Reward> rewardsList = this.getPlugin().getDataController().getRewards();
+		List<Reward> rewardsList = plugin.getDataController().getRewards();
 		if (!rewardsList.isEmpty()){
 			int maximumPages = rewardsList.size() / 5;
 			if (rewardsList.size() % 5 != 0){

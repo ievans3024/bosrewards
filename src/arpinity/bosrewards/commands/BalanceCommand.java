@@ -1,4 +1,4 @@
-package arpinity.bosrewards.subcommands;
+package arpinity.bosrewards.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -25,8 +25,8 @@ public final class BalanceCommand extends SubCommand {
 		
 		if (args.length > 0) {
 			if (sender instanceof ConsoleCommandSender || sender.hasPermission("BOSRewards.admin.seebalance")) {
-				if (this.getPlugin().getDataController().getUserExists(args[0])) {
-					user = this.getPlugin().getDataController().getUserByName(args[0]);
+				if (plugin.getDataController().getUserExists(args[0])) {
+					user = plugin.getDataController().getUserByName(args[0]);
 					sentencePrefix = Messages.COLOR_INFO + user.getName() + " has ";
 				} else {
 					sender.sendMessage(Messages.INVALID_ARGUMENT + args[0] + " not in rewards database");
@@ -38,7 +38,7 @@ public final class BalanceCommand extends SubCommand {
 			}
 		} else {
 			if (sender instanceof Player){
-				user = this.getPlugin().getDataController().getUserByName(sender.getName());
+				user = plugin.getDataController().getUserByName(sender.getName());
 				sentencePrefix = Messages.COLOR_INFO + "You have ";
 			} else {
 				Messages.sendNoPermsError(sender);

@@ -1,7 +1,5 @@
-package arpinity.bosrewards.subcommands;
+package arpinity.bosrewards.commands;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
 import java.util.regex.Matcher;
 
@@ -24,31 +22,29 @@ public class RedeemCommand extends SubCommand {
 	@Override
 	public boolean run(CommandSender sender, Command command, String label,
 			String[] args) {
-		User user = this.getPlugin().getDataController().getUserByName(sender.getName());
-		if (this.getPlugin().getDataController().getRewardExists(args[1])){
-			Reward reward = this.getPlugin().getDataController().getRewardById(args[1]);
+		User user = plugin.getDataController().getUserByName(sender.getName());
+		if (plugin.getDataController().getRewardExists(args[1])){
+			Reward reward = plugin.getDataController().getRewardById(args[1]);
 			if (reward.getCost() >= 0){
 				if (user.getPoints() >= reward.getCost()){
-					Calendar calendar = Calendar.getInstance();
-					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-					String date = dateFormat.format(calendar.getTime());
+					String date = plugin.getDateFormat().format(plugin.getCalendar().getTime());
 					String receiptString = date + " " + reward.getSummary() + " " + reward.getCost();
 					user.subtractPoints(reward.getCost());
 					user.addReceipt(receiptString);
-					this.getPlugin().getLogger().info(user.getName() + receiptString);
+					plugin.getLogger().info(user.getName() + receiptString);
 					List<String> commands = reward.getCommands();
 					while (commands.iterator().hasNext()){
 						String cmd = commands.iterator().next();
 						
 						//find unescaped keywords
-						cmd = cmd.replaceAll("\\Q${user}\\E",user.getName());
+						cmd = cmd.replaceAll("\\Q${user}\\E",user.getName())
 						
 						//clear escape sequences
-						cmd = cmd.replaceAll("\\{", Matcher.quoteReplacement("{"));
-						cmd = cmd.replaceAll("\\}", Matcher.quoteReplacement("}"));
-						cmd = cmd.replaceAll("\\$", Matcher.quoteReplacement("$"));
+						.replaceAll("\\{", Matcher.quoteReplacement("{"))
+						.replaceAll("\\}", Matcher.quoteReplacement("}"))
+						.replaceAll("\\$", Matcher.quoteReplacement("$"));
 						
-						this.getPlugin().getServer().dispatchCommand(Bukkit.getConsoleSender(), cmd);
+						plugin.getServer().dispatchCommand(Bukkit.getConsoleSender(), cmd);
 					}
 					sender.sendMessage(Messages.COLOR_SUCCESS
 							+ "You redeemed "

@@ -1,4 +1,4 @@
-package arpinity.bosrewards.subcommands;
+package arpinity.bosrewards.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -18,8 +18,8 @@ public final class RemoveCommand extends SubCommand {
 	
 	public boolean run(CommandSender sender, Command command, String label, String[] args) {
 		for (int i=1;i<args.length;i++){
-			if (this.getPlugin().getDataController().getRewardExists(args[i])){
-    			this.getPlugin().getDataController().removeRewardById(args[i]);
+			if (plugin.getDataController().getRewardExists(args[i])){
+    			plugin.getDataController().removeRewardById(args[i]);
 			}
 		}
 		String message = Messages.COLOR_INFO
@@ -29,7 +29,7 @@ public final class RemoveCommand extends SubCommand {
 		if (sender instanceof Player) {
 			sender.sendMessage(message);
 		}
-		this.getPlugin().getLogger().info(message);
+		plugin.getLogger().info(message);
 		return true;
 	}
 

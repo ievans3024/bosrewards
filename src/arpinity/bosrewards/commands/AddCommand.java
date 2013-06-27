@@ -1,4 +1,4 @@
-package arpinity.bosrewards.subcommands;
+package arpinity.bosrewards.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -20,7 +20,7 @@ public final class AddCommand extends SubCommand {
 		Reward newReward = new Reward();
 		newReward.setId(args[0]);
 		newReward.setSummary(ToolBox.arrayToString(args,1,args.length));
-		this.getPlugin().getDataController().writeReward(newReward);
+		plugin.getDataController().writeReward(newReward);
 		sender.sendMessage(Messages.SUCCESS_ADD + newReward.getId());
 		return true;
 	};
