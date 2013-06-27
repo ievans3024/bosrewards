@@ -27,8 +27,7 @@ public final class LoginListener implements Listener {
 			plugin.getLogger().info("New user added to BOSRewards user database: " + username);
 		} else if (userExists) {
 			User user = plugin.getDataController().getUserByName(username).setLastOnline(lastOnline);
-			plugin.getDataController()
-			.writeUser(user);
+			plugin.getDataController().writeUser(user);
 			
 		}
 	}
