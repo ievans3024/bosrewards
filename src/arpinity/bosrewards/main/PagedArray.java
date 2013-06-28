@@ -22,10 +22,16 @@ public final class PagedArray {
 			return null;
 		}
 		String[] newarray;
-		newarray = new String[5];
+		int length = 5;
+		if (this.content.length < 5) {
+			length = this.content.length;
+		}
+		newarray = new String[length];
 		int index = (page * 5) - 5;
-		for (int i=0;i < 5;i++) {
+		int i = 0;
+		while (i < length) {
 			newarray[i] = this.content[index + i];
+			i++;
 		}
 		return newarray;
 	}

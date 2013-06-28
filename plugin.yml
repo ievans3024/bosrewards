@@ -7,7 +7,7 @@ commands:
   rewards:
     aliases: bosrewards
     description: "Main command for BOSRewards"
-    permission: |
+    permission: BOSRewards.user.*
     permission-message: You do not have permission to use rewards.
     usage: |
       "/rewards [command] [args]"
@@ -16,7 +16,7 @@ commands:
   rw:
     aliases: bosrw
     description: "Shorthand version of main command for BOSRewards"
-    permission: |
+    permission: BOSRewards.user.*
     permission-message: You do not have permissions to use rewards.
     usage: |
       "/rw [command] [args]"

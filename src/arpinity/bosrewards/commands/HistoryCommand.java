@@ -60,7 +60,7 @@ public final class HistoryCommand extends SubCommand {
 			if (pageNumber < 0 || pageNumber > reply.getMaxPages()){
 				String[] message = {
 						Messages.COLOR_SYNTAX_ERROR
-							+ "Invalid page number. Expecting number 1 - "
+							+ "Invalid page number. Expecting number 1 through "
 							+ reply.getMaxPages()
 				};
 				sender.sendMessage(message);
