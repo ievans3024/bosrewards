@@ -46,6 +46,7 @@ permissions:
     children:
       BOSRewards.user.list: true
       BOSRewards.user.redeem: true
+      BOSRewards.user.help: true
   BOSRewards.util.*:
     description: All utility permissions
     default: false

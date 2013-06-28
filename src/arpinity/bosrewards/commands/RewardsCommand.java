@@ -3,6 +3,7 @@ package arpinity.bosrewards.commands;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,26 +21,43 @@ public final class RewardsCommand implements CommandExecutor {
 		return this.plugin;
 	}
 	
+	public final boolean getSubCmdExists(String cmd) {
+		return this.commandMap.containsKey(cmd);
+	}
+	
+	public final String[] getSubCmdUsage(String cmd) {
+		return this.commandMap.get(cmd).getUsage();
+	}
+	
+	public final String getSubCmdPermNode(String cmd) {
+		return this.commandMap.get(cmd).getPermNode();
+	}
+	
+	public final int getSubCmdCount() {
+		return this.commandMap.size();
+	}
+	
 	public RewardsCommand(BOSRewards plugin) {
 		this.plugin = plugin;
 		
 		// register new subcommands here
 		// don't forget to set description and usage strings!
 		// create /rewards help <subcmd> that uses description/usage fields
-		this.commandMap.put("reload", new ReloadCommand(plugin,"reload","BOSRewards.util.reload",true,0));
-		this.commandMap.put("add", new AddCommand(plugin,"add","BOSRewards.util.createreward",true,2));
-		this.commandMap.put("edit", new EditCommand(plugin,"edit","BOSRewards.util.editreward",true,2));
-		this.commandMap.put("remove", new RemoveCommand(plugin,"remove","BOSRewards.util.removereward",true,1));
+		this.commandMap.put("help", new HelpCommand(plugin,this,"help","BOSRewards.user.help",true,0));
+		this.commandMap.put("reload", new ReloadCommand(plugin,this,"reload","BOSRewards.util.reload",true,0));
+		this.commandMap.put("add", new AddCommand(plugin,this,"add","BOSRewards.util.createreward",true,2));
+		this.commandMap.put("edit", new EditCommand(plugin,this,"edit","BOSRewards.util.editreward",true,2));
+		this.commandMap.put("remove", new RemoveCommand(plugin,this,"remove","BOSRewards.util.removereward",true,1));
 		this.commandMap.put("rm", this.commandMap.get("remove"));
-		this.commandMap.put("list", new ListCommand(plugin,"list","BOSRewards.user.list",true,0));
-		this.commandMap.put("give", new GiveCommand(plugin,"give","BOSRewards.admin.givepoints",true,2));
-		this.commandMap.put("take", new TakeCommand(plugin,"take","BOSRewards.admin.takepoints",true,2));
+		this.commandMap.put("list", new ListCommand(plugin,this,"list","BOSRewards.user.list",true,0));
+		this.commandMap.put("give", new GiveCommand(plugin,this,"give","BOSRewards.admin.givepoints",true,2));
+		this.commandMap.put("take", new TakeCommand(plugin,this,"take","BOSRewards.admin.takepoints",true,2));
 		this.commandMap.put("subtract", this.commandMap.get("take"));
 		this.commandMap.put("sub", this.commandMap.get("take"));
-		this.commandMap.put("set", new SetCommand(plugin,"set","BOSRewards.admin.setpoints",true,2));
-		this.commandMap.put("redeem", new RedeemCommand(plugin,"redeem","BOSRewards.user.redeem",false,1));
-		this.commandMap.put("balance", new BalanceCommand(plugin,"balance","BOSRewards.user.balance",false,0));
-		this.commandMap.put("history", new HistoryCommand(plugin,"history","BOSRewards.user.history",false,0));
+		this.commandMap.put("set", new SetCommand(plugin,this,"set","BOSRewards.admin.setpoints",true,2));
+		this.commandMap.put("redeem", new RedeemCommand(plugin,this,"redeem","BOSRewards.user.redeem",false,1));
+		this.commandMap.put("balance", new BalanceCommand(plugin,this,"balance","BOSRewards.user.balance",false,0));
+		this.commandMap.put("history", new HistoryCommand(plugin,this,"history","BOSRewards.user.history",false,0));
 		this.commandMap.put("hist", this.commandMap.get("history"));
 	}
 	

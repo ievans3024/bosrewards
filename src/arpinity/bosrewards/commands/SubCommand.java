@@ -12,15 +12,17 @@ public abstract class SubCommand {
 	protected final String pointSingular;
 	protected final String pointPlural;
 	protected final BOSRewards plugin;
+	protected final RewardsCommand parent;
 	private final String name;
 	private String permissionNode;
 	private boolean allowConsole = false;
 	private int minArgs = 0;
 	private String description;
-	private String usage;
+	private String[] usage;
 	
-	public SubCommand(BOSRewards plugin,String name, String permission, boolean allowConsole, int minArgs) {
+	public SubCommand(BOSRewards plugin, RewardsCommand parent, String name, String permission, boolean allowConsole, int minArgs) {
 		this.plugin = plugin;
+		this.parent = parent;
 		this.name = name;
 		this.permissionNode = permission;
 		this.allowConsole = allowConsole;
@@ -49,7 +51,7 @@ public abstract class SubCommand {
 		return this.minArgs;
 	}
 	
-	public final String getUsage() {
+	public final String[] getUsage() {
 		return this.usage;
 	}
 	
@@ -84,7 +86,7 @@ public abstract class SubCommand {
 		return this;
 	}
 	
-	public final SubCommand setUsage(String usage) {
+	public final SubCommand setUsage(String[] usage) {
 		this.usage = usage;
 		return this;
 	}

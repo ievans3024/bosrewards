@@ -14,9 +14,9 @@ import arpinity.bosrewards.main.User;
 
 public class RedeemCommand extends SubCommand {
 
-	public RedeemCommand(BOSRewards plugin, String name, String permission,
+	public RedeemCommand(BOSRewards plugin, RewardsCommand parent, String name, String permission,
 			boolean allowConsole, int minArgs) {
-		super(plugin, name, permission, allowConsole, minArgs);
+		super(plugin, parent, name, permission, allowConsole, minArgs);
 	}
 
 	@Override

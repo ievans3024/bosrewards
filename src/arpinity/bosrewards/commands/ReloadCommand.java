@@ -10,9 +10,9 @@ import arpinity.bosrewards.main.Messages;
 
 public final class ReloadCommand extends SubCommand {
 
-	public ReloadCommand(BOSRewards plugin, String name, String permission,
+	public ReloadCommand(BOSRewards plugin, RewardsCommand parent, String name, String permission,
 			boolean allowConsole, int minArgs) {
-		super(plugin, name, permission, allowConsole, minArgs);
+		super(plugin, parent, name, permission, allowConsole, minArgs);
 	}
 	
 	public boolean run(CommandSender sender, Command command, String label, String[] args) {

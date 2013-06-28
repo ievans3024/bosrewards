@@ -1,5 +1,6 @@
 package arpinity.bosrewards.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.command.Command;
@@ -8,58 +9,56 @@ import org.bukkit.command.CommandSender;
 import arpinity.bosrewards.main.BOSRewards;
 import arpinity.bosrewards.main.Messages;
 import arpinity.bosrewards.main.Reward;
+import arpinity.bosrewards.main.PagedArray;
 
 public final class ListCommand extends SubCommand {
 
-	public ListCommand(BOSRewards plugin, String name, String permission,
+	public ListCommand(BOSRewards plugin, RewardsCommand parent, String name, String permission,
 			boolean allowConsole, int minArgs) {
-		super(plugin, name, permission, allowConsole, minArgs);
+		super(plugin, parent, name, permission, allowConsole, minArgs);
 	}
 	
 	public boolean run(CommandSender sender, Command command, String label, String[] args){
 		int pageNumber = 1;
 		List<Reward> rewardsList = plugin.getDataController().getRewards();
-		if (!rewardsList.isEmpty()){
-			int maximumPages = rewardsList.size() / 5;
-			if (rewardsList.size() % 5 != 0){
-				maximumPages += 1;
+		if (!rewardsList.isEmpty()) {
+			ArrayList<String> catalogue = new ArrayList<String>();
+			while (rewardsList.iterator().hasNext()) {
+				Reward reward = rewardsList.iterator().next();
+				if (sender.hasPermission("BOSRewards.admin.bypass") || reward.getCost() >= 0) {
+					catalogue.add(reward.getId() + "        " + reward.getSummary() + "        " + reward.getCost());
+				}
 			}
+			if (catalogue.isEmpty()) {
+				sender.sendMessage(Messages.COLOR_INFO + "No rewards are available for purchase!");
+				return true;
+			}
+			String[] catArray = new String[catalogue.size()];
+			PagedArray reply = new PagedArray(catalogue.toArray(catArray));
+			
 			if (args.length > 2){
 				pageNumber = Integer.parseInt(args[2]);
-				if (pageNumber > maximumPages){
-					sender.sendMessage(Messages.COLOR_SYNTAX_ERROR + "There are not that many pages in the catalogue. There are " + maximumPages + ((maximumPages == 1) ? " page." : " pages.") );
+				if (pageNumber > reply.getMaxPages()){
+					sender.sendMessage(Messages.COLOR_SYNTAX_ERROR + "Invalid page number. Expecting number 1 - " + reply.getMaxPages());
 					return true;
 				}
 			}
-			int listStart = (pageNumber * 5) - 5;
-			String[] message = new String[8];
-			message[0] = Messages.COLOR_INFO + "Rewards Catalogue - "
+			
+			String[] header = {
+					Messages.COLOR_INFO + "Rewards Catalogue - "
 							+ Messages.COLOR_SYNTAX_ERROR + "Page "
 							+ Messages.COLOR_INFO + pageNumber
 							+ Messages.COLOR_SYNTAX_ERROR + "/" 
-							+ Messages.COLOR_INFO + maximumPages;
-			message[1] = Messages.COLOR_INFO + "-----------------------------";
-			message[2] = Messages.COLOR_INFO + "ID        Summary        Cost";
+							+ Messages.COLOR_INFO + reply.getMaxPages(),
+					Messages.COLOR_INFO + "-----------------------------",
+					Messages.COLOR_INFO + "ID        Summary        Cost"
+			};
 			
-			// i is to iterate through the list based on page number
-			// m is to count the number of rewards that don't have a negative cost.
-			int i = 0;
-			int m = 3;
-			while (m < 8){
-				Reward reward = rewardsList.get(listStart + i);
-				if (reward.getCost() >= 0) {
-					message[m] = reward.getId() + "        " + reward.getSummary() + "        " + reward.getCost();
-					m++;
-				}
-				i++;
-				if (listStart + i > rewardsList.size() - 1){
-					m = 8;
-				}
-			}
-			sender.sendMessage(message);
+			sender.sendMessage(header);
+			sender.sendMessage(reply.getPage(pageNumber));
 			return true;
 		}
-		sender.sendMessage(Messages.COLOR_INFO + "No rewards have been set up to purchase yet!");
+		sender.sendMessage(Messages.COLOR_INFO + "No rewards are available for purchase!");
 		return true;
 	}
 

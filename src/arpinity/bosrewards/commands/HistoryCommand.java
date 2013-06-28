@@ -1,5 +1,6 @@
 package arpinity.bosrewards.commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.command.Command;
@@ -9,26 +10,27 @@ import org.bukkit.entity.Player;
 
 import arpinity.bosrewards.main.BOSRewards;
 import arpinity.bosrewards.main.Messages;
+import arpinity.bosrewards.main.PagedArray;
 import arpinity.bosrewards.main.User;
 
 public final class HistoryCommand extends SubCommand {
 
-	public HistoryCommand(BOSRewards plugin, String name, String permission,
+	public HistoryCommand(BOSRewards plugin, RewardsCommand parent, String name, String permission,
 			boolean allowConsole, int minArgs) {
-		super(plugin, name, permission, allowConsole, minArgs);
+		super(plugin, parent, name, permission, allowConsole, minArgs);
 	}
 
 	@Override
 	public final boolean run(CommandSender sender, Command command, String label,
 			String[] args) {
 		User user;
-		String header;
+		String[] header = new String[2];
 		int pageNumber = 1;
 		if (args.length > 0){
 			if (plugin.getDataController().getUserExists(args[0])){
 				if (sender instanceof ConsoleCommandSender || sender.hasPermission("BOSRewards.admin.seehistory")) {
 					user = plugin.getDataController().getUserByName(args[0]);
-					header =  Messages.COLOR_INFO + "Redemption history for " + user.getName();
+					header[0] = Messages.COLOR_INFO + "Redemption history for " + user.getName() + " - ";
 					if (args.length > 2){
 						pageNumber = Integer.parseInt(args[1]);
 					}
@@ -38,7 +40,7 @@ public final class HistoryCommand extends SubCommand {
 				}
 			} else if (sender instanceof Player){
 				user = plugin.getDataController().getUserByName(sender.getName());
-				header = Messages.COLOR_INFO + "Your redemption history: ";
+				header[0] = Messages.COLOR_INFO + "Your redemption history - ";
 				pageNumber = Integer.parseInt(args[0]);
 			} else {
 				Messages.sendNoPermsError(sender);
@@ -47,43 +49,40 @@ public final class HistoryCommand extends SubCommand {
 		} else {
 			if (sender instanceof Player){
 				user = plugin.getDataController().getUserByName(sender.getName());
-				header = Messages.COLOR_INFO + "Your redemption history: ";
+				header[0] = Messages.COLOR_INFO + "Your redemption history - Page ";
 			} else {
 				Messages.sendNoPermsError(sender);
 				return true;
 			}
 		}
-		List<String> userReceipts = user.getReceipts();
-		String[] message;
-		if (!userReceipts.isEmpty()){
-			int maximumPages = userReceipts.size() / 5;
-			if (maximumPages % 5 != 0){
-				maximumPages += 1;
-			}
-			if (pageNumber > maximumPages){
-				message = new String[1];
-				message[0] = Messages.COLOR_SYNTAX_ERROR + "There are not that many pages. There are " + maximumPages + ((maximumPages == 1) ? " page." : " pages.");
-			} else {				
-				int listStart = (pageNumber * 5) - 5;
-				message = new String[7];
-				message[0] = header;
-				message[1] = "--------------------------";
-				int i = 0;
-				int m = 2;
-				while (m < 7){
-					message[m] = Messages.COLOR_INFO + userReceipts.get(listStart + i);
-					m++;
-					i++;
-					if ((listStart + i) > (userReceipts.size() - 1)){
-						m = 7;
-					}
-				}
+		
+		String[] userReceipts = new String[user.getReceipts().size()];
+		userReceipts = user.getReceipts().toArray(userReceipts);
+		if (userReceipts.length > 0){
+			PagedArray reply = new PagedArray(userReceipts);
+			if (pageNumber < 0 || pageNumber > reply.getMaxPages()){
+				String[] message = {
+						Messages.COLOR_SYNTAX_ERROR
+							+ "Invalid page number. Expecting number 1 - "
+							+ reply.getMaxPages()
+				};
+				sender.sendMessage(message);
+				return true;
+			} else {
+				header[0] += Messages.COLOR_SUCCESS 
+								+ Integer.toString(pageNumber) 
+								+ Messages.COLOR_INFO + "/" 
+								+ Messages.COLOR_SUCCESS + Integer.toString(reply.getMaxPages());
+				sender.sendMessage(header);
+				sender.sendMessage(reply.getPage(pageNumber));
+				return true;
 			}
 		} else {
-			message = new String[1];
-			message[0] = Messages.COLOR_INFO + "No rewards purchased yet!";
+			String[] message = {
+					Messages.COLOR_INFO + "You have not purchased any rewards yet!"
+			};
+			sender.sendMessage(message);
 		}
-		sender.sendMessage(message);
 		return true;
 	}
 

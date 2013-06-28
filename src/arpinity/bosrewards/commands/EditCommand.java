@@ -16,9 +16,9 @@ public final class EditCommand extends SubCommand {
 
 	private Map<String,EditFlag> editFlags = new HashMap<String,EditFlag>();
 	
-	public EditCommand(BOSRewards plugin, String name, String permission,
+	public EditCommand(BOSRewards plugin, RewardsCommand parent, String name, String permission,
 			boolean allowConsole, int minArgs) {
-		super(plugin, name, permission, allowConsole, minArgs);
+		super(plugin, parent, name, permission, allowConsole, minArgs);
 		this.editFlags.put("cost", new CostFlag());
 		this.editFlags.put("commands", new CommandsFlag());
 		this.editFlags.put("cmds", new CommandsFlag());

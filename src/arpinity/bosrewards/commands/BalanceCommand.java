@@ -11,9 +11,9 @@ import arpinity.bosrewards.main.User;
 
 public final class BalanceCommand extends SubCommand {
 
-	public BalanceCommand(BOSRewards plugin, String name, String permission,
+	public BalanceCommand(BOSRewards plugin, RewardsCommand parent, String name, String permission,
 			boolean allowConsole, int minArgs) {
-		super(plugin, name, permission, allowConsole, minArgs);
+		super(plugin, parent, name, permission, allowConsole, minArgs);
 	}
 
 	@Override

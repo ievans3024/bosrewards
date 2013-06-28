@@ -11,9 +11,9 @@ import arpinity.bosrewards.main.ToolBox;
 
 public final class RemoveCommand extends SubCommand {
 
-	public RemoveCommand(BOSRewards plugin, String name, String permission,
+	public RemoveCommand(BOSRewards plugin, RewardsCommand parent, String name, String permission,
 			boolean allowConsole, int minArgs) {
-		super(plugin, name, permission, allowConsole, minArgs);
+		super(plugin, parent, name, permission, allowConsole, minArgs);
 	}
 	
 	public boolean run(CommandSender sender, Command command, String label, String[] args) {
