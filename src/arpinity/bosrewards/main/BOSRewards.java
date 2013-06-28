@@ -69,7 +69,7 @@ public final class BOSRewards extends JavaPlugin {
     	
     	// Scheduled Tasks
     	SaveTask dataSaveTask = new SaveTask(this);
-    	this.dataSaveTaskId = getServer().getScheduler().scheduleSyncRepeatingTask(this, dataSaveTask, 20L, 20L);
+    	this.dataSaveTaskId = getServer().getScheduler().scheduleSyncRepeatingTask(this, dataSaveTask, 20L, 2000L);
     	
     	getLogger().info("BOSRewards Enabled!");
     }

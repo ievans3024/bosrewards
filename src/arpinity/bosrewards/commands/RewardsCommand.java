@@ -3,6 +3,7 @@ package arpinity.bosrewards.commands;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,12 +29,20 @@ public final class RewardsCommand implements CommandExecutor {
 		return this.commandMap.get(cmd).getUsage();
 	}
 	
+	public final String getSubCmdDescription(String cmd) {
+		return this.commandMap.get(cmd).getDescription();
+	}
+	
 	public final String getSubCmdPermNode(String cmd) {
 		return this.commandMap.get(cmd).getPermNode();
 	}
 	
 	public final int getSubCmdCount() {
 		return this.commandMap.size();
+	}
+	
+	public final Set<String> getMapKeys() {
+		return this.commandMap.keySet();
 	}
 	
 	public RewardsCommand(BOSRewards plugin) {
