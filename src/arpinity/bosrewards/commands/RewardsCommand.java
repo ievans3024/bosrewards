@@ -67,6 +67,7 @@ public final class RewardsCommand implements CommandExecutor {
 		this.commandMap.put("balance", new BalanceCommand(plugin,this,"balance","BOSRewards.user.balance",false,0));
 		this.commandMap.put("history", new HistoryCommand(plugin,this,"history","BOSRewards.user.history",false,0));
 		this.commandMap.put("hist", this.commandMap.get("history"));
+		this.commandMap.put("info", new InfoCommand(plugin,this,"info","BOSRewards.admin.info",true,1));
 	}
 	
 	@Override

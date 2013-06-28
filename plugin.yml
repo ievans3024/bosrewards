@@ -1,6 +1,6 @@
 name: BOSRewards
 main: arpinity.bosrewards.main.BOSRewards
-version: 0.0.6.7
+version: 0.0.6.8
 author: arpinity3024
 website: http://www.bhslaughter.com/
 commands:
@@ -40,6 +40,7 @@ permissions:
       BOSRewards.admin.seebalance: true
       BOSRewards.admin.seehistory: true
       BOSRewards.admin.bypass: true
+      BOSRewards.admin.info: true
   BOSRewards.user.*:
     description: All normal user permissions
     default: true

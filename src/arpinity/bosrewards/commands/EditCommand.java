@@ -56,7 +56,6 @@ public final class EditCommand extends SubCommand {
 	}
 	
 	public boolean run(CommandSender sender, Command command, String label, String[] args){
-		sender.sendMessage(args);
 		if (args.length > 2
 				&& this.editFlags.containsKey(args[1])){
 			if (plugin.getDataController().getRewardExists(args[0])){

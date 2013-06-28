@@ -44,7 +44,7 @@ public final class Messages {
 	// "success" messages
 	public static final String SUCCESS_ADD = COLOR_SUCCESS + "Added reward ";
 	public static final String SUCCESS_REMOVE = COLOR_SUCCESS + "Removed reward ";
-	public static final String SUCCESS_EDIT = COLOR_SUCCESS + "Edit reward ";
+	public static final String SUCCESS_EDIT = COLOR_SUCCESS + "Edited reward ";
 	
 	// "fail" messages
 	public static final String FAIL_REDEEM_NEGCOST = COLOR_BAD + "This reward is disabled.";
