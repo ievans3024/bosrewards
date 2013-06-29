@@ -2,7 +2,6 @@ package arpinity.bosrewards.commands;
 
 import java.util.Iterator;
 import java.util.List;
-//import java.util.regex.Pattern;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -30,7 +29,7 @@ public class RedeemCommand extends SubCommand {
 			if (hasByPass || reward.getCost() >= 0){
 				if (hasByPass || user.getPoints() >= reward.getCost()){
 					String date = plugin.getDateFormat().format(plugin.getCalendar().getTime());
-					String receiptString = date + " " + reward.getSummary() + " " + reward.getCost();
+					String receiptString = date + "  " + reward.getSummary() + "  " + reward.getCost() + " " + ((reward.getCost() == 1) ? this.pointSingular : this.pointPlural);
 					if (!hasByPass) {
 						user.subtractPoints(reward.getCost());
 						user.addReceipt(receiptString);
