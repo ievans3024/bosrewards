@@ -232,6 +232,7 @@ public final class YamlController extends DataController {
 		ConfigurationSection userSection = this.getUsersTable().getConfigurationSection(user.getName());
 		userSection.set("points", user.getPoints());
 		userSection.set("last-online",user.getLastOnline());
+		userSection.set("receipts", user.getReceipts());
 	}
 	
 	@Override // writes loaded users table to disk
