@@ -9,23 +9,25 @@ import arpinity.bosrewards.commands.RewardsCommand;
 import arpinity.bosrewards.datacontroller.DataController;
 import arpinity.bosrewards.datacontroller.YamlController;
 
+/**
+ * BOSRewards prize catalogue plugin developed on the Bukkit API
+ * and made for the Brotherhood of Slaughter Minecraft server.
+ * Visit our website at www.bhslaughter.com!
+ * 
+ * @version 0.0.6.8
+ * @author arpinity3024
+ */
 
 public final class BOSRewards extends JavaPlugin {
 	
 	// Calendar
 	private Calendar calendar;
+	private SimpleDateFormat dateFormat;
 	public Calendar getCalendar() {
 		return this.calendar;
 	}
-	public void createCalendar() {
-		this.calendar = Calendar.getInstance();
-	}
-	private SimpleDateFormat dateFormat;
 	public SimpleDateFormat getDateFormat() {
 		return this.dateFormat;
-	}
-	public void setDateFormat(String format) {
-		this.dateFormat = new SimpleDateFormat(format);
 	}
 	
 	// Database Controller
@@ -33,51 +35,56 @@ public final class BOSRewards extends JavaPlugin {
 	private int dataSaveTaskId;
 	public DataController getDataController() {
 		return this.controller;
-	}
-	public void setDataController(DataController c) {
-		this.controller = c;
 	}		
 	
 	@Override public void onLoad(){
-		
-	}
-	
-    @Override
-    public void onEnable(){    	
-    	// Configuration
-    	this.saveDefaultConfig(); //create default config file if one doesn't exist
+		// Load configuration
+		this.saveDefaultConfig()
+;		
+    	// Create calendar
+    	this.calendar = Calendar.getInstance();
+    	this.dateFormat = new SimpleDateFormat("yyyy/MM/dd");
     	
-    	// Calendar
-    	this.createCalendar();
-    	this.setDateFormat("yyyy/MM/dd");
-    	
-    	// Database Controller Selection
+    	// Select database controller based on configuration
     	if (getConfig().getString("database-type") != null) {
-    		setDataController(new YamlController(this)); // TODO: write sql code
+    		this.controller = new YamlController(this); // TODO: write sql code
     	} else {
-    		setDataController(new YamlController(this));
+    		this.controller = new YamlController(this);
     	}
     	getDataController().openDatabase();
     	
-    	// Commands
+	}
+	
+    @Override
+    public void onEnable(){  
+    	
+    	// Register commands
     	RewardsCommand commandExecutor = new RewardsCommand(this);
     	getCommand("rewards").setExecutor(commandExecutor);
     	getCommand("rw").setExecutor(commandExecutor);
     	
-    	// Event Listeners
+    	// Register event listeners
     	getServer().getPluginManager().registerEvents(new LoginListener(this), this);
     	
-    	// Scheduled Tasks
+    	// Schedule tasks
     	SaveTask dataSaveTask = new SaveTask(this);
     	this.dataSaveTaskId = getServer().getScheduler().scheduleSyncRepeatingTask(this, dataSaveTask, 20L, 2000L);
     	
+    	// Log completed startup
     	getLogger().info("BOSRewards Enabled!");
+    	
     }
  
     @Override
     public void onDisable() {
+    	
+    	// Cancel scheduled tasks
     	getServer().getScheduler().cancelTask(this.dataSaveTaskId);
+    	
+    	// Write any loose data and close database connection
     	getDataController().closeDatabase();
+    	
+    	// Log completed shutdown
     	getLogger().info("BOSRewards Disabled!");
     }
 

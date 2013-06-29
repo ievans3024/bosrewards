@@ -61,8 +61,7 @@ public final class YamlController extends DataController {
 			return null;
 		}
 		ConfigurationSection userSection = getUsersTable().getConfigurationSection(username);
-		return new User()
-		.setName(userSection.getName())
+		return new User(userSection.getName())
 		.setPoints(userSection.getInt("points"))
 		.setLastOnline(userSection.getString("last-online"));	
 	}
@@ -70,7 +69,7 @@ public final class YamlController extends DataController {
 	@Override
 	public int getUserPoints(String username){
 		if (!this.getUserExists(username)){
-			return 0; // -1 for non-existent users?
+			return -1;
 		}
 		return this.getUserByName(username).getPoints();
 	}

@@ -19,8 +19,7 @@ public final class LoginListener implements Listener {
 		boolean userExists = plugin.getDataController().getUserExists(username);
 		String lastOnline = plugin.getDateFormat().format(plugin.getCalendar().getTime());
 		if (!userExists){
-			User user = new User()
-			.setName(username)
+			User user = new User(username)
 			.setPoints(plugin.getConfig().getInt("user-default-points"))
 			.setLastOnline(lastOnline);
 			plugin.getDataController().writeUser(user);

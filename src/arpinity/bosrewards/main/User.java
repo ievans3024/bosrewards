@@ -3,10 +3,14 @@ package arpinity.bosrewards.main;
 import java.util.List;
 
 public final class User {
-	private String name;
+	private final String name;
 	private int points;
 	private List<String> receipts;
 	private String lastOnline;
+	
+	public User(String name) {
+		this.name = name;
+	}
 	
 	//Getters
 	
@@ -25,10 +29,6 @@ public final class User {
 	
 	//Setters
 	
-	public User setName(String name) {
-		this.name = name;
-		return this;
-	}
 	public User setPoints(int points) {
 		this.points = points;
 		return this;
