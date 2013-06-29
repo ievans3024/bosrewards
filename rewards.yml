@@ -1,13 +1,7 @@
-001:
-  summary: An example reward
+1:
+  summary: A Compliment
   cost: 1
-  groups: all
   commands:
-    -"say Someone bought a compliment!"
-    -"say That person is awesome!"
-    
-testkw:
-  summary: Tests "${user}" keyword
-  cost: 0
-  commands:
-    -"say ${user} tested the \$\{user\} keyword!"
+    -"say ${user} bought a compliment!"
+    -"say ${user} is awesome!"
+    -"give ${user} 38 1
