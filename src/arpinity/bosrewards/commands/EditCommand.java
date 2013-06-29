@@ -25,6 +25,8 @@ public final class EditCommand extends SubCommand {
 		this.editFlags.put("+commands", new AddCommandsFlag());
 		this.editFlags.put("+cmds", new AddCommandsFlag());
 		this.editFlags.put("summary", new SummaryFlag());
+		this.editFlags.put("-commands", new RemoveCommandsFlag());
+		this.editFlags.put("-cmds", new RemoveCommandsFlag());
 	}
 	
 	private interface EditFlag {
@@ -33,7 +35,13 @@ public final class EditCommand extends SubCommand {
 	
 	private final class CostFlag implements EditFlag {
 		public void change(String[] args, Reward reward) {
-			reward.setCost(Integer.parseInt(args[2]));
+			int cost;
+			try {
+				cost = Integer.parseInt(args[2]);
+			} catch (NumberFormatException ex) {
+				throw ex;
+			}
+			reward.setCost(cost);			
 		}
 	}
 	
@@ -49,6 +57,22 @@ public final class EditCommand extends SubCommand {
 		}
 	}
 	
+	private final class RemoveCommandsFlag implements EditFlag {
+		public void change(String[]args, Reward reward) {
+			int index;
+			try {
+				index = Integer.parseInt(args[2]);
+			} catch (NumberFormatException ex) {
+				throw ex;
+			}
+			try {
+				reward.removeCommands(index);
+			} catch (IndexOutOfBoundsException ex) {
+				throw ex;
+			}			
+		}
+	}
+	
 	private final class SummaryFlag implements EditFlag {
 		public void change(String[] args, Reward reward){
 			reward.setSummary(ToolBox.arrayToString(args, 2, args.length));
@@ -60,12 +84,22 @@ public final class EditCommand extends SubCommand {
 				&& this.editFlags.containsKey(args[1])){
 			if (plugin.getDataController().getRewardExists(args[0])){
 				Reward reward = plugin.getDataController().getRewardById(args[0]);
-				this.editFlags.get(args[1]).change(args,reward);
+				
+				try {
+					this.editFlags.get(args[1]).change(args,reward);
+				} catch (NumberFormatException ex) {
+					sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[2] + "\"" + " is not a number.");
+					return true;
+				} catch (IndexOutOfBoundsException ex) {
+					sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[2] + "\"" + " does not correspond to a reward.");
+					return true;
+				}
+				
 				plugin.getDataController().writeReward(reward);
 				sender.sendMessage(Messages.SUCCESS_EDIT + reward.getId());
 				return true;
 			}
-			sender.sendMessage(Messages.INVALID_ARGUMENT + "the reward " + args[0] + "does not exist.");
+			sender.sendMessage(Messages.INVALID_ARGUMENT + "the reward " + args[0] + " does not exist.");
 			return true;
 		}
 		sender.sendMessage(Messages.NOT_ENOUGH_ARGS);

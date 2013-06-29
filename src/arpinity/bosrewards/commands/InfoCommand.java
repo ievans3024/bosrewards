@@ -26,13 +26,15 @@ public final class InfoCommand extends SubCommand {
 			cmdarray = new String[cmdlist.size()];
 			cmdarray = cmdlist.toArray(cmdarray);
 			String[] message = {
-					Messages.COLOR_INFO + "ID: " + reward.getId(),
-					Messages.COLOR_INFO + "Cost: " + Integer.toString(reward.getCost()),
-					Messages.COLOR_INFO + "Summary: " + reward.getSummary(),
-					Messages.COLOR_INFO + "Commands: "
+					"",
+					Messages.COLOR_INFO + "Reward Info:",
+					Messages.COLOR_INFO + "  ID: " + reward.getId(),
+					Messages.COLOR_INFO + "  Cost: " + Integer.toString(reward.getCost()),
+					Messages.COLOR_INFO + "  Summary: " + reward.getSummary(),
+					Messages.COLOR_INFO + "  Commands: "
 			};
 			for (int i=0;i < cmdarray.length;i++) {
-				cmdarray[i] = Messages.COLOR_INFO + "  " + cmdarray[i];
+				cmdarray[i] = Messages.COLOR_INFO + "    " + i + " " + cmdarray[i];
 			}
 			sender.sendMessage(message);
 			sender.sendMessage(cmdarray);			

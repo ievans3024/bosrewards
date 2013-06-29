@@ -47,8 +47,8 @@ public final class ListCommand extends SubCommand {
 			}
 			
 			String[] header = {
-					Messages.COLOR_INFO + "Rewards Catalogue - "
-							+ "Page "
+					"",
+					Messages.COLOR_INFO + "Rewards Catalogue - " + "Page "
 							+ Messages.COLOR_SYNTAX_ERROR + pageNumber
 							+ Messages.COLOR_INFO + "/" 
 							+ Messages.COLOR_SYNTAX_ERROR + reply.getMaxPages(),

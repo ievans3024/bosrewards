@@ -1,6 +1,6 @@
 name: BOSRewards
 main: arpinity.bosrewards.main.BOSRewards
-version: 0.0.6.8
+version: 0.0.7.0
 author: arpinity3024
 website: http://www.bhslaughter.com/
 commands:
@@ -46,8 +46,10 @@ permissions:
     default: true
     children:
       BOSRewards.user.list: true
+      BOSRewards.user.balance: true
       BOSRewards.user.redeem: true
       BOSRewards.user.help: true
+      BOSRewards.user.history: true
   BOSRewards.util.*:
     description: All utility permissions
     default: false

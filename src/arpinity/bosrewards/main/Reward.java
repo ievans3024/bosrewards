@@ -52,4 +52,8 @@ public final class Reward {
 		this.commands.add(command);
 		return this;
 	}
+	public Reward removeCommands(int cmdindex){
+		this.commands.remove(cmdindex);
+		return this;
+	}
 }

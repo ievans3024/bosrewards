@@ -1,5 +1,6 @@
 package arpinity.bosrewards.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class User {
@@ -10,6 +11,7 @@ public final class User {
 	
 	public User(String name) {
 		this.name = name;
+		this.receipts = new ArrayList<String>();
 	}
 	
 	//Getters

@@ -1,7 +1,8 @@
 package arpinity.bosrewards.commands;
 
+import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Matcher;
+//import java.util.regex.Pattern;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -24,26 +25,29 @@ public class RedeemCommand extends SubCommand {
 			String[] args) {
 		boolean hasByPass = (sender.hasPermission("BOSRewards.admin.bypass"));
 		User user = plugin.getDataController().getUserByName(sender.getName());
-		if (plugin.getDataController().getRewardExists(args[1])){
-			Reward reward = plugin.getDataController().getRewardById(args[1]);
+		if (plugin.getDataController().getRewardExists(args[0])){
+			Reward reward = plugin.getDataController().getRewardById(args[0]);
 			if (hasByPass || reward.getCost() >= 0){
 				if (hasByPass || user.getPoints() >= reward.getCost()){
 					String date = plugin.getDateFormat().format(plugin.getCalendar().getTime());
 					String receiptString = date + " " + reward.getSummary() + " " + reward.getCost();
-					user.subtractPoints(reward.getCost());
-					user.addReceipt(receiptString);
-					plugin.getLogger().info(user.getName() + receiptString);
+					if (!hasByPass) {
+						user.subtractPoints(reward.getCost());
+						user.addReceipt(receiptString);
+					}
+					plugin.getLogger().info(user.getName() + " " + receiptString);
 					List<String> commands = reward.getCommands();
-					while (commands.iterator().hasNext()){
-						String cmd = commands.iterator().next();
+					Iterator<String> cmdIter = commands.iterator();
+					while (cmdIter.hasNext()){
+						String cmd = cmdIter.next();
 						
 						//find unescaped keywords
 						cmd = cmd.replaceAll("\\Q${user}\\E",user.getName())
 						
 						//clear escape sequences
-						.replaceAll("\\{", Matcher.quoteReplacement("{"))
-						.replaceAll("\\}", Matcher.quoteReplacement("}"))
-						.replaceAll("\\$", Matcher.quoteReplacement("$"));
+						.replaceAll("\\Q\\{\\E", "{")
+						.replaceAll("\\Q\\}\\E", "}")
+						.replaceAll("\\Q\\$\\E", "\\$");
 						
 						plugin.getServer().dispatchCommand(Bukkit.getConsoleSender(), cmd);
 					}
@@ -52,6 +56,7 @@ public class RedeemCommand extends SubCommand {
 							+ Messages.COLOR_INFO + reward.getCost() + " "
 							+ Messages.COLOR_SUCCESS + ((reward.getCost() == 1) ? this.pointSingular : this.pointPlural)
 							+ " for " + reward.getSummary());
+					return true;
 				}
 				sender.sendMessage(Messages.COLOR_BAD
 						+ "You don't have enough "

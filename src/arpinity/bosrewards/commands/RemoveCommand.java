@@ -2,7 +2,6 @@ package arpinity.bosrewards.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import arpinity.bosrewards.main.BOSRewards;
 import arpinity.bosrewards.main.Messages;
@@ -17,7 +16,7 @@ public final class RemoveCommand extends SubCommand {
 	}
 	
 	public boolean run(CommandSender sender, Command command, String label, String[] args) {
-		for (int i=1;i<args.length;i++){
+		for (int i=0;i<args.length;i++){
 			if (plugin.getDataController().getRewardExists(args[i])){
     			plugin.getDataController().removeRewardById(args[i]);
 			}
@@ -26,10 +25,7 @@ public final class RemoveCommand extends SubCommand {
 				+ "Removed "
 				+ (((args.length - 1) == 1) ? "Reward" : "Rewards") + ": "
 				+ ToolBox.arrayToString(args, 0, (args.length - 1));
-		if (sender instanceof Player) {
-			sender.sendMessage(message);
-		}
-		plugin.getLogger().info(message);
+		sender.sendMessage(message);
 		return true;
 	}
 

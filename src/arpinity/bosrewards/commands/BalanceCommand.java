@@ -3,7 +3,7 @@ package arpinity.bosrewards.commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.entity.Player;
+//import org.bukkit.entity.Player;
 
 import arpinity.bosrewards.main.BOSRewards;
 import arpinity.bosrewards.main.Messages;
@@ -37,7 +37,7 @@ public final class BalanceCommand extends SubCommand {
 				return true;
 			}
 		} else {
-			if (sender instanceof Player){
+			if (!(sender instanceof ConsoleCommandSender)){
 				user = plugin.getDataController().getUserByName(sender.getName());
 				sentencePrefix = Messages.COLOR_INFO + "You have ";
 			} else {
@@ -46,7 +46,7 @@ public final class BalanceCommand extends SubCommand {
 			}
 		}
 		sender.sendMessage(sentencePrefix
-					+ user.getPoints()
+					+ user.getPoints() + " "
 					+ ((user.getPoints() == 1) ? this.pointSingular : this.pointPlural));
 		return true;
 	}

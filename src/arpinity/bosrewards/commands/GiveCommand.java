@@ -25,7 +25,7 @@ public final class GiveCommand extends SubCommand {
 			user.addPoints(pointsvalue);
 			plugin.getDataController().writeUser(user);
 			sender.sendMessage(Messages.COLOR_SUCCESS 
-					+ args[1]
+					+ args[1] + " "
 					+ pointword 
 					+ " " + havehas 
 					+ " been given to " 
@@ -37,6 +37,7 @@ public final class GiveCommand extends SubCommand {
 						+ args[1] + " "
 						+ pointword);
 			}
+			return true;
 		}
 		sender.sendMessage(Messages.INVALID_ARGUMENT + "The user " + args[0] + " is not in the database.");
 		return true;

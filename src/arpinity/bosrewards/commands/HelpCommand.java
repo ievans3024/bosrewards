@@ -1,6 +1,7 @@
 package arpinity.bosrewards.commands;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.bukkit.command.Command;
@@ -34,14 +35,15 @@ public final class HelpCommand extends SubCommand {
 		ArrayList<String> catalogue = new ArrayList<String>();
 		int pageNumber = 1;
 		Set<String> subCmdSet = this.parent.getMapKeys();
-		while (subCmdSet.iterator().hasNext()) {
-			String cmd = subCmdSet.iterator().next();
+		Iterator<String> subCmdIter = subCmdSet.iterator();
+		while (subCmdIter.hasNext()) {
+			String cmd = subCmdIter.next();
 			if (sender instanceof ConsoleCommandSender || sender.hasPermission(this.parent.getSubCmdPermNode(cmd))) {
-				catalogue.add(Messages.COLOR_INFO + cmd + " - " + this.parent.getSubCmdDescription(cmd));
+				catalogue.add(Messages.COLOR_INFO + "/rewards " + cmd + " - " + this.parent.getSubCmdDescription(cmd));
 			}
 		}
 		String[] catArray = new String[catalogue.size()];
-		PagedArray reply = new PagedArray(catArray);	
+		PagedArray reply = new PagedArray(catalogue.toArray(catArray));	
 		
 		if (args.length > 0) {
 			if (this.parent.getSubCmdExists(args[0])) {
@@ -52,13 +54,30 @@ public final class HelpCommand extends SubCommand {
 				}
 			} else if (Integer.parseInt(args[0]) > 0) {
 				pageNumber = Integer.parseInt(args[0]);
-				message = reply.getPage(pageNumber);
+				if (pageNumber > reply.getMaxPages()) {
+					message = ToolBox.stringToArray(Messages.COLOR_SYNTAX_ERROR	
+								+ "Invalid page number. Expecting number 1 through "
+								+ reply.getMaxPages());
+					sender.sendMessage(message);
+					return true;
+				} else {
+					message = reply.getPage(pageNumber);
+				}
 			} else {
 				message = Messages.NOT_A_SUBCMD;
 			}
 		} else {
 			message = reply.getPage(pageNumber);
 		}
+		String[] header = {
+			"",
+			Messages.COLOR_INFO + "BOSRewards Help - Page "
+					+ Messages.COLOR_SYNTAX_ERROR + pageNumber
+					+ Messages.COLOR_INFO + "/"
+					+ Messages.COLOR_SYNTAX_ERROR + reply.getMaxPages(),
+			Messages.COLOR_INFO + "---------------------------"
+		};
+		sender.sendMessage(header);
 		sender.sendMessage(message);
 		return true;
 	}
