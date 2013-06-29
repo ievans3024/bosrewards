@@ -25,10 +25,23 @@ public final class ListCommand extends SubCommand {
 		Iterator<Reward> iterator = rewardsList.iterator();
 		if (!rewardsList.isEmpty()) {
 			ArrayList<String> catalogue = new ArrayList<String>();
+			int[] tablepad = {0,0};
+			for (int i=0;i<rewardsList.size();i++) {
+				int idlength = rewardsList.get(i).getId().length() + 2;
+				int sumlength = rewardsList.get(i).getSummary().length() + 2;
+				if (idlength > tablepad[0]) {
+					tablepad[0] = idlength;
+				}
+				if (sumlength > tablepad[1]) {
+					tablepad[1] = sumlength;
+				}
+			}
 			while (iterator.hasNext()) {
 				Reward reward = iterator.next();
 				if (sender.hasPermission("BOSRewards.admin.bypass") || reward.getCost() >= 0) {
-					catalogue.add(Messages.COLOR_INFO + reward.getId() + "        " + reward.getSummary() + "        " + reward.getCost());
+					String id = String.format("%1$-" + tablepad[0] + "s", reward.getId());
+					String summary = String.format("%1$-" + tablepad[1] + "s", reward.getSummary());
+					catalogue.add(Messages.COLOR_INFO + id + summary + reward.getCost());
 				}
 			}
 			if (catalogue.isEmpty()) {
@@ -52,8 +65,11 @@ public final class ListCommand extends SubCommand {
 							+ Messages.COLOR_SYNTAX_ERROR + pageNumber
 							+ Messages.COLOR_INFO + "/" 
 							+ Messages.COLOR_SYNTAX_ERROR + reply.getMaxPages(),
-					Messages.COLOR_INFO + "-----------------------------",
-					Messages.COLOR_SYNTAX_ERROR + "ID        Summary        Cost"
+					Messages.COLOR_INFO + String.format("%1$" + catalogue.get(0).length() + "s","-").replace(' ','-'),
+					Messages.COLOR_SYNTAX_ERROR 
+							+ String.format("%1$-" + tablepad[0] + "s","ID")
+							+ String.format("%1$-" + tablepad[1] + "s","Summary")
+							+ "Cost"
 			};
 			
 			sender.sendMessage(header);
