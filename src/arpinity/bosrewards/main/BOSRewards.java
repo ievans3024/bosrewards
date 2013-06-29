@@ -14,7 +14,7 @@ import arpinity.bosrewards.datacontroller.YamlController;
  * and made for the Brotherhood of Slaughter Minecraft server.
  * Visit our website at www.bhslaughter.com!
  * 
- * @version 0.0.7.0
+ * @version 0.0.7.1
  * @author arpinity3024
  */
 
