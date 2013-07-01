@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 
 import arpinity.bosrewards.main.BOSRewards;
 import arpinity.bosrewards.main.Messages;
+import arpinity.bosrewards.main.Receipt;
 import arpinity.bosrewards.main.Reward;
 import arpinity.bosrewards.main.User;
 
@@ -32,7 +33,7 @@ public class RedeemCommand extends SubCommand {
 					String receiptString = date + "  " + reward.getSummary() + "  " + reward.getCost() + " " + ((reward.getCost() == 1) ? this.pointSingular : this.pointPlural);
 					if (!hasByPass) {
 						user.subtractPoints(reward.getCost());
-						user.addReceipt(receiptString);
+						user.addReceipt(new Receipt(date,reward.getSummary(),reward.getCost()));
 					}
 					plugin.getLogger().info(user.getName() + " " + receiptString);
 					List<String> commands = reward.getCommands();

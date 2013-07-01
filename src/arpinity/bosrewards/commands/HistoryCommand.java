@@ -54,8 +54,8 @@ public final class HistoryCommand extends SubCommand {
 			}
 		}
 		
-		String[] userReceipts = new String[user.getReceipts().size()];
-		userReceipts = user.getReceipts().toArray(userReceipts);
+		String[] userReceipts = new String[user.getReceiptsList().size()];
+		userReceipts = user.getReceiptsList().toArray(userReceipts);
 		if (userReceipts.length > 0){
 			PagedArray reply = new PagedArray(userReceipts);
 			if (pageNumber < 0 || pageNumber > reply.getMaxPages()){
