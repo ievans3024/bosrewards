@@ -5,8 +5,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 
@@ -15,6 +17,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import arpinity.bosrewards.main.BOSRewards;
+import arpinity.bosrewards.main.Receipt;
 import arpinity.bosrewards.main.Reward;
 import arpinity.bosrewards.main.User;
 
@@ -61,9 +64,16 @@ public final class YamlController extends DataController {
 			return null;
 		}
 		ConfigurationSection userSection = getUsersTable().getConfigurationSection(username);
-		return new User(userSection.getName())
+		User user = new User(userSection.getName())
 		.setPoints(userSection.getInt("points"))
-		.setLastOnline(userSection.getString("last-online"));	
+		.setLastOnline(userSection.getString("last-online"));
+		List<?> rlist = userSection.getList("receipts");
+		Iterator<?> iter = rlist.iterator();
+		while (iter.hasNext()) {
+			Receipt r = (Receipt) iter.next(); 
+			user.addReceipt(r);			
+		}
+		return user;
 	}
 	
 	@Override
@@ -232,7 +242,17 @@ public final class YamlController extends DataController {
 		ConfigurationSection userSection = this.getUsersTable().getConfigurationSection(user.getName());
 		userSection.set("points", user.getPoints());
 		userSection.set("last-online",user.getLastOnline());
-		userSection.set("receipts", user.getReceipts());
+		List<Map<String,String>> receiptlist = new ArrayList<Map<String,String>>();
+		Iterator<Receipt> iter = user.getReceipts().iterator();
+		while (iter.hasNext()){
+			Map<String,String> receipt = new HashMap<String,String>();
+			Receipt r = iter.next();
+			receipt.put("date",r.getDate());
+			receipt.put("summary",r.getSummary());
+			receipt.put("cost",Integer.toString(r.getCost()));
+			receiptlist.add(receipt);
+		}
+		userSection.set("receipts", receiptlist);
 	}
 	
 	@Override // writes loaded users table to disk
