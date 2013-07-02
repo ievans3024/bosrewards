@@ -34,6 +34,7 @@ public class RedeemCommand extends SubCommand {
 					if (!hasByPass) {
 						user.subtractPoints(reward.getCost());
 						user.addReceipt(new Receipt(date,reward.getSummary(),reward.getCost()));
+						plugin.getDataController().writeUser(user);
 					}
 					plugin.getLogger().info(user.getName() + " " + receiptString);
 					List<String> commands = reward.getCommands();
