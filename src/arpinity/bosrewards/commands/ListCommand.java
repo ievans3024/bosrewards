@@ -62,11 +62,11 @@ public final class ListCommand extends SubCommand {
 			String[] header = {
 					"",
 					Messages.COLOR_INFO + "Rewards Catalogue - " + "Page "
-							+ Messages.COLOR_SYNTAX_ERROR + pageNumber
+							+ Messages.COLOR_SUCCESS + pageNumber
 							+ Messages.COLOR_INFO + "/" 
-							+ Messages.COLOR_SYNTAX_ERROR + reply.getMaxPages(),
+							+ Messages.COLOR_SUCCESS + reply.getMaxPages(),
 					Messages.COLOR_INFO + String.format("%1$" + catalogue.get(0).length() + "s","-").replace(' ','-'),
-					Messages.COLOR_SYNTAX_ERROR 
+					Messages.COLOR_SUCCESS 
 							+ String.format("%1$-" + tablepad[0] + "s","ID")
 							+ String.format("%1$-" + tablepad[1] + "s","Summary")
 							+ "Cost"

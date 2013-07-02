@@ -26,13 +26,14 @@ public final class PagedArray {
 		if (this.content.length < 5) {
 			length = this.content.length;
 		}
-		newarray = new String[length];
+		newarray = new String[length + 1];
 		int index = (page * 5) - 5;
 		int i = 0;
 		while (i < length) {
 			newarray[i] = this.content[index + i];
 			i++;
 		}
+		newarray[length] = "";
 		return newarray;
 	}
 	

@@ -28,7 +28,7 @@ public final class HistoryCommand extends SubCommand {
 			if (plugin.getDataController().getUserExists(args[0])) {
 				if (sender instanceof ConsoleCommandSender || sender.hasPermission("BOSRewards.admin.seehistory")) {
 					user = plugin.getDataController().getUserByName(args[0]);
-					header[1] = Messages.COLOR_INFO + "Redemption history for " + user.getName() + " - ";
+					header[1] = Messages.COLOR_INFO + "Redemption history for " + user.getName() + " - Page ";
 					if (args.length > 2){
 						pageNumber = Integer.parseInt(args[1]);
 					}
@@ -38,7 +38,7 @@ public final class HistoryCommand extends SubCommand {
 				}
 			} else if (!(sender instanceof ConsoleCommandSender)) {
 				user = plugin.getDataController().getUserByName(sender.getName());
-				header[1] = Messages.COLOR_INFO + "Your redemption history - ";
+				header[1] = Messages.COLOR_INFO + "Your redemption history - Page ";
 				pageNumber = Integer.parseInt(args[0]);
 			} else {
 				Messages.sendNoPermsError(sender);
@@ -67,10 +67,11 @@ public final class HistoryCommand extends SubCommand {
 				sender.sendMessage(message);
 				return true;
 			} else {
-				header[0] += Messages.COLOR_SUCCESS 
+				header[1] += Messages.COLOR_SUCCESS 
 								+ Integer.toString(pageNumber) 
 								+ Messages.COLOR_INFO + "/" 
 								+ Messages.COLOR_SUCCESS + Integer.toString(reply.getMaxPages());
+				header[2] = Messages.COLOR_INFO + String.format("%1$" + reply.getPage(pageNumber)[0].length() + "s","-").replace(' ','-');
 				sender.sendMessage(header);
 				sender.sendMessage(reply.getPage(pageNumber));
 				return true;
