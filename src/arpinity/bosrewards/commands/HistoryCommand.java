@@ -25,6 +25,11 @@ public final class HistoryCommand extends SubCommand {
 		header[0] = "";
 		int pageNumber = 1;
 		if (args.length > 0){
+			/*
+			 * TODO: find out if args[0] is a number using try/except
+			 * if it's a number, assign pageNumber
+			 * if not, check permissions 
+			 */
 			if (plugin.getDataController().getUserExists(args[0])) {
 				if (sender instanceof ConsoleCommandSender || sender.hasPermission("BOSRewards.admin.seehistory")) {
 					user = plugin.getDataController().getUserByName(args[0]);
