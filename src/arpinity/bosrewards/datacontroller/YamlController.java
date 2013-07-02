@@ -63,15 +63,17 @@ public final class YamlController extends DataController {
 		if (!this.getUserExists(username)){
 			return null;
 		}
-		ConfigurationSection userSection = getUsersTable().getConfigurationSection(username);
-		User user = new User(userSection.getName())
-		.setPoints(userSection.getInt("points"))
-		.setLastOnline(userSection.getString("last-online"));
-		List<?> rlist = userSection.getList("receipts");
-		Iterator<?> iter = rlist.iterator();
+		//ConfigurationSection userSection = this.getUsersTable().getConfigurationSection(username);
+		String usernode = username + ".";
+		User user = new User(username)
+		.setPoints(this.getUsersTable().getInt(usernode + "points"))
+		.setLastOnline(this.getUsersTable().getString(usernode + "last-online"));
+		List<Map<?,?>> rlist = this.getUsersTable().getMapList(usernode + "receipts");
+		Iterator<Map<?,?>> iter = rlist.iterator();
 		while (iter.hasNext()) {
-			Receipt r = (Receipt) iter.next(); 
-			user.addReceipt(r);			
+			Map<?,?> r = iter.next();
+			Receipt receipt = new Receipt((String) r.get("date"),(String) r.get("summary"),Integer.parseInt((String) r.get("cost")));
+			user.addReceipt(receipt);			
 		}
 		return user;
 	}
@@ -239,32 +241,32 @@ public final class YamlController extends DataController {
 		if (!getUserExists(user.getName())){
 			this.getUsersTable().createSection(user.getName());
 		}
-		ConfigurationSection userSection = this.getUsersTable().getConfigurationSection(user.getName());
-		userSection.set("points", user.getPoints());
-		userSection.set("last-online",user.getLastOnline());
+		String usernode = user.getName() + ".";
+		this.getUsersTable().set(usernode + "points", user.getPoints());
+		this.getUsersTable().set(usernode + "last-online",user.getLastOnline());
 		List<Map<String,String>> receiptlist = new ArrayList<Map<String,String>>();
 		Iterator<Receipt> iter = user.getReceipts().iterator();
 		while (iter.hasNext()){
-			Map<String,String> receipt = new HashMap<String,String>();
 			Receipt r = iter.next();
+			HashMap<String,String> receipt = new HashMap<String,String>();
 			receipt.put("date",r.getDate());
-			receipt.put("summary",r.getSummary());
-			receipt.put("cost",Integer.toString(r.getCost()));
+			receipt.put("summary", r.getSummary());
+			receipt.put("cost", Integer.toString(r.getCost()));
 			receiptlist.add(receipt);
 		}
-		userSection.set("receipts", receiptlist);
+		this.getUsersTable().set(usernode + "receipts", receiptlist);
 	}
 	
 	@Override // writes loaded users table to disk
 	public void writeUsers(){
 		if (usersTable == null || usersTableFile == null) {
 		    return;
-		    }
-		    try {
-		        this.getUsersTable().save(usersTableFile);
-		    } catch (IOException ex) {
-		        plugin.getLogger().log(Level.SEVERE, "Could not save config to " + usersTableFile, ex);
-		    }
+		}
+	    try {
+	        this.getUsersTable().save(usersTableFile);
+	    } catch (IOException ex) {
+	        plugin.getLogger().log(Level.SEVERE, "Could not save config to " + usersTableFile, ex);
+	    }
 	}
 	
 	
@@ -282,10 +284,10 @@ public final class YamlController extends DataController {
 		if (!getRewardExists(reward.getId())){
 			this.getRewardsTable().createSection(reward.getId());
 		}
-		ConfigurationSection rewardSection = getRewardsTable().getConfigurationSection(reward.getId());
-		rewardSection.set("summary", reward.getSummary());
-		rewardSection.set("cost",reward.getCost());
-		rewardSection.set("commands",reward.getCommands());
+		String idnode = reward.getId() + ".";
+		this.getRewardsTable().set(idnode + "summary", reward.getSummary());
+		this.getRewardsTable().set(idnode + "cost",reward.getCost());
+		this.getRewardsTable().set(idnode + "commands",reward.getCommands());
 	}
 	
 	@Override // writes loaded rewards table to disk
