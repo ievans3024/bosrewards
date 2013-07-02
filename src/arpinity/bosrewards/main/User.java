@@ -40,7 +40,7 @@ public final class User {
 			Receipt receipt = iterator.next();
 			String date = String.format("%1$-" + tablepad[0] + "s", receipt.getDate());
 			String summary = String.format("%1$-" + tablepad[1] + "s", receipt.getSummary());
-			receiptlist.add(date + summary + receipt.getCost());
+			receiptlist.add(Messages.COLOR_INFO + date + summary + receipt.getCost());
 		}			
 		return receiptlist;
 	}
