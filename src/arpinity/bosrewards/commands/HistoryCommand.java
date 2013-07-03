@@ -37,20 +37,34 @@ public final class HistoryCommand extends SubCommand {
 				argisnumber = false;
 			}
 			if (argisnumber){
-				//try self page number
+				if (!(sender instanceof ConsoleCommandSender)) {
+					user = plugin.getDataController().getUserByName(sender.getName());
+					header[1] = Messages.COLOR_INFO + "Your redemption history - Page ";
+					pageNumber = Integer.parseInt(args[0]);
+				} else {
+					Messages.sendNoPermsError(sender);
+					return true;
+				}
 			} else {
 				if (sender instanceof ConsoleCommandSender || sender.hasPermission("BOSRewards.admin.seehistory")) {
 					if (plugin.getDataController().getUserExists(args[0])){
-						//get user info
+						user = plugin.getDataController().getUserByName(args[0]);
+						header[1] = Messages.COLOR_INFO + "Redemption history for " + user.getName() + " - Page ";
+						if (args.length > 2){
+							pageNumber = Integer.parseInt(args[1]);
+						}
 					} else {
-						//return with user doesn't exist
+						sender.sendMessage(Messages.INVALID_ARGUMENT + " " + args[0] + " is not in the database.");
+						return true;
 					}
 				} else {
-					//return with insufficient perms
+					Messages.sendNoPermsError(sender);
+					return true;
 				}
 			}
 			
 			// Old code
+			/*
 			if (plugin.getDataController().getUserExists(args[0])) {
 				if (sender instanceof ConsoleCommandSender || sender.hasPermission("BOSRewards.admin.seehistory")) {
 					user = plugin.getDataController().getUserByName(args[0]);
@@ -70,6 +84,7 @@ public final class HistoryCommand extends SubCommand {
 				Messages.sendNoPermsError(sender);
 				return true;
 			}
+			*/
 		} else {
 			if (!(sender instanceof ConsoleCommandSender)) {
 				user = plugin.getDataController().getUserByName(sender.getName());
@@ -104,7 +119,7 @@ public final class HistoryCommand extends SubCommand {
 			}
 		} else {
 			String[] message = {
-					Messages.COLOR_INFO + "You have not purchased any rewards yet!"
+					Messages.COLOR_INFO + "No rewards history yet!"
 			};
 			sender.sendMessage(message);
 		}
