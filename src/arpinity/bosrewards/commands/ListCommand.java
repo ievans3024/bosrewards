@@ -27,8 +27,8 @@ public final class ListCommand extends SubCommand {
 			ArrayList<String> catalogue = new ArrayList<String>();
 			int[] tablepad = {0,0};
 			for (int i=0;i<rewardsList.size();i++) {
-				int idlength = rewardsList.get(i).getId().length() + 2;
-				int sumlength = rewardsList.get(i).getSummary().length() + 2;
+				int idlength = rewardsList.get(i).getId().length() + 3;
+				int sumlength = rewardsList.get(i).getSummary().length() + 3;
 				if (idlength > tablepad[0]) {
 					tablepad[0] = idlength;
 				}

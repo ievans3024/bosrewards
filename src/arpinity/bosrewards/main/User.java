@@ -28,9 +28,9 @@ public final class User {
 	}
 	public List<String> getReceiptsList() {
 		List<String> receiptlist = new ArrayList<String>();
-		int[] tablepad = {12,0};
+		int[] tablepad = {13,0};
 		for (int i=(this.receipts.size() - 1);i>=0;i--) {
-			int sumlength = this.receipts.get(i).getSummary().length() + 2;
+			int sumlength = this.receipts.get(i).getSummary().length() + 3;
 			if (sumlength > tablepad[1]) {
 				tablepad[1] = sumlength;
 			}
