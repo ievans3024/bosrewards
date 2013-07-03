@@ -30,6 +30,27 @@ public final class HistoryCommand extends SubCommand {
 			 * if it's a number, assign pageNumber
 			 * if not, check permissions 
 			 */
+			boolean argisnumber = true;
+			try {
+				Integer.parseInt(args[0]);
+			} catch (NumberFormatException ex) {
+				argisnumber = false;
+			}
+			if (argisnumber){
+				//try self page number
+			} else {
+				if (sender instanceof ConsoleCommandSender || sender.hasPermission("BOSRewards.admin.seehistory")) {
+					if (plugin.getDataController().getUserExists(args[0])){
+						//get user info
+					} else {
+						//return with user doesn't exist
+					}
+				} else {
+					//return with insufficient perms
+				}
+			}
+			
+			// Old code
 			if (plugin.getDataController().getUserExists(args[0])) {
 				if (sender instanceof ConsoleCommandSender || sender.hasPermission("BOSRewards.admin.seehistory")) {
 					user = plugin.getDataController().getUserByName(args[0]);
