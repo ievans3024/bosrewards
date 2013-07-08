@@ -50,7 +50,6 @@ public final class RewardsCommand implements CommandExecutor {
 		
 		// register new subcommands here
 		// don't forget to set description and usage strings!
-		// create /rewards help <subcmd> that uses description/usage fields
 		this.commandMap.put("help", new HelpCommand(plugin,this,"help","BOSRewards.user.help",true,0));
 		this.commandMap.put("reload", new ReloadCommand(plugin,this,"reload","BOSRewards.util.reload",true,0));
 		this.commandMap.put("add", new AddCommand(plugin,this,"add","BOSRewards.util.createreward",true,2));

@@ -8,6 +8,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import arpinity.bosrewards.main.BOSRewards;
 import arpinity.bosrewards.main.Messages;
 import arpinity.bosrewards.main.PagedArray;
+import arpinity.bosrewards.main.ToolBox;
 import arpinity.bosrewards.main.User;
 
 public final class HistoryCommand extends SubCommand {
@@ -15,6 +16,14 @@ public final class HistoryCommand extends SubCommand {
 	public HistoryCommand(BOSRewards plugin, RewardsCommand parent, String name, String permission,
 			boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
+		String[] usage = {
+			Messages.COLOR_SUCCESS + "/rewards history <page>"
+				+ Messages.COLOR_INFO + " - Displays a paged history of your rewards redemptions.",
+			Messages.COLOR_SUCCESS + "/rewards history <user> <page>"
+				+Messages.COLOR_INFO + " - Displays a paged history of <user>'s rewards redemptions."
+		};
+		this.setDescription("Displays a paged history of rewards redemptions")
+		.setUsage(usage);
 	}
 
 	@Override
@@ -25,18 +34,7 @@ public final class HistoryCommand extends SubCommand {
 		header[0] = "";
 		int pageNumber = 1;
 		if (args.length > 0){
-			/*
-			 * TODO: find out if args[0] is a number using try/except
-			 * if it's a number, assign pageNumber
-			 * if not, check permissions 
-			 */
-			boolean argisnumber = true;
-			try {
-				Integer.parseInt(args[0]);
-			} catch (NumberFormatException ex) {
-				argisnumber = false;
-			}
-			if (argisnumber){
+			if (ToolBox.stringIsANumber(args[0])){
 				if (!(sender instanceof ConsoleCommandSender)) {
 					user = plugin.getDataController().getUserByName(sender.getName());
 					header[1] = Messages.COLOR_INFO + "Your redemption history - Page ";
@@ -50,9 +48,15 @@ public final class HistoryCommand extends SubCommand {
 					if (plugin.getDataController().getUserExists(args[0])){
 						user = plugin.getDataController().getUserByName(args[0]);
 						header[1] = Messages.COLOR_INFO + "Redemption history for " + user.getName() + " - Page ";
-						if (args.length > 2){
+						if (args.length > 2 && ToolBox.stringIsANumber(args[1])){
 							pageNumber = Integer.parseInt(args[1]);
+						} else {
+							sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[1] + "\"" + " is not a page number.");
+							return true;
 						}
+					} else if (sender.getName().equalsIgnoreCase(args[0])){
+						user = plugin.getDataController().getUserByName(sender.getName());
+						header[1] = Messages.COLOR_INFO + "Your redemption history - Page ";
 					} else {
 						sender.sendMessage(Messages.INVALID_ARGUMENT + " " + args[0] + " is not in the database.");
 						return true;
@@ -118,12 +122,9 @@ public final class HistoryCommand extends SubCommand {
 				return true;
 			}
 		} else {
-			String[] message = {
-					Messages.COLOR_INFO + "No rewards history yet!"
-			};
-			sender.sendMessage(message);
+			sender.sendMessage(Messages.COLOR_INFO + "No rewards history yet!");
+			return true;
 		}
-		return true;
 	}
 
 }

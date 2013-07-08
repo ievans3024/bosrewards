@@ -52,7 +52,7 @@ public final class HelpCommand extends SubCommand {
 				} else {
 					message = ToolBox.stringToArray(Messages.NO_PERMISSION);
 				}
-			} else if (Integer.parseInt(args[0]) > 0) {
+			} else if (ToolBox.stringIsANumber(args[0])) {
 				pageNumber = Integer.parseInt(args[0]);
 				if (pageNumber > reply.getMaxPages()) {
 					message = ToolBox.stringToArray(Messages.COLOR_SYNTAX_ERROR	

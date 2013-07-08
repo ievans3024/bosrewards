@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 
 import arpinity.bosrewards.main.BOSRewards;
 import arpinity.bosrewards.main.Messages;
+import arpinity.bosrewards.main.ToolBox;
 import arpinity.bosrewards.main.User;
 
 public final class SetCommand extends SubCommand {
@@ -14,25 +15,38 @@ public final class SetCommand extends SubCommand {
 	public SetCommand(BOSRewards plugin, RewardsCommand parent, String name, String permission,
 			boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
+		String[] usage = {
+				Messages.COLOR_SUCCESS + "/rewards set [user] [number]",
+				Messages.COLOR_INFO + "Sets a user's " + plugin.getPointWordPlural() + " to the number specified."
+		};
+		this.setDescription("Sets a users " + plugin.getPointWordPlural() + " to a particular value.")
+		.setUsage(usage);
 	}
 	
 	public boolean run(CommandSender sender, Command command, String label, String[] args) {
 		if (plugin.getDataController().getUserExists(args[0])) {
+			int pointsvalue;
+			if (ToolBox.stringIsANumber(args[0])) {
+				pointsvalue = Integer.parseInt(args[1]);
+			} else {
+				sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[1] + "\"" + " is not a number.");
+				return true;
+			}
 			User user = plugin.getDataController().getUserByName(args[0]);
-			int pointsvalue = Integer.parseInt(args[1]);
-			String pointword = ((pointsvalue == 1) ? this.pointSingular : this.pointPlural);
+			String pointword = ((pointsvalue == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural());
 			user.setPoints(pointsvalue);
 			plugin.getDataController().writeUser(user);
 			sender.sendMessage(Messages.COLOR_SUCCESS 
 					+ args[0] + "'s "
-					+ this.pointPlural
+					+ plugin.getPointWordPlural()
 					+ " have been set to "
-					+ args[1]);
+					+ args[1] + " "
+					+ pointword);
 			Player target = Bukkit.getServer().getPlayer(args[0]);
 			if (target != null) {
 				target.sendMessage(Messages.COLOR_SUCCESS
 						+ "Your "
-						+ this.pointPlural
+						+ plugin.getPointWordPlural()
 						+ " have been set to "
 						+ args[1] + " "
 						+ pointword);

@@ -30,7 +30,7 @@ public class RedeemCommand extends SubCommand {
 			if (hasByPass || reward.getCost() >= 0){
 				if (hasByPass || user.getPoints() >= reward.getCost()){
 					String date = plugin.getDateFormat().format(plugin.getCalendar().getTime());
-					String receiptString = date + "  " + reward.getSummary() + "  " + reward.getCost() + " " + ((reward.getCost() == 1) ? this.pointSingular : this.pointPlural);
+					String receiptString = date + "  " + reward.getSummary() + "  " + reward.getCost() + " " + ((reward.getCost() == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural());
 					if (!hasByPass) {
 						user.subtractPoints(reward.getCost());
 						user.addReceipt(new Receipt(date,reward.getSummary(),reward.getCost()));
@@ -55,13 +55,13 @@ public class RedeemCommand extends SubCommand {
 					sender.sendMessage(Messages.COLOR_SUCCESS
 							+ "You redeemed "
 							+ Messages.COLOR_INFO + reward.getCost() + " "
-							+ Messages.COLOR_SUCCESS + ((reward.getCost() == 1) ? this.pointSingular : this.pointPlural)
+							+ Messages.COLOR_SUCCESS + ((reward.getCost() == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural())
 							+ " for " + reward.getSummary());
 					return true;
 				}
 				sender.sendMessage(Messages.COLOR_BAD
 						+ "You don't have enough "
-						+ this.pointPlural
+						+ plugin.getPointWordPlural()
 						+ " for that reward");
 				return true;
 			}

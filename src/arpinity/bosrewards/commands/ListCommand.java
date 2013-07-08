@@ -11,12 +11,19 @@ import arpinity.bosrewards.main.BOSRewards;
 import arpinity.bosrewards.main.Messages;
 import arpinity.bosrewards.main.Reward;
 import arpinity.bosrewards.main.PagedArray;
+import arpinity.bosrewards.main.ToolBox;
 
 public final class ListCommand extends SubCommand {
 
 	public ListCommand(BOSRewards plugin, RewardsCommand parent, String name, String permission,
 			boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
+		String[] usage = {
+			Messages.COLOR_SUCCESS + "/rewards list <page>",
+			Messages.COLOR_INFO + "Lists all available rewards, paged if necessary."
+		};
+		this.setDescription("Lists all available rewards")
+		.setUsage(usage);
 	}
 	
 	public boolean run(CommandSender sender, Command command, String label, String[] args){
@@ -52,7 +59,12 @@ public final class ListCommand extends SubCommand {
 			PagedArray reply = new PagedArray(catalogue.toArray(catArray));
 			
 			if (args.length > 0){
-				pageNumber = Integer.parseInt(args[0]);
+				if (ToolBox.stringIsANumber(args[0])) {
+					pageNumber = Integer.parseInt(args[0]);
+				} else {
+					sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[0] + "\"" + " is not a page number.");
+					return true;
+				}
 				if (pageNumber > reply.getMaxPages()){
 					sender.sendMessage(Messages.COLOR_SYNTAX_ERROR + "Invalid page number. Expecting number 1 through " + reply.getMaxPages());
 					return true;

@@ -14,6 +14,14 @@ public final class BalanceCommand extends SubCommand {
 	public BalanceCommand(BOSRewards plugin, RewardsCommand parent, String name, String permission,
 			boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
+		String[] usage = {
+				Messages.COLOR_SUCCESS + "/rewards balance"
+					+ Messages.COLOR_INFO + "Displays your " + plugin.getPointWordPlural() + " balance.",
+				Messages.COLOR_SUCCESS + "/rewards balance [user]"
+					+ Messages.COLOR_INFO + "Displays the " + plugin.getPointWordPlural() + " balance for [user]"
+		};
+		this.setDescription("Displays " + plugin.getPointWordPlural() + " balance")
+		.setUsage(usage);
 	}
 
 	@Override
@@ -32,6 +40,9 @@ public final class BalanceCommand extends SubCommand {
 					sender.sendMessage(Messages.INVALID_ARGUMENT + args[0] + " not in rewards database");
 					return true;
 				}
+			} else if (sender.getName().equalsIgnoreCase(args[0])) {
+				user = plugin.getDataController().getUserByName(sender.getName());
+				sentencePrefix = Messages.COLOR_INFO + "You have ";
 			} else {
 				Messages.sendNoPermsError(sender);
 				return true;
@@ -47,7 +58,7 @@ public final class BalanceCommand extends SubCommand {
 		}
 		sender.sendMessage(sentencePrefix
 					+ user.getPoints() + " "
-					+ ((user.getPoints() == 1) ? this.pointSingular : this.pointPlural));
+					+ ((user.getPoints() == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural()));
 		return true;
 	}
 

@@ -14,6 +14,12 @@ public final class InfoCommand extends SubCommand {
 	public InfoCommand(BOSRewards plugin, RewardsCommand parent, String name,
 			String permission, boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
+		String[] usage = {
+			Messages.COLOR_SUCCESS + "/rewards info [id]",
+			Messages.COLOR_INFO + "Displays attributes for the reward with ID of [id]."
+		};
+		this.setDescription("Displays attributes for rewards by id.")
+		.setUsage(usage);
 	}
 
 	@Override

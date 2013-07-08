@@ -35,11 +35,25 @@ public final class BOSRewards extends JavaPlugin {
 	private int dataSaveTaskId;
 	public DataController getDataController() {
 		return this.controller;
-	}		
+	}
+	
+	private String pointSingular;
+	private String pointPlural;
+	public final String getPointWordSingle() {
+		return pointSingular;
+	}
+	public final String getPointWordPlural() {
+		return pointPlural;
+	}
+	public void reloadPointWords() {
+		this.pointSingular = getConfig().getString("point-name");
+		this.pointPlural = getConfig().getString("point-name-plural");
+	}
 	
 	@Override public void onLoad(){
 		// Load configuration
-		this.saveDefaultConfig()
+		saveDefaultConfig();
+		reloadPointWords();
 ;		
     	// Create calendar
     	this.calendar = Calendar.getInstance();

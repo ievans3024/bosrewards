@@ -9,8 +9,6 @@ import arpinity.bosrewards.main.BOSRewards;
 public abstract class SubCommand {
 	
 	// strings set in config file
-	protected final String pointSingular;
-	protected final String pointPlural;
 	protected final BOSRewards plugin;
 	protected final RewardsCommand parent;
 	private final String name;
@@ -27,8 +25,6 @@ public abstract class SubCommand {
 		this.permissionNode = permission;
 		this.allowConsole = allowConsole;
 		this.minArgs = minArgs;
-		this.pointSingular = plugin.getConfig().getString("point-name");
-		this.pointPlural = plugin.getConfig().getString("point-name-plural");
 	}
 	
 	public abstract boolean run(CommandSender sender, Command command, String label, String[] args);

@@ -14,13 +14,19 @@ public final class GiveCommand extends SubCommand {
 	public GiveCommand(BOSRewards plugin, RewardsCommand parent, String name, String permission,
 			boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
+		String[] usage = {
+				Messages.COLOR_SUCCESS + "/rewards give [user] [number]",
+				Messages.COLOR_INFO + "Adds a number of " + plugin.getPointWordPlural() + " to [user]'s balance"
+		};
+		this.setDescription("Adds some " + plugin.getPointWordPlural() + " to a user's balance")
+		.setUsage(usage);
 	}
 	
 	public boolean run(CommandSender sender, Command command, String label, String[] args){
 		if (plugin.getDataController().getUserExists(args[0])){
 			User user = plugin.getDataController().getUserByName(args[0]);
 			int pointsvalue = Integer.parseInt(args[1]);
-			String pointword = ((pointsvalue == 1) ? this.pointSingular : this.pointPlural);
+			String pointword = ((pointsvalue == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural());
 			String havehas = ((pointsvalue == 1) ? "has" : "have");
 			user.addPoints(pointsvalue);
 			plugin.getDataController().writeUser(user);

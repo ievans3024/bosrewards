@@ -27,6 +27,16 @@ public final class EditCommand extends SubCommand {
 		this.editFlags.put("summary", new SummaryFlag());
 		this.editFlags.put("-commands", new RemoveCommandsFlag());
 		this.editFlags.put("-cmds", new RemoveCommandsFlag());
+		
+		String[] usage = {
+			Messages.COLOR_SUCCESS + "/rewards edit [id] [flag] [value]",
+			Messages.COLOR_INFO + "Edits the properties of the reward with id of [id]",
+			Messages.COLOR_INFO + "Flags:",
+			Messages.COLOR_SUCCESS + "cost, commands, +commands, -commands, summary",
+			Messages.COLOR_INFO + "Consult the README or bukkitdev documentation for more info."
+		};
+		this.setDescription("Edits the properties of a reward.")
+		.setUsage(usage);
 	}
 	
 	private interface EditFlag {
