@@ -20,4 +20,13 @@ public final class ToolBox {
 		String[] array = {string};
 		return array;
 	}
+	
+	public static boolean stringIsANumber(String string) {
+		try {
+			Integer.parseInt(string);
+		} catch (NumberFormatException ex) {
+			return false;
+		}
+		return true;
+	}
 }
