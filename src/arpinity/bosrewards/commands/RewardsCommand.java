@@ -63,8 +63,9 @@ public final class RewardsCommand implements CommandExecutor {
 		this.commandMap.put("sub", this.commandMap.get("take"));
 		this.commandMap.put("set", new SetCommand(plugin,this,"set","BOSRewards.admin.setpoints",true,2));
 		this.commandMap.put("redeem", new RedeemCommand(plugin,this,"redeem","BOSRewards.user.redeem",false,1));
+		this.commandMap.put("get", this.commandMap.get("redeem"));
 		this.commandMap.put("balance", new BalanceCommand(plugin,this,"balance","BOSRewards.user.balance",false,0));
-		this.commandMap.put("get", this.commandMap.get("balance"));
+		this.commandMap.put("bal", this.commandMap.get("balance"));
 		this.commandMap.put("history", new HistoryCommand(plugin,this,"history","BOSRewards.user.history",false,0));
 		this.commandMap.put("hist", this.commandMap.get("history"));
 		this.commandMap.put("info", new InfoCommand(plugin,this,"info","BOSRewards.admin.info",true,1));
