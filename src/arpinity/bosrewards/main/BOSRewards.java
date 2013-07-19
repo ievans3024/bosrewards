@@ -51,9 +51,10 @@ public final class BOSRewards extends JavaPlugin {
 	}
 	
 	@Override public void onLoad(){
-		// Load configuration
+		// Load configuration & write README
 		saveDefaultConfig();
 		reloadPointWords();
+		saveResource("README.txt",true);
 ;		
     	// Create calendar
     	this.calendar = Calendar.getInstance();
