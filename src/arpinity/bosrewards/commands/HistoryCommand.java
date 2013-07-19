@@ -116,7 +116,7 @@ public final class HistoryCommand extends SubCommand {
 								+ Integer.toString(pageNumber) 
 								+ Messages.COLOR_INFO + "/" 
 								+ Messages.COLOR_SUCCESS + Integer.toString(reply.getMaxPages());
-				header[2] = Messages.COLOR_INFO + String.format("%1$" + reply.getPage(pageNumber)[0].length() + "s","-").replace(' ','-');
+				header[2] = Messages.COLOR_INFO + String.format("%1$" + header[1].length() + "s","-").replace(' ','-');
 				sender.sendMessage(header);
 				sender.sendMessage(reply.getPage(pageNumber));
 				return true;

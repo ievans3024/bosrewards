@@ -6,8 +6,8 @@ public final class PagedArray {
 	
 	public PagedArray(String[] c) {
 		this.content = c;
-		int maximum = c.length / 5;
-		if (c.length % 5 != 0) {
+		int maximum = c.length / 6;
+		if (c.length % 6 != 0) {
 			maximum++;
 		}
 		this.maxpages = maximum;
@@ -22,12 +22,12 @@ public final class PagedArray {
 			return null;
 		}
 		String[] newarray;
-		int length = 5;
-		if (this.content.length < 5) {
+		int length = 6;
+		if (this.content.length < 6) {
 			length = this.content.length;
 		}
 		newarray = new String[length + 1];
-		int index = (page * 5) - 5;
+		int index = (page * 6) - 6;
 		int i = 0;
 		while (i < length) {
 			newarray[i] = this.content[index + i];
