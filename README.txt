@@ -134,7 +134,7 @@ Format:
   summary: <summary>
   cost: <cost>
   commands:
-          - <command1>
+        - <command1>
         - <command2>
         - etc.
 
@@ -155,7 +155,7 @@ The ${user} keyword will be replaced with the username
 of the user who is purchasing the reward when they purchase 
 it. if necessary, you may escape this behavior like so: \$\{user\}
 \$\{user\} will then be interpreted as literally ${user} instead 
-of the username. you would only need this if a plugin command 
+of the username. you would only need this if another plugin's command 
 uses ${user} for something else.
 
 
@@ -171,7 +171,7 @@ IV. Commands
   -permission node: BOSRewards.util.createreward
   -usage: /rewards add <id> <summary>
 
-/rewards balance (alias: /rewards get)
+/rewards balance (alias: /rewards bal)
   -tells the number of rewards points a user has collected
   -permission node: BOSRewards.user.balance
   -usage: /rewards balance [<user>]
@@ -236,7 +236,7 @@ IV. Commands
   -usage: /rewards list [<page>]
     -<page> is optional, specifies a section of the catalogue to display
     
-/rewards redeem 
+/rewards redeem (alias: /rewards get)
   -purchases a reward by its id
   -permission node: BOSRewards.user.redeem
   -usage: /rewards redeem <id>
@@ -245,7 +245,7 @@ IV. Commands
     -not require points to buy rewards
     -not have their reward purchase logged in their reward history.
     
-/rewards remove
+/rewards remove (alias /rewards rm)
   -removes one or more rewards from the rewards database
   -permission node: BOSRewards.util.remove
   -usage: /rewards remove <id> [<id> [<id>]...]
