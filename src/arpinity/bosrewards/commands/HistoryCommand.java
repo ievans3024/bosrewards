@@ -48,11 +48,13 @@ public final class HistoryCommand extends SubCommand {
 					if (plugin.getDataController().getUserExists(args[0])){
 						user = plugin.getDataController().getUserByName(args[0]);
 						header[1] = Messages.COLOR_INFO + "Redemption history for " + user.getName() + " - Page ";
-						if (args.length > 2 && ToolBox.stringIsANumber(args[1])){
-							pageNumber = Integer.parseInt(args[1]);
-						} else {
-							sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[1] + "\"" + " is not a page number.");
-							return true;
+						if (args.length > 2) {
+							if (ToolBox.stringIsANumber(args[1])){
+								pageNumber = Integer.parseInt(args[1]);
+							} else {
+								sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[1] + "\"" + " is not a page number.");
+								return true;
+							}
 						}
 					} else if (sender.getName().equalsIgnoreCase(args[0])){
 						user = plugin.getDataController().getUserByName(sender.getName());
