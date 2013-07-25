@@ -3,6 +3,7 @@ package arpinity.bosrewards.main;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.entity.Player;
 
 public final class Messages {
 	
@@ -19,7 +20,7 @@ public final class Messages {
 	public static void sendNoPermsError(CommandSender sender) {
 		if (sender instanceof ConsoleCommandSender) {
 			sender.sendMessage(NO_CONSOLE);
-		} else {
+		} else if (sender instanceof Player){
 			sender.sendMessage(NO_PERMISSION);
 		}
 	}

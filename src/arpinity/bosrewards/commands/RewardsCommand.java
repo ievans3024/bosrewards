@@ -76,7 +76,7 @@ public final class RewardsCommand implements CommandExecutor {
 			String label, String[] args) {
 		if (sender.hasPermission(command.getPermission())) {
 			if (args.length > 0){
-				if (this.commandMap.containsKey(args[0])){
+				if (this.commandMap.containsKey(args[0])) {
 					SubCommand subcommand = this.commandMap.get(args[0]);
 					String[] subargs;
 					if (args.length > 1) {
@@ -84,7 +84,7 @@ public final class RewardsCommand implements CommandExecutor {
 					} else {
 						subargs = new String[0];
 					}
-					if (subcommand.getCanUseSubCommand(sender)){
+					if (subcommand.getCanUseSubCommand(sender)) {
 						if (subargs.length >= subcommand.getMinArgs()) {
 							return (subcommand.run(sender,command,label,subargs));
 						}
