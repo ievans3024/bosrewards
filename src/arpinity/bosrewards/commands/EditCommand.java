@@ -90,30 +90,33 @@ public final class EditCommand extends SubCommand {
 	}
 	
 	public boolean run(CommandSender sender, Command command, String label, String[] args){
-		if (args.length > 2
-				&& this.editFlags.containsKey(args[1])){
-			if (plugin.getDataController().getRewardExists(args[0])){
-				Reward reward = plugin.getDataController().getRewardById(args[0]);
-				
-				try {
-					this.editFlags.get(args[1]).change(args,reward);
-				} catch (NumberFormatException ex) {
-					sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[2] + "\"" + " is not a number.");
-					return true;
-				} catch (IndexOutOfBoundsException ex) {
-					sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[2] + "\"" + " does not correspond to a reward.");
+		if (args.length > 2){
+			if (this.editFlags.containsKey(args[1])){
+				if (plugin.getDataController().getRewardExists(args[0])){
+					Reward reward = plugin.getDataController().getRewardById(args[0]);
+					
+					try {
+						this.editFlags.get(args[1]).change(args,reward);
+					} catch (NumberFormatException ex) {
+						sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[2] + "\"" + " is not a number.");
+						return true;
+					} catch (IndexOutOfBoundsException ex) {
+						sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[2] + "\"" + " does not correspond to a reward.");
+						return true;
+					}
+					
+					plugin.getDataController().writeReward(reward);
+					sender.sendMessage(Messages.SUCCESS_EDIT + reward.getId());
 					return true;
 				}
-				
-				plugin.getDataController().writeReward(reward);
-				sender.sendMessage(Messages.SUCCESS_EDIT + reward.getId());
+				sender.sendMessage(Messages.INVALID_ARGUMENT + "the reward " + args[0] + " does not exist.");
 				return true;
 			}
-			sender.sendMessage(Messages.INVALID_ARGUMENT + "the reward " + args[0] + " does not exist.");
+			sender.sendMessage(Messages.INVALID_ARGUMENT + "invalid flag.");
 			return true;
 		}
 		sender.sendMessage(Messages.NOT_ENOUGH_ARGS);
 		return true;
-	};
+	}
 
 }
