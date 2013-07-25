@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import org.bukkit.Material;
+import org.bukkit.command.BlockCommandSender;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -71,32 +73,43 @@ public final class RewardsCommand implements CommandExecutor {
 		this.commandMap.put("info", new InfoCommand(plugin,this,"info","BOSRewards.admin.info",true,1));
 	}
 	
+	private boolean doCommand(CommandSender sender, Command command, String label, String[] args) {
+		if (args.length > 0){
+			if (this.commandMap.containsKey(args[0])) {
+				SubCommand subcommand = this.commandMap.get(args[0]);
+				String[] subargs;
+				if (args.length > 1) {
+					subargs = Arrays.copyOfRange(args,1,args.length);
+				} else {
+					subargs = new String[0];
+				}
+				if (subcommand.getCanUseSubCommand(sender)) {
+					if (subargs.length >= subcommand.getMinArgs()) {
+						return (subcommand.run(sender,command,label,subargs));
+					}
+					sender.sendMessage(Messages.NOT_ENOUGH_ARGS);
+					return true;
+				}
+				Messages.sendNoPermsError(sender);
+				return true;
+			}
+			sender.sendMessage(Messages.NOT_A_SUBCMD);
+		}
+		return false;
+	}
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command,
 			String label, String[] args) {
-		if (sender.hasPermission(command.getPermission())) {
-			if (args.length > 0){
-				if (this.commandMap.containsKey(args[0])) {
-					SubCommand subcommand = this.commandMap.get(args[0]);
-					String[] subargs;
-					if (args.length > 1) {
-						subargs = Arrays.copyOfRange(args,1,args.length);
-					} else {
-						subargs = new String[0];
-					}
-					if (subcommand.getCanUseSubCommand(sender)) {
-						if (subargs.length >= subcommand.getMinArgs()) {
-							return (subcommand.run(sender,command,label,subargs));
-						}
-						sender.sendMessage(Messages.NOT_ENOUGH_ARGS);
-						return true;
-					}
-					Messages.sendNoPermsError(sender);
-					return true;
+		if (sender instanceof BlockCommandSender) {
+			if (plugin.getConfig().isSet("command-block." + args[0])
+					&& plugin.getConfig().getBoolean("command-block." + args[0])) {
+				if (((BlockCommandSender) sender).getBlock().getType().compareTo(Material.COMMAND) == 0) {
+					doCommand(sender,command,label,args);
 				}
-				sender.sendMessage(Messages.NOT_A_SUBCMD);
 			}
-			return false;
+		} else if (sender.hasPermission(command.getPermission())) {
+			doCommand(sender,command,label,args);
 		}
 		Messages.sendNoPermsError(sender);
 		return true;
