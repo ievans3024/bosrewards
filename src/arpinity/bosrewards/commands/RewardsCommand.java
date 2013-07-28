@@ -86,16 +86,21 @@ public final class RewardsCommand implements CommandExecutor {
 				if (subcommand.getCanUseSubCommand(sender)) {
 					if (subargs.length >= subcommand.getMinArgs()) {
 						return (subcommand.run(sender,command,label,subargs));
+					} else {
+						sender.sendMessage(Messages.NOT_ENOUGH_ARGS);
+						return true;
 					}
-					sender.sendMessage(Messages.NOT_ENOUGH_ARGS);
+				} else {
+					Messages.sendNoPermsError(sender);
 					return true;
 				}
-				Messages.sendNoPermsError(sender);
-				return true;
+			} else {
+				sender.sendMessage(Messages.NOT_A_SUBCMD);
+				return false;
 			}
-			sender.sendMessage(Messages.NOT_A_SUBCMD);
+		} else {
+			return false;
 		}
-		return false;
 	}
 	
 	@Override
@@ -108,10 +113,12 @@ public final class RewardsCommand implements CommandExecutor {
 					doCommand(sender,command,label,args);
 				}
 			}
+			return true;
 		} else if (sender.hasPermission(command.getPermission())) {
-			doCommand(sender,command,label,args);
-		}
-		Messages.sendNoPermsError(sender);
-		return true;
+			return doCommand(sender,command,label,args);
+		} else {
+			Messages.sendNoPermsError(sender);
+			return true;
+		}		
 	}
 }
