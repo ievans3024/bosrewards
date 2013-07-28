@@ -36,7 +36,7 @@ public class RedeemCommand extends SubCommand {
 						user.addReceipt(new Receipt(date,reward.getSummary(),reward.getCost()));
 						plugin.getDataController().writeUser(user);
 					}
-					plugin.getLogger().info(user.getName() + " " + receiptString);
+					plugin.getLogger().info("Receipt: " + user.getName() + " " + receiptString);
 					List<String> commands = reward.getCommands();
 					Iterator<String> cmdIter = commands.iterator();
 					while (cmdIter.hasNext()){

@@ -37,12 +37,13 @@ public final class TakeCommand extends SubCommand {
 			String pointword = ((pointsvalue == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural());
 			String havehas = ((pointsvalue == 1) ? "has" : "have");
 			String pointstring = Integer.toString(pointsvalue);
-			sender.sendMessage(Messages.COLOR_SUCCESS 
-					+ pointstring + " "
+			String message = pointstring + " "
 					+ pointword 
 					+ " " + havehas 
 					+ " been taken from " 
-					+ args[0]);
+					+ args[0];
+			plugin.getLogger().info(message);
+			sender.sendMessage(Messages.COLOR_SUCCESS + message);
 			Player target = Bukkit.getServer().getPlayer(args[0]);
 			if (target != null) {
 				target.sendMessage(Messages.COLOR_SUCCESS
