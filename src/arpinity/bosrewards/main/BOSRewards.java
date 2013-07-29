@@ -37,23 +37,16 @@ public final class BOSRewards extends JavaPlugin {
 		return this.controller;
 	}
 	
-	private String pointSingular;
-	private String pointPlural;
 	public final String getPointWordSingle() {
-		return pointSingular;
+		return getConfig().getString("point-name");
 	}
 	public final String getPointWordPlural() {
-		return pointPlural;
-	}
-	public void reloadPointWords() {
-		this.pointSingular = getConfig().getString("point-name");
-		this.pointPlural = getConfig().getString("point-name-plural");
+		return getConfig().getString("point-name-plural");
 	}
 	
 	@Override public void onLoad(){
 		// Load configuration & write README
 		saveDefaultConfig();
-		reloadPointWords();
 		saveResource("README.txt",true);
 ;		
     	// Create calendar
