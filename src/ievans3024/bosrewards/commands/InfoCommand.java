@@ -1,13 +1,14 @@
-package arpinity.bosrewards.commands;
+package ievans3024.bosrewards.commands;
+
+import ievans3024.bosrewards.main.BOSRewards;
+import ievans3024.bosrewards.main.Messages;
+import ievans3024.bosrewards.main.Reward;
 
 import java.util.List;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import arpinity.bosrewards.main.BOSRewards;
-import arpinity.bosrewards.main.Messages;
-import arpinity.bosrewards.main.Reward;
 
 public final class InfoCommand extends SubCommand {
 

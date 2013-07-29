@@ -1,21 +1,22 @@
-package arpinity.bosrewards.main;
+package ievans3024.bosrewards.main;
+
+import ievans3024.bosrewards.commands.RewardsCommand;
+import ievans3024.bosrewards.datacontroller.DataController;
+import ievans3024.bosrewards.datacontroller.YamlController;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import arpinity.bosrewards.commands.RewardsCommand;
-import arpinity.bosrewards.datacontroller.DataController;
-import arpinity.bosrewards.datacontroller.YamlController;
 
 /**
  * BOSRewards prize catalogue plugin developed on the Bukkit API
  * and made for the Brotherhood of Slaughter Minecraft server.
  * Visit our website at www.bhslaughter.com!
  * 
- * @version 0.0.8.2
- * @author arpinity3024
+ * @version 0.0.8.5
+ * @author ievans3024
  */
 
 public final class BOSRewards extends JavaPlugin {

@@ -1,10 +1,11 @@
-package arpinity.bosrewards.datacontroller;
+package ievans3024.bosrewards.datacontroller;
+
+import ievans3024.bosrewards.main.BOSRewards;
+import ievans3024.bosrewards.main.Reward;
+import ievans3024.bosrewards.main.User;
 
 import java.util.List;
 
-import arpinity.bosrewards.main.BOSRewards;
-import arpinity.bosrewards.main.Reward;
-import arpinity.bosrewards.main.User;
 
 /**
  * Data Controller abstract

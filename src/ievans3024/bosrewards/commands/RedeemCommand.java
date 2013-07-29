@@ -1,4 +1,10 @@
-package arpinity.bosrewards.commands;
+package ievans3024.bosrewards.commands;
+
+import ievans3024.bosrewards.main.BOSRewards;
+import ievans3024.bosrewards.main.Messages;
+import ievans3024.bosrewards.main.Receipt;
+import ievans3024.bosrewards.main.Reward;
+import ievans3024.bosrewards.main.User;
 
 import java.util.Iterator;
 import java.util.List;
@@ -7,11 +13,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import arpinity.bosrewards.main.BOSRewards;
-import arpinity.bosrewards.main.Messages;
-import arpinity.bosrewards.main.Receipt;
-import arpinity.bosrewards.main.Reward;
-import arpinity.bosrewards.main.User;
 
 public class RedeemCommand extends SubCommand {
 

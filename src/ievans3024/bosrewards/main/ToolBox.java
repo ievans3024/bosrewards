@@ -1,4 +1,4 @@
-package arpinity.bosrewards.main;
+package ievans3024.bosrewards.main;
 
 public final class ToolBox {
 	public static String arrayToString(String[] array, int start, int finish){

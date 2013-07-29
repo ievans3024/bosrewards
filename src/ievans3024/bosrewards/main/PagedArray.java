@@ -1,4 +1,4 @@
-package arpinity.bosrewards.main;
+package ievans3024.bosrewards.main;
 
 public final class PagedArray {
 	private final String[] content;

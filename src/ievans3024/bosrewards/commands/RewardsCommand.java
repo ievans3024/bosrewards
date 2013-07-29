@@ -1,4 +1,7 @@
-package arpinity.bosrewards.commands;
+package ievans3024.bosrewards.commands;
+
+import ievans3024.bosrewards.main.BOSRewards;
+import ievans3024.bosrewards.main.Messages;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -11,8 +14,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import arpinity.bosrewards.main.BOSRewards;
-import arpinity.bosrewards.main.Messages;
 
 public final class RewardsCommand implements CommandExecutor {
 	

@@ -1,5 +1,10 @@
-package arpinity.bosrewards.datacontroller;
+package ievans3024.bosrewards.datacontroller;
 
+
+import ievans3024.bosrewards.main.BOSRewards;
+import ievans3024.bosrewards.main.Receipt;
+import ievans3024.bosrewards.main.Reward;
+import ievans3024.bosrewards.main.User;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,10 +21,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import arpinity.bosrewards.main.BOSRewards;
-import arpinity.bosrewards.main.Receipt;
-import arpinity.bosrewards.main.Reward;
-import arpinity.bosrewards.main.User;
 
 public final class YamlController extends DataController {
 	

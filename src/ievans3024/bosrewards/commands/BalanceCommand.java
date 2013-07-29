@@ -1,13 +1,14 @@
-package arpinity.bosrewards.commands;
+package ievans3024.bosrewards.commands;
+
+import ievans3024.bosrewards.main.BOSRewards;
+import ievans3024.bosrewards.main.Messages;
+import ievans3024.bosrewards.main.User;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 //import org.bukkit.entity.Player;
 
-import arpinity.bosrewards.main.BOSRewards;
-import arpinity.bosrewards.main.Messages;
-import arpinity.bosrewards.main.User;
 
 public final class BalanceCommand extends SubCommand {
 

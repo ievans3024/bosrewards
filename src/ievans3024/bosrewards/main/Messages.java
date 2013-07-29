@@ -1,4 +1,4 @@
-package arpinity.bosrewards.main;
+package ievans3024.bosrewards.main;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;

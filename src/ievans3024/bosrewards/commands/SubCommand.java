@@ -1,10 +1,11 @@
-package arpinity.bosrewards.commands;
+package ievans3024.bosrewards.commands;
+
+import ievans3024.bosrewards.main.BOSRewards;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 
-import arpinity.bosrewards.main.BOSRewards;
 
 public abstract class SubCommand {
 	

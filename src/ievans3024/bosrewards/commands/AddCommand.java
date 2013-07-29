@@ -1,12 +1,13 @@
-package arpinity.bosrewards.commands;
+package ievans3024.bosrewards.commands;
+
+import ievans3024.bosrewards.main.BOSRewards;
+import ievans3024.bosrewards.main.Messages;
+import ievans3024.bosrewards.main.Reward;
+import ievans3024.bosrewards.main.ToolBox;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import arpinity.bosrewards.main.BOSRewards;
-import arpinity.bosrewards.main.Messages;
-import arpinity.bosrewards.main.Reward;
-import arpinity.bosrewards.main.ToolBox;
 
 
 public final class AddCommand extends SubCommand {
