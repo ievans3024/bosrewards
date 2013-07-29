@@ -29,7 +29,7 @@ public final class Messages {
 	// "syntax error" messages
 	public static final String[] NOT_A_SUBCMD = {
 		COLOR_SYNTAX_ERROR + "That subcommand does not exist",
-		COLOR_SYNTAX_ERROR + "Try /help rewards for a list of subcommands"
+		COLOR_SYNTAX_ERROR + "Try /rewards help for a list of subcommands"
 	};
 	public static final String[] NOT_A_REWARD = {
 		COLOR_SYNTAX_ERROR + "That reward does not exist!",
@@ -37,7 +37,7 @@ public final class Messages {
 	};
 	public static final String[] NOT_ENOUGH_ARGS = {
 		COLOR_SYNTAX_ERROR + "Not enough arguments for that command",
-		COLOR_SYNTAX_ERROR + "Try /help rewards <command> for more info"
+		COLOR_SYNTAX_ERROR + "Try /rewards help <command> for more info"
 	};
 	public static final String INVALID_ARGUMENT = COLOR_SYNTAX_ERROR + "Invalid argument: ";
 	
