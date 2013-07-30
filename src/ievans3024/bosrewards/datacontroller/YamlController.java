@@ -93,8 +93,9 @@ public final class YamlController extends DataController {
 		Iterator<String> iterator = UsersSet.iterator();
 		List<User> UsersList = new ArrayList<User>();
 		while (iterator.hasNext()){
-			if (usersTable.getConfigurationSection(iterator.next()).getInt("points") == points){
-				UsersList.add(getUserByName(iterator.next()));
+			ConfigurationSection usersection = usersTable.getConfigurationSection(iterator.next());
+			if (usersection.getInt("points") == points){
+				UsersList.add(getUserByName(usersection.getName()));
 			}
 		}
 		return UsersList;		
