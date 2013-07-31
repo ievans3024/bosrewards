@@ -47,7 +47,7 @@ public final class ListCommand extends SubCommand {
 			while (iterator.hasNext()) {
 				Reward reward = iterator.next();
 				boolean hasBypass = sender.hasPermission("BOSRewards.admin.bypass");
-				boolean hasPermission = (reward.getPermNode().equalsIgnoreCase("")) ? true : sender.hasPermission(reward.getPermNode());
+				boolean hasPermission = (reward.getPermNode() == null) ? true : sender.hasPermission(reward.getPermNode());			
 				if (hasBypass || hasPermission){
 					if (hasBypass || reward.getCost() >= 0) {
 						String id = String.format("%1$-" + tablepad[0] + "s", reward.getId());
