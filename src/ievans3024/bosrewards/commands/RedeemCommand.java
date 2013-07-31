@@ -71,7 +71,7 @@ public class RedeemCommand extends SubCommand {
 				sender.sendMessage(Messages.FAIL_REDEEM_NEGCOST);
 				return true;
 			}
-			sender.sendMessage(Messages.COLOR_BAD + "You do not have permission to get this reward");
+			sender.sendMessage(Messages.FAIL_REDEEM_NOPERM);
 			return true;
 		}
 		sender.sendMessage(Messages.NOT_A_REWARD);

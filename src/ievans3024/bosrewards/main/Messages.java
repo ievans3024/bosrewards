@@ -8,10 +8,10 @@ import org.bukkit.entity.Player;
 public final class Messages {
 	
 	// colors
-	public static final ChatColor COLOR_BAD = ChatColor.RED;
-	public static final ChatColor COLOR_SYNTAX_ERROR = ChatColor.AQUA;
-	public static final ChatColor COLOR_SUCCESS = ChatColor.GREEN;
-	public static final ChatColor COLOR_INFO = ChatColor.WHITE;
+	public static final String COLOR_BAD = ChatColor.RED + "" + ChatColor.ITALIC;
+	public static final String COLOR_SYNTAX_ERROR = ChatColor.DARK_AQUA + "" + ChatColor.ITALIC;
+	public static final String COLOR_SUCCESS = ChatColor.RESET + "" + ChatColor.GREEN;
+	public static final String COLOR_INFO = ChatColor.RESET + "" + ChatColor.GRAY;
 	
 	
 	// "bad" messages
@@ -49,5 +49,6 @@ public final class Messages {
 	
 	// "fail" messages
 	public static final String FAIL_REDEEM_NEGCOST = COLOR_BAD + "This reward is disabled.";
+	public static final String FAIL_REDEEM_NOPERM = COLOR_BAD + "You do not have permission to get this reward.";
 	
 }

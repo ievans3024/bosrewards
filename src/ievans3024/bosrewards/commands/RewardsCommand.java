@@ -53,25 +53,28 @@ public final class RewardsCommand implements CommandExecutor {
 		
 		// register new subcommands here
 		// don't forget to set description and usage strings!
-		this.commandMap.put("help", new HelpCommand(plugin,this,"help","BOSRewards.user.help",true,0));
-		this.commandMap.put("reload", new ReloadCommand(plugin,this,"reload","BOSRewards.util.reload",true,0));
 		this.commandMap.put("add", new AddCommand(plugin,this,"add","BOSRewards.util.createreward",true,2));
-		this.commandMap.put("edit", new EditCommand(plugin,this,"edit","BOSRewards.util.editreward",true,2));
-		this.commandMap.put("remove", new RemoveCommand(plugin,this,"remove","BOSRewards.util.removereward",true,1));
-		this.commandMap.put("rm", this.commandMap.get("remove"));
-		this.commandMap.put("list", new ListCommand(plugin,this,"list","BOSRewards.user.list",true,0));
-		this.commandMap.put("give", new GiveCommand(plugin,this,"give","BOSRewards.admin.givepoints",true,2));
-		this.commandMap.put("take", new TakeCommand(plugin,this,"take","BOSRewards.admin.takepoints",true,2));
-		this.commandMap.put("subtract", this.commandMap.get("take"));
-		this.commandMap.put("sub", this.commandMap.get("take"));
-		this.commandMap.put("set", new SetCommand(plugin,this,"set","BOSRewards.admin.setpoints",true,2));
-		this.commandMap.put("redeem", new RedeemCommand(plugin,this,"redeem","BOSRewards.user.redeem",false,1));
-		this.commandMap.put("get", this.commandMap.get("redeem"));
 		this.commandMap.put("balance", new BalanceCommand(plugin,this,"balance","BOSRewards.user.balance",false,0));
-		this.commandMap.put("bal", this.commandMap.get("balance"));
+		this.commandMap.put("edit", new EditCommand(plugin,this,"edit","BOSRewards.util.editreward",true,2));
+		this.commandMap.put("give", new GiveCommand(plugin,this,"give","BOSRewards.admin.givepoints",true,2));
+		this.commandMap.put("help", new HelpCommand(plugin,this,"help","BOSRewards.user.help",true,0));
 		this.commandMap.put("history", new HistoryCommand(plugin,this,"history","BOSRewards.user.history",false,0));
-		this.commandMap.put("hist", this.commandMap.get("history"));
 		this.commandMap.put("info", new InfoCommand(plugin,this,"info","BOSRewards.admin.info",true,1));
+		this.commandMap.put("list", new ListCommand(plugin,this,"list","BOSRewards.user.list",true,0));
+		this.commandMap.put("redeem", new RedeemCommand(plugin,this,"redeem","BOSRewards.user.redeem",false,1));
+		this.commandMap.put("reload", new ReloadCommand(plugin,this,"reload","BOSRewards.util.reload",true,0));
+		this.commandMap.put("remove", new RemoveCommand(plugin,this,"remove","BOSRewards.util.removereward",true,1));
+		this.commandMap.put("set", new SetCommand(plugin,this,"set","BOSRewards.admin.setpoints",true,2));
+		this.commandMap.put("take", new TakeCommand(plugin,this,"take","BOSRewards.admin.takepoints",true,2));
+		
+		// subcommand aliases
+		this.commandMap.put("bal", this.commandMap.get("balance"));
+		this.commandMap.put("get", this.commandMap.get("redeem"));
+		this.commandMap.put("hist", this.commandMap.get("history"));
+		this.commandMap.put("rm", this.commandMap.get("remove"));
+		this.commandMap.put("sub", this.commandMap.get("take"));
+		this.commandMap.put("subtract", this.commandMap.get("take"));
+		
 	}
 	
 	private boolean doCommand(CommandSender sender, Command command, String label, String[] args) {

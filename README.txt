@@ -72,7 +72,31 @@ point-name-plural
   -default value: points
   -the word to use for multiple points
 
-
+command-blocks
+  -child options define whether command blocks have access to subcommands
+  -all subcommands are blocked by default unless explicitly defined with this section
+  -subcommand aliases are supported, but must be explicitly defined
+  -options (set to true to allow)
+    add
+    balance
+    edit
+    give
+    help
+    history
+    info
+    list
+    redeem
+    reload
+    remove
+    set
+    take
+    bal
+    get
+    hist
+    rm
+    sub
+    subtract
+    
 database-type
   -default value: yaml
   -currently no other value will do anything
