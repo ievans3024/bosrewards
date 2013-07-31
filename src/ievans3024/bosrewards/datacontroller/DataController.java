@@ -131,10 +131,7 @@ public abstract class DataController {
 	public abstract Reward getRewardById(String id);
 	
 	/**
-	 * removeRewardById
-	 * 
 	 * Finds a reward entry in the Rewards table and removes it, if it exists.
-	 * 
 	 * @param id the id of the reward to remove.
 	 */
 	public abstract void removeRewardById(String id); //removes a reward from the rewards table
@@ -149,6 +146,12 @@ public abstract class DataController {
 	 */
 	public abstract List<String> getRewardCommands(String id);
 	
+	/**
+	 * Fetches the permission node string for a reward by id.
+	 * @param id the id of the reward in question.
+	 * @return A permission node string
+	 */
+	public abstract String getRewardPermNode(String id);
 	
 	/**
 	 * writeReward

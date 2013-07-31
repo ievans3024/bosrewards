@@ -46,10 +46,14 @@ public final class ListCommand extends SubCommand {
 			}
 			while (iterator.hasNext()) {
 				Reward reward = iterator.next();
-				if (sender.hasPermission("BOSRewards.admin.bypass") || reward.getCost() >= 0) {
-					String id = String.format("%1$-" + tablepad[0] + "s", reward.getId());
-					String summary = String.format("%1$-" + tablepad[1] + "s", reward.getSummary());
-					catalogue.add(Messages.COLOR_INFO + id + summary + reward.getCost());
+				boolean hasBypass = sender.hasPermission("BOSRewards.admin.bypass");
+				boolean hasPermission = (reward.getPermNode().equalsIgnoreCase("")) ? true : sender.hasPermission(reward.getPermNode());
+				if (hasBypass || hasPermission){
+					if (hasBypass || reward.getCost() >= 0) {
+						String id = String.format("%1$-" + tablepad[0] + "s", reward.getId());
+						String summary = String.format("%1$-" + tablepad[1] + "s", reward.getSummary());
+						catalogue.add(Messages.COLOR_INFO + id + summary + reward.getCost());
+					}
 				}
 			}
 			if (catalogue.isEmpty()) {

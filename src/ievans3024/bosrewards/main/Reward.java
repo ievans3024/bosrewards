@@ -7,6 +7,7 @@ public final class Reward {
 	private String summary;
 	private int cost = -1;
 	private List<String> commands;
+	private String permnode;
 	
 	// Getters
 
@@ -21,6 +22,10 @@ public final class Reward {
 	}
 	public List<String> getCommands(){
 		return this.commands;
+	}
+	
+	public String getPermNode(){
+		return this.permnode;
 	}
 	
 	//Setters
@@ -54,6 +59,10 @@ public final class Reward {
 	}
 	public Reward removeCommands(int cmdindex){
 		this.commands.remove(cmdindex);
+		return this;
+	}
+	public Reward setPermNode(String perm){
+		this.permnode = perm;
 		return this;
 	}
 }

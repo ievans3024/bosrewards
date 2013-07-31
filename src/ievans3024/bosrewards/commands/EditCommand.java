@@ -28,6 +28,8 @@ public final class EditCommand extends SubCommand {
 		this.editFlags.put("summary", new SummaryFlag());
 		this.editFlags.put("-commands", new RemoveCommandsFlag());
 		this.editFlags.put("-cmds", new RemoveCommandsFlag());
+		this.editFlags.put("permission", new PermissionFlag());
+		this.editFlags.put("perm", new PermissionFlag());
 		
 		String[] usage = {
 			Messages.COLOR_SUCCESS + "/rewards edit [id] [flag] [value]",
@@ -87,6 +89,12 @@ public final class EditCommand extends SubCommand {
 	private final class SummaryFlag implements EditFlag {
 		public void change(String[] args, Reward reward){
 			reward.setSummary(ToolBox.arrayToString(args, 2, args.length));
+		}
+	}
+	
+	private final class PermissionFlag implements EditFlag {
+		public void change(String[] args, Reward reward){
+			reward.setPermNode(args[2]);
 		}
 	}
 	

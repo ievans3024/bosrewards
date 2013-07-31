@@ -28,45 +28,50 @@ public class RedeemCommand extends SubCommand {
 		User user = plugin.getDataController().getUserByName(sender.getName());
 		if (plugin.getDataController().getRewardExists(args[0])){
 			Reward reward = plugin.getDataController().getRewardById(args[0]);
-			if (hasByPass || reward.getCost() >= 0){
-				if (hasByPass || user.getPoints() >= reward.getCost()){
-					String date = plugin.getDateFormat().format(plugin.getCalendar().getTime());
-					String receiptString = date + "  " + reward.getSummary() + "  " + reward.getCost() + " " + ((reward.getCost() == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural());
-					if (!hasByPass) {
-						user.subtractPoints(reward.getCost());
-						user.addReceipt(new Receipt(date,reward.getSummary(),reward.getCost()));
-						plugin.getDataController().writeUser(user);
+			boolean hasPermission = (reward.getPermNode().equalsIgnoreCase("")) ? true : sender.hasPermission(reward.getPermNode());
+			if (hasByPass || hasPermission){
+				if (hasByPass || reward.getCost() >= 0){
+					if (hasByPass || user.getPoints() >= reward.getCost()){
+						String date = plugin.getDateFormat().format(plugin.getCalendar().getTime());
+						String receiptString = date + "  " + reward.getSummary() + "  " + reward.getCost() + " " + ((reward.getCost() == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural());
+						if (!hasByPass) {
+							user.subtractPoints(reward.getCost());
+							user.addReceipt(new Receipt(date,reward.getSummary(),reward.getCost()));
+							plugin.getDataController().writeUser(user);
+						}
+						plugin.getLogger().info("Receipt: " + user.getName() + " " + receiptString);
+						List<String> commands = reward.getCommands();
+						Iterator<String> cmdIter = commands.iterator();
+						while (cmdIter.hasNext()){
+							String cmd = cmdIter.next();
+							
+							//find unescaped keywords
+							cmd = cmd.replaceAll("\\Q${user}\\E",user.getName())
+							
+							//clear escape sequences
+							.replaceAll("\\Q\\{\\E", "{")
+							.replaceAll("\\Q\\}\\E", "}")
+							.replaceAll("\\Q\\$\\E", "\\$");
+							
+							plugin.getServer().dispatchCommand(Bukkit.getConsoleSender(), cmd);
+						}
+						sender.sendMessage(Messages.COLOR_SUCCESS
+								+ "You redeemed "
+								+ Messages.COLOR_INFO + reward.getCost() + " "
+								+ Messages.COLOR_SUCCESS + ((reward.getCost() == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural())
+								+ " for " + reward.getSummary());
+						return true;
 					}
-					plugin.getLogger().info("Receipt: " + user.getName() + " " + receiptString);
-					List<String> commands = reward.getCommands();
-					Iterator<String> cmdIter = commands.iterator();
-					while (cmdIter.hasNext()){
-						String cmd = cmdIter.next();
-						
-						//find unescaped keywords
-						cmd = cmd.replaceAll("\\Q${user}\\E",user.getName())
-						
-						//clear escape sequences
-						.replaceAll("\\Q\\{\\E", "{")
-						.replaceAll("\\Q\\}\\E", "}")
-						.replaceAll("\\Q\\$\\E", "\\$");
-						
-						plugin.getServer().dispatchCommand(Bukkit.getConsoleSender(), cmd);
-					}
-					sender.sendMessage(Messages.COLOR_SUCCESS
-							+ "You redeemed "
-							+ Messages.COLOR_INFO + reward.getCost() + " "
-							+ Messages.COLOR_SUCCESS + ((reward.getCost() == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural())
-							+ " for " + reward.getSummary());
+					sender.sendMessage(Messages.COLOR_BAD
+							+ "You don't have enough "
+							+ plugin.getPointWordPlural()
+							+ " for that reward");
 					return true;
 				}
-				sender.sendMessage(Messages.COLOR_BAD
-						+ "You don't have enough "
-						+ plugin.getPointWordPlural()
-						+ " for that reward");
+				sender.sendMessage(Messages.FAIL_REDEEM_NEGCOST);
 				return true;
 			}
-			sender.sendMessage(Messages.FAIL_REDEEM_NEGCOST);
+			sender.sendMessage(Messages.COLOR_BAD + "You do not have permission to get this reward");
 			return true;
 		}
 		sender.sendMessage(Messages.NOT_A_REWARD);

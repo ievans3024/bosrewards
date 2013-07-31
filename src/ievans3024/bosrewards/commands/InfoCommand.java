@@ -36,6 +36,7 @@ public final class InfoCommand extends SubCommand {
 					"",
 					Messages.COLOR_INFO + "Reward Info:",
 					Messages.COLOR_INFO + "  ID: " + reward.getId(),
+					Messages.COLOR_INFO + "  Permission: " + reward.getPermNode(),
 					Messages.COLOR_INFO + "  Cost: " + Integer.toString(reward.getCost()),
 					Messages.COLOR_INFO + "  Summary: " + reward.getSummary(),
 					Messages.COLOR_INFO + "  Commands: "
