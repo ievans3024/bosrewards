@@ -27,23 +27,25 @@ public final class GiveCommand extends SubCommand {
 		if (plugin.getDataController().getUserExists(args[0])){
 			User user = plugin.getDataController().getUserByName(args[0]);
 			int pointsvalue = Integer.parseInt(args[1]);
-			String pointword = ((pointsvalue == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural());
-			String havehas = ((pointsvalue == 1) ? "has" : "have");
-			user.addPoints(pointsvalue);
-			plugin.getDataController().writeUser(user);
-			String message = args[1] + " "
-					+ pointword 
-					+ " " + havehas 
-					+ " been given to " 
-					+ args[0];
-			sender.sendMessage(Messages.COLOR_SUCCESS + message);
-			plugin.getLogger().info(message);
-			Player target = Bukkit.getServer().getPlayer(args[0]);
-			if (target != null) {
-				target.sendMessage(Messages.COLOR_SUCCESS
-						+ "You have been awarded "
-						+ args[1] + " "
-						+ pointword);
+			if (pointsvalue > 0) {
+				String pointword = ((pointsvalue == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural());
+				String havehas = ((pointsvalue == 1) ? "has" : "have");
+				user.addPoints(pointsvalue);
+				plugin.getDataController().writeUser(user);
+				String message = args[1] + " "
+						+ pointword 
+						+ " " + havehas 
+						+ " been given to " 
+						+ args[0];
+				sender.sendMessage(Messages.COLOR_SUCCESS + message);
+				plugin.getLogger().info(message);
+				Player target = Bukkit.getServer().getPlayer(args[0]);
+				if (target != null) {
+					target.sendMessage(Messages.COLOR_SUCCESS
+							+ "You have been awarded "
+							+ args[1] + " "
+							+ pointword);
+				}
 			}
 			return true;
 		}

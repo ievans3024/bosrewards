@@ -27,30 +27,32 @@ public final class TakeCommand extends SubCommand {
 				sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[1] + "\"" + " is not a number.");
 				return true;
 			}
-			User user = plugin.getDataController().getUserByName(args[0]);
-			if (user.getPoints() >= pointsvalue) {
-				user.subtractPoints(pointsvalue);
-			} else {
-				user.setPoints(0);
-				pointsvalue = user.getPoints();
-			}
-			plugin.getDataController().writeUser(user);
-			String pointword = ((pointsvalue == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural());
-			String havehas = ((pointsvalue == 1) ? "has" : "have");
-			String pointstring = Integer.toString(pointsvalue);
-			String message = pointstring + " "
-					+ pointword 
-					+ " " + havehas 
-					+ " been taken from " 
-					+ args[0];
-			plugin.getLogger().info(message);
-			sender.sendMessage(Messages.COLOR_SUCCESS + message);
-			Player target = Bukkit.getServer().getPlayer(args[0]);
-			if (target != null) {
-				target.sendMessage(Messages.COLOR_SUCCESS
-						+ pointstring + " "
-						+ pointword + " "
-						+ havehas + " been subtracted from your balance.");
+			if (pointsvalue > 0) {
+				User user = plugin.getDataController().getUserByName(args[0]);
+				if (user.getPoints() >= pointsvalue) {
+					user.subtractPoints(pointsvalue);
+				} else {
+					pointsvalue = user.getPoints();
+					user.setPoints(0);
+				}
+				plugin.getDataController().writeUser(user);
+				String pointword = ((pointsvalue == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural());
+				String havehas = ((pointsvalue == 1) ? "has" : "have");
+				String pointstring = Integer.toString(pointsvalue);
+				String message = pointstring + " "
+						+ pointword 
+						+ " " + havehas 
+						+ " been taken from " 
+						+ args[0];
+				plugin.getLogger().info(message);
+				sender.sendMessage(Messages.COLOR_SUCCESS + message);
+				Player target = Bukkit.getServer().getPlayer(args[0]);
+				if (target != null) {
+					target.sendMessage(Messages.COLOR_SUCCESS
+							+ pointstring + " "
+							+ pointword + " "
+							+ havehas + " been subtracted from your balance.");
+				}
 			}
 			return true;
 		}
