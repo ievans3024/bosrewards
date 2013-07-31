@@ -121,6 +121,8 @@ A very short description of what the reward is or does
 The number of points that are removed from a user’s 
 balance on purchase of the reward
 
+<permission>
+A permission node string
 
 <command>
 A quoted text string of a command to execute as console 
@@ -133,6 +135,7 @@ Format:
 <id>:
   summary: <summary>
   cost: <cost>
+  permission: <permission>
   commands:
         - <command1>
         - <command2>
@@ -140,9 +143,10 @@ Format:
 
 
 Example:
-1:
+example:
   summary: A Compliment
   cost: 1
+  permission: example.reward
   commands:
         -"say ${user} bought a compliment!"
         -"say ${user} is awesome!"
@@ -157,6 +161,16 @@ it. if necessary, you may escape this behavior like so: \$\{user\}
 \$\{user\} will then be interpreted as literally ${user} instead 
 of the username. you would only need this if another plugin's command 
 uses ${user} for something else.
+
+The permission node, if supplied, determines if the reward can be seen in
+/rewards list, and if the reward can be purchased with points. If no permission
+node is specified, the reward is automatically visible/purchasable for everyone.
+
+If the cost of the reward is a negative number, the reward is disabled
+and requires the BOSRewards.admin.bypass permission to see/purchase. If
+a player has this permission, rewards that do not have a negative cost will not
+take points from them on purchase, and their transaction history will not
+be recorded. This is useful for testing rewards.
 
 
 
@@ -187,22 +201,25 @@ IV. Commands
     -<flag> is one of several flags:
     
       cost
-	-requires a number
-	-negative numbers disable the reward for normal users
+		-requires a number
+		-negative numbers disable the reward for normal users
 	  
       commands (alias cmds)
-	-sets the commands to exactly one command
+		-sets the commands to exactly one command
 	  
       +commands (alias +cmds)
-	-adds another command to the reward commands list
+		-adds another command to the reward commands list
 	  
       -commands (alias -cmds)
-	-requires a number
-	-removes the command at the index supplied
-	-use /rewards info <id> to find the index of a command
+		-requires a number
+		-removes the command at the index supplied
+		-use /rewards info <id> to find the index of a command
 	  
       summary
-	  -sets the summary of the reward
+	  	-sets the summary of the reward
+	  	
+	  permission (alias perm)
+	  	-sets the permission node
     
 /rewards give 
   -gives a user points
