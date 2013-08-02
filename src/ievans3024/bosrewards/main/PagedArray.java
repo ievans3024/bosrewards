@@ -23,11 +23,13 @@ public final class PagedArray {
 		}
 		String[] newarray;
 		int length = 6;
+		int index = (page * 6) - 6;
 		if (this.content.length < 6) {
 			length = this.content.length;
+		} else if (this.content.length - index < 6) {
+			length = this.content.length - index;
 		}
 		newarray = new String[length + 1];
-		int index = (page * 6) - 6;
 		int i = 0;
 		while (i < length) {
 			newarray[i] = this.content[index + i];

@@ -19,25 +19,44 @@ public final class RewardsCommand implements CommandExecutor {
 	
 	private final BOSRewards plugin;
 	private Map<String,SubCommand> commandMap = new HashMap<String,SubCommand>();
+	private Map<String,SubCommand> aliasMap = new HashMap<String,SubCommand>();
 	
 	public final BOSRewards getPlugin() {
 		return this.plugin;
 	}
 	
 	public final boolean getSubCmdExists(String cmd) {
-		return this.commandMap.containsKey(cmd);
+		if (this.commandMap.containsKey(cmd) || this.aliasMap.containsKey(cmd)) {
+			return true;
+		}
+		return false;
 	}
 	
 	public final String[] getSubCmdUsage(String cmd) {
-		return this.commandMap.get(cmd).getUsage();
+		if (this.commandMap.containsKey(cmd)) {
+			return this.commandMap.get(cmd).getUsage();
+		} else if (this.aliasMap.containsKey(cmd)) {
+			return this.aliasMap.get(cmd).getUsage();
+		}
+		return null;
 	}
 	
 	public final String getSubCmdDescription(String cmd) {
-		return this.commandMap.get(cmd).getDescription();
+		if (this.commandMap.containsKey(cmd)) {
+			return this.commandMap.get(cmd).getDescription();
+		} else if (this.aliasMap.containsKey(cmd)) {
+			return this.aliasMap.get(cmd).getDescription();
+		}
+		return null;
 	}
 	
 	public final String getSubCmdPermNode(String cmd) {
-		return this.commandMap.get(cmd).getPermNode();
+		if (this.commandMap.containsKey(cmd)) {
+			return this.commandMap.get(cmd).getPermNode();
+		} else if (this.aliasMap.containsKey(cmd)) {
+			return this.aliasMap.get(cmd).getPermNode();
+		}
+		return null;
 	}
 	
 	public final int getSubCmdCount() {
@@ -68,39 +87,42 @@ public final class RewardsCommand implements CommandExecutor {
 		this.commandMap.put("take", new TakeCommand(plugin,this,"take","BOSRewards.admin.takepoints",true,2));
 		
 		// subcommand aliases
-		this.commandMap.put("bal", this.commandMap.get("balance"));
-		this.commandMap.put("get", this.commandMap.get("redeem"));
-		this.commandMap.put("hist", this.commandMap.get("history"));
-		this.commandMap.put("rm", this.commandMap.get("remove"));
-		this.commandMap.put("sub", this.commandMap.get("take"));
-		this.commandMap.put("subtract", this.commandMap.get("take"));
+		this.aliasMap.put("bal", new BalanceCommand(plugin,this,"balance","BOSRewards.user.balance",false,0));
+		this.aliasMap.put("get", new RedeemCommand(plugin,this,"redeem","BOSRewards.user.redeem",false,1));
+		this.aliasMap.put("hist", new HistoryCommand(plugin,this,"history","BOSRewards.user.history",false,0));
+		this.aliasMap.put("rm", new RemoveCommand(plugin,this,"remove","BOSRewards.util.removereward",true,1));
+		this.aliasMap.put("sub", new TakeCommand(plugin,this,"take","BOSRewards.admin.takepoints",true,2));
+		this.aliasMap.put("subtract", new TakeCommand(plugin,this,"take","BOSRewards.admin.takepoints",true,2));
 		
 	}
 	
 	private boolean doCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (args.length > 0){
+			SubCommand subcommand;
 			if (this.commandMap.containsKey(args[0])) {
-				SubCommand subcommand = this.commandMap.get(args[0]);
-				String[] subargs;
-				if (args.length > 1) {
-					subargs = Arrays.copyOfRange(args,1,args.length);
-				} else {
-					subargs = new String[0];
-				}
-				if (subcommand.getCanUseSubCommand(sender)) {
-					if (subargs.length >= subcommand.getMinArgs()) {
-						return (subcommand.run(sender,command,label,subargs));
-					} else {
-						sender.sendMessage(Messages.NOT_ENOUGH_ARGS);
-						return true;
-					}
-				} else {
-					Messages.sendNoPermsError(sender);
-					return true;
-				}
+				subcommand = this.commandMap.get(args[0]);
+			} else if (this.aliasMap.containsKey(args[0])) {
+				subcommand = this.aliasMap.get(args[0]);
 			} else {
 				sender.sendMessage(Messages.NOT_A_SUBCMD);
 				return false;
+			}
+			String[] subargs;
+			if (args.length > 1) {
+				subargs = Arrays.copyOfRange(args,1,args.length);
+			} else {
+				subargs = new String[0];
+			}
+			if (subcommand.getCanUseSubCommand(sender)) {
+				if (subargs.length >= subcommand.getMinArgs()) {
+					return (subcommand.run(sender,command,label,subargs));
+				} else {
+					sender.sendMessage(Messages.NOT_ENOUGH_ARGS);
+					return true;
+				}
+			} else {
+				Messages.sendNoPermsError(sender);
+				return true;
 			}
 		} else {
 			return false;

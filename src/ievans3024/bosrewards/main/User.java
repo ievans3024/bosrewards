@@ -33,6 +33,7 @@ public final class User {
 			Receipt receipt = iterator.next();
 			receiptlist.add(Messages.COLOR_INFO + receipt.getDate());
 			receiptlist.add(Messages.COLOR_INFO + receipt.getSummary() + "    " + receipt.getCost());
+			receiptlist.add("");
 		}			
 		return receiptlist;
 	}

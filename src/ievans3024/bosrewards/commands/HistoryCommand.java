@@ -69,29 +69,6 @@ public final class HistoryCommand extends SubCommand {
 					return true;
 				}
 			}
-			
-			// Old code
-			/*
-			if (plugin.getDataController().getUserExists(args[0])) {
-				if (sender instanceof ConsoleCommandSender || sender.hasPermission("BOSRewards.admin.seehistory")) {
-					user = plugin.getDataController().getUserByName(args[0]);
-					header[1] = Messages.COLOR_INFO + "Redemption history for " + user.getName() + " - Page ";
-					if (args.length > 2){
-						pageNumber = Integer.parseInt(args[1]);
-					}
-				} else {
-					Messages.sendNoPermsError(sender);
-					return true;
-				}
-			} else if (!(sender instanceof ConsoleCommandSender)) {
-				user = plugin.getDataController().getUserByName(sender.getName());
-				header[1] = Messages.COLOR_INFO + "Your redemption history - Page ";
-				pageNumber = Integer.parseInt(args[0]);
-			} else {
-				Messages.sendNoPermsError(sender);
-				return true;
-			}
-			*/
 		} else {
 			if (!(sender instanceof ConsoleCommandSender)) {
 				user = plugin.getDataController().getUserByName(sender.getName());
