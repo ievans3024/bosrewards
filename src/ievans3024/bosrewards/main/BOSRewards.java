@@ -15,7 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * and made for the Brotherhood of Slaughter Minecraft server.
  * Visit our website at www.bhslaughter.com!
  * 
- * @version 0.0.8.6
+ * @version 0.0.8.7
  * @author ievans3024
  */
 
