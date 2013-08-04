@@ -40,8 +40,7 @@ public final class HelpCommand extends SubCommand {
 		while (subCmdIter.hasNext()) {
 			String cmd = subCmdIter.next();
 			if (sender instanceof ConsoleCommandSender || sender.hasPermission(this.parent.getSubCmdPermNode(cmd))) {
-				catalogue.add(Messages.COLOR_INFO + "/" + command.getName() + " " + cmd);
-				catalogue.add(Messages.COLOR_INFO + this.parent.getSubCmdDescription(cmd));
+				catalogue.add(Messages.COLOR_INFO + "/" + command.getName() + " " + cmd + this.parent.getSubCmdDescription(cmd));
 			}
 		}
 		String[] catArray = new String[catalogue.size()];

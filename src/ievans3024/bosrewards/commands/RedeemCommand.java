@@ -32,6 +32,9 @@ public class RedeemCommand extends SubCommand {
 			String[] args) {
 		boolean hasByPass = (sender.hasPermission("BOSRewards.admin.bypass"));
 		User user = plugin.getDataController().getUserByName(sender.getName());
+		if (user.getPoints() < 0) {
+			user.setPoints(0);
+		}
 		if (plugin.getDataController().getRewardExists(args[0])){
 			Reward reward = plugin.getDataController().getRewardById(args[0]);
 			boolean hasPermission = (reward.getPermNode() == null) ? true : sender.hasPermission(reward.getPermNode());

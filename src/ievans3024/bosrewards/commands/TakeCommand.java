@@ -35,7 +35,7 @@ public final class TakeCommand extends SubCommand {
 			}
 			if (pointsvalue > 0) {
 				User user = plugin.getDataController().getUserByName(args[0]);
-				if (user.getPoints() >= pointsvalue) {
+				if (user.getPoints() >= 0 && user.getPoints() >= pointsvalue) {
 					user.subtractPoints(pointsvalue);
 				} else {
 					pointsvalue = user.getPoints();
@@ -59,6 +59,8 @@ public final class TakeCommand extends SubCommand {
 							+ pointword + " "
 							+ havehas + " been subtracted from your balance.");
 				}
+			} else {
+				sender.sendMessage(Messages.COLOR_BAD + "Please provide a positive number greater than zero.");
 			}
 			return true;
 		}

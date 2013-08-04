@@ -92,6 +92,13 @@ public final class EditCommand extends SubCommand {
 		}
 	}
 	
+	/*TODO:
+	 * make the permission setting a list
+	 * make three classes for PermissionFlag:
+	 *     AddPermissionFlag
+	 *     RemPermissionFlag
+	 *     PermissionFlag
+	 */
 	private final class PermissionFlag implements EditFlag {
 		public void change(String[] args, Reward reward){
 			reward.setPermNode(args[2]);
@@ -110,7 +117,7 @@ public final class EditCommand extends SubCommand {
 						sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[2] + "\"" + " is not a number.");
 						return true;
 					} catch (IndexOutOfBoundsException ex) {
-						sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[2] + "\"" + " does not correspond to a reward.");
+						sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[2] + "\"" + " does not correspond to a reward command.");
 						return true;
 					}
 					

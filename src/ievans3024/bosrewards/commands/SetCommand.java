@@ -27,7 +27,7 @@ public final class SetCommand extends SubCommand {
 	public boolean run(CommandSender sender, Command command, String label, String[] args) {
 		if (plugin.getDataController().getUserExists(args[0])) {
 			int pointsvalue;
-			if (ToolBox.stringIsANumber(args[0])) {
+			if (ToolBox.stringIsANumber(args[1])) {
 				pointsvalue = Integer.parseInt(args[1]);
 			} else {
 				sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[1] + "\"" + " is not a number.");
@@ -35,7 +35,11 @@ public final class SetCommand extends SubCommand {
 			}
 			User user = plugin.getDataController().getUserByName(args[0]);
 			String pointword = ((pointsvalue == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural());
-			user.setPoints(pointsvalue);
+			if (pointsvalue >= 0) {
+				user.setPoints(pointsvalue);
+			} else {
+				user.setPoints(0);
+			}
 			plugin.getDataController().writeUser(user);
 			String message = args[0] + "'s "
 					+ plugin.getPointWordPlural()

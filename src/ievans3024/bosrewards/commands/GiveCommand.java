@@ -28,8 +28,15 @@ public final class GiveCommand extends SubCommand {
 			User user = plugin.getDataController().getUserByName(args[0]);
 			int pointsvalue = Integer.parseInt(args[1]);
 			if (pointsvalue > 0) {
+				if (user.getPoints() + pointsvalue < 0) {
+					sender.sendMessage(Messages.COLOR_BAD + user.getName() + " has reached the maximum points allowable.");
+					return true;
+				}
 				String pointword = ((pointsvalue == 1) ? plugin.getPointWordSingle() : plugin.getPointWordPlural());
 				String havehas = ((pointsvalue == 1) ? "has" : "have");
+				if (user.getPoints() < 0) {
+					user.setPoints(0);
+				}
 				user.addPoints(pointsvalue);
 				plugin.getDataController().writeUser(user);
 				String message = args[1] + " "
@@ -46,6 +53,8 @@ public final class GiveCommand extends SubCommand {
 							+ args[1] + " "
 							+ pointword);
 				}
+			} else {
+				sender.sendMessage(Messages.COLOR_BAD + "Please provide a positive number greater than zero.");
 			}
 			return true;
 		}
