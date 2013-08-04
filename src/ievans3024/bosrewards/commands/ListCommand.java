@@ -20,10 +20,10 @@ public final class ListCommand extends SubCommand {
 			boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
 		String[] usage = {
-			Messages.COLOR_SUCCESS + "/rewards list <page>",
-			Messages.COLOR_INFO + "Lists all available rewards, paged if necessary."
+			Messages.COLOR_SUCCESS + "/rewards list <page>" +
+			Messages.COLOR_INFO + " - Lists all available rewards, paged if necessary."
 		};
-		this.setDescription("Lists all available rewards")
+		this.setDescription("Lists all available rewards.")
 		.setUsage(usage);
 	}
 	
@@ -70,7 +70,7 @@ public final class ListCommand extends SubCommand {
 					sender.sendMessage(Messages.INVALID_ARGUMENT + "\"" + args[0] + "\"" + " is not a page number.");
 					return true;
 				}
-				if (pageNumber > reply.getMaxPages()){
+				if (pageNumber < 1 || pageNumber > reply.getMaxPages()){
 					sender.sendMessage(Messages.COLOR_SYNTAX_ERROR + "Invalid page number. Expecting number 1 through " + reply.getMaxPages());
 					return true;
 				}

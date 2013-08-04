@@ -17,9 +17,9 @@ public final class BalanceCommand extends SubCommand {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
 		String[] usage = {
 				Messages.COLOR_SUCCESS + "/rewards balance"
-					+ Messages.COLOR_INFO + "Displays your " + plugin.getPointWordPlural() + " balance.",
+					+ Messages.COLOR_INFO + " - Displays your " + plugin.getPointWordPlural() + " balance.",
 				Messages.COLOR_SUCCESS + "/rewards balance [user]"
-					+ Messages.COLOR_INFO + "Displays the " + plugin.getPointWordPlural() + " balance for [user]"
+					+ Messages.COLOR_INFO + " - Displays the " + plugin.getPointWordPlural() + " balance for [user]"
 		};
 		this.setDescription("Displays " + plugin.getPointWordPlural() + " balance")
 		.setUsage(usage);

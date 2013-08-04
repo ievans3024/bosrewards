@@ -17,8 +17,8 @@ public final class SetCommand extends SubCommand {
 			boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
 		String[] usage = {
-				Messages.COLOR_SUCCESS + "/rewards set [user] [number]",
-				Messages.COLOR_INFO + "Sets a user's " + plugin.getPointWordPlural() + " to the number specified."
+				Messages.COLOR_SUCCESS + "/rewards set [user] [number]" +
+				Messages.COLOR_INFO + " - Sets a user's " + plugin.getPointWordPlural() + " to the number specified."
 		};
 		this.setDescription("Sets a users " + plugin.getPointWordPlural() + " to a particular value.")
 		.setUsage(usage);

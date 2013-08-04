@@ -21,11 +21,11 @@ public final class HelpCommand extends SubCommand {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
 		String[] usage = {
 				Messages.COLOR_SUCCESS + "/rewards help <page>"
-						+ Messages.COLOR_INFO + " - lists all subcommands and their descriptions",
+						+ Messages.COLOR_INFO + " - Lists all subcommands and their descriptions.",
 				Messages.COLOR_SUCCESS + "/rewards help <subcommand>"
-						+ Messages.COLOR_INFO + " - provides usage info for <subcommand>"
+						+ Messages.COLOR_INFO + " - Provides usage info for <subcommand>."
 		};
-		this.setDescription("Help menu for BOSRewards")
+		this.setDescription("Help menu for BOSRewards.")
 		.setUsage(usage);
 	}
 
@@ -40,7 +40,8 @@ public final class HelpCommand extends SubCommand {
 		while (subCmdIter.hasNext()) {
 			String cmd = subCmdIter.next();
 			if (sender instanceof ConsoleCommandSender || sender.hasPermission(this.parent.getSubCmdPermNode(cmd))) {
-				catalogue.add(Messages.COLOR_INFO + "/" + command.getName() + " " + cmd + " - " + this.parent.getSubCmdDescription(cmd));
+				catalogue.add(Messages.COLOR_INFO + "/" + command.getName() + " " + cmd);
+				catalogue.add(Messages.COLOR_INFO + this.parent.getSubCmdDescription(cmd));
 			}
 		}
 		String[] catArray = new String[catalogue.size()];
@@ -55,7 +56,7 @@ public final class HelpCommand extends SubCommand {
 				}
 			} else if (ToolBox.stringIsANumber(args[0])) {
 				pageNumber = Integer.parseInt(args[0]);
-				if (pageNumber > reply.getMaxPages()) {
+				if (pageNumber > reply.getMaxPages() || pageNumber < 1) {
 					message = ToolBox.stringToArray(Messages.COLOR_SYNTAX_ERROR	
 								+ "Invalid page number. Expecting number 1 through "
 								+ reply.getMaxPages());

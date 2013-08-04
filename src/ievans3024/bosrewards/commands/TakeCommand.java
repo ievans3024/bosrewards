@@ -17,10 +17,10 @@ public final class TakeCommand extends SubCommand {
 			boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
 		String[] usage = {
-				Messages.COLOR_SUCCESS + "/rewards take [user] [number]",
-				Messages.COLOR_INFO + "Removes a number of " + plugin.getPointWordPlural() + " from [user]'s balance"
+				Messages.COLOR_SUCCESS + "/rewards take [user] [number]" +
+				Messages.COLOR_INFO + " - Removes a number of " + plugin.getPointWordPlural() + " from [user]'s balance."
 		};
-		this.setDescription("Removes some " + plugin.getPointWordPlural() + " from a user's balance")
+		this.setDescription("Removes some " + plugin.getPointWordPlural() + " from a user's balance.")
 		.setUsage(usage);
 	}
 	

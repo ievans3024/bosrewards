@@ -16,8 +16,8 @@ public final class AddCommand extends SubCommand {
 			boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
 		String[] usage = {
-				Messages.COLOR_SUCCESS + "/rewards add [id] [summary]",
-				Messages.COLOR_INFO + "Adds a new reward with the specified id and summary properties"
+				Messages.COLOR_SUCCESS + "/rewards add [id] [summary]" +
+				Messages.COLOR_INFO + " - Adds a new reward with the specified id and summary."
 		};
 		this.setDescription("Adds a new reward.")
 		.setUsage(usage);

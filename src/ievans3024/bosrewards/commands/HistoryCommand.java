@@ -18,12 +18,12 @@ public final class HistoryCommand extends SubCommand {
 			boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
 		String[] usage = {
-			Messages.COLOR_SUCCESS + "/rewards history <page>"
-				+ Messages.COLOR_INFO + " - Displays a paged history of your rewards redemptions.",
-			Messages.COLOR_SUCCESS + "/rewards history <user> <page>"
-				+Messages.COLOR_INFO + " - Displays a paged history of <user>'s rewards redemptions."
+			Messages.COLOR_SUCCESS + "/rewards history <page>" +
+			Messages.COLOR_INFO + " - Displays a paged history of your rewards redemptions.",
+			Messages.COLOR_SUCCESS + "/rewards history <user> <page>" +
+			Messages.COLOR_INFO + " - Displays a paged history of <user>'s rewards redemptions."
 		};
-		this.setDescription("Displays a paged history of rewards redemptions")
+		this.setDescription("Displays a paged history of rewards redemptions.")
 		.setUsage(usage);
 	}
 
@@ -49,7 +49,7 @@ public final class HistoryCommand extends SubCommand {
 					if (plugin.getDataController().getUserExists(args[0])){
 						user = plugin.getDataController().getUserByName(args[0]);
 						header[1] = Messages.COLOR_INFO + "Redemption history for " + user.getName() + " - Page ";
-						if (args.length > 2) {
+						if (args.length > 1) {
 							if (ToolBox.stringIsANumber(args[1])){
 								pageNumber = Integer.parseInt(args[1]);
 							} else {
@@ -57,13 +57,13 @@ public final class HistoryCommand extends SubCommand {
 								return true;
 							}
 						}
-					} else if (sender.getName().equalsIgnoreCase(args[0])){
-						user = plugin.getDataController().getUserByName(sender.getName());
-						header[1] = Messages.COLOR_INFO + "Your redemption history - Page ";
 					} else {
 						sender.sendMessage(Messages.INVALID_ARGUMENT + " " + args[0] + " is not in the database.");
 						return true;
 					}
+				} else if (sender.getName().equalsIgnoreCase(args[0])){
+						user = plugin.getDataController().getUserByName(sender.getName());
+						header[1] = Messages.COLOR_INFO + "Your redemption history - Page ";
 				} else {
 					Messages.sendNoPermsError(sender);
 					return true;
@@ -83,7 +83,7 @@ public final class HistoryCommand extends SubCommand {
 		userReceipts = user.getReceiptsList().toArray(userReceipts);
 		if (userReceipts.length > 0){
 			PagedArray reply = new PagedArray(userReceipts);
-			if (pageNumber < 0 || pageNumber > reply.getMaxPages()){
+			if (pageNumber < 1 || pageNumber > reply.getMaxPages()){
 				String[] message = {
 						Messages.COLOR_SYNTAX_ERROR
 							+ "Invalid page number. Expecting number 1 through "

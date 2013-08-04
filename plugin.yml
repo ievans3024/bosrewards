@@ -1,6 +1,6 @@
 name: BOSRewards
 main: ievans3024.bosrewards.main.BOSRewards
-version: 0.0.8.8
+version: 0.0.8.9
 author: ievans3024
 website: http://www.bhslaughter.com/
 commands:
@@ -25,7 +25,7 @@ commands:
 permissions:
   BOSRewards.*:
     description: All BOSRewards permissions
-    default: false
+    default: op
     children:
       BOSRewards.admin.*: true
       BOSRewards.user.*: true

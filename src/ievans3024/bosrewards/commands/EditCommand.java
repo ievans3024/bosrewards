@@ -32,11 +32,11 @@ public final class EditCommand extends SubCommand {
 		this.editFlags.put("perm", new PermissionFlag());
 		
 		String[] usage = {
-			Messages.COLOR_SUCCESS + "/rewards edit [id] [flag] [value]",
-			Messages.COLOR_INFO + "Edits the properties of the reward with id of [id]",
-			Messages.COLOR_INFO + "Flags:",
-			Messages.COLOR_SUCCESS + "cost, commands, +commands, -commands, summary",
-			Messages.COLOR_INFO + "Consult the README or bukkitdev documentation for more info."
+			Messages.COLOR_SUCCESS + "/rewards edit [id] [flag] [value]" +
+			Messages.COLOR_INFO + " - Edits the properties of the reward with id of [id].",
+			Messages.COLOR_INFO + "Flags:" +
+			Messages.COLOR_SUCCESS + " cost, commands, +commands, -commands, summary, permission",
+			Messages.COLOR_INFO + "Consult the BOSRewards documentation for more info."
 		};
 		this.setDescription("Edits the properties of a reward.")
 		.setUsage(usage);

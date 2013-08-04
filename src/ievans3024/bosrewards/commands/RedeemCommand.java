@@ -20,8 +20,8 @@ public class RedeemCommand extends SubCommand {
 			boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
 		String[] usage = {
-				Messages.COLOR_SUCCESS + "/rewards redeem [id]",
-				Messages.COLOR_INFO + "Redeems " + plugin.getPointWordPlural() + " for the specified reward."
+				Messages.COLOR_SUCCESS + "/rewards redeem [id]" +
+				Messages.COLOR_INFO + " - Redeems " + plugin.getPointWordPlural() + " for the specified reward."
 		};
 		this.setDescription("Redeem " + plugin.getPointWordPlural() + " for a reward.")
 		.setUsage(usage);

@@ -16,10 +16,10 @@ public final class GiveCommand extends SubCommand {
 			boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
 		String[] usage = {
-				Messages.COLOR_SUCCESS + "/rewards give [user] [number]",
-				Messages.COLOR_INFO + "Adds a number of " + plugin.getPointWordPlural() + " to [user]'s balance"
+				Messages.COLOR_SUCCESS + "/rewards give [user] [number]" +
+				Messages.COLOR_INFO + " - Adds a number of " + plugin.getPointWordPlural() + " to [user]'s balance."
 		};
-		this.setDescription("Adds some " + plugin.getPointWordPlural() + " to a user's balance")
+		this.setDescription("Adds some " + plugin.getPointWordPlural() + " to a user's balance.")
 		.setUsage(usage);
 	}
 	

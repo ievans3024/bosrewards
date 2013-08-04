@@ -15,10 +15,10 @@ public final class RemoveCommand extends SubCommand {
 			boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
 		String[] usage = {
-				Messages.COLOR_SUCCESS + "/rewards remove [id] [another id] [...]",
-				Messages.COLOR_INFO + "Removes one or more rewards by a list of IDs."
+				Messages.COLOR_SUCCESS + "/rewards remove [id] [another id] [...]" + 
+				Messages.COLOR_INFO + " - Removes one or more rewards by a list of IDs."
 		};
-		this.setDescription("Removes rewards by their IDs")
+		this.setDescription("Removes rewards by their IDs.")
 		.setUsage(usage);
 	}
 	

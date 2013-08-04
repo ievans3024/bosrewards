@@ -16,8 +16,8 @@ public final class InfoCommand extends SubCommand {
 			String permission, boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
 		String[] usage = {
-			Messages.COLOR_SUCCESS + "/rewards info [id]",
-			Messages.COLOR_INFO + "Displays attributes for the reward with ID of [id]."
+			Messages.COLOR_SUCCESS + "/rewards info [id]" +
+			Messages.COLOR_INFO + " - Displays attributes for the reward with ID of [id]."
 		};
 		this.setDescription("Displays attributes for rewards by id.")
 		.setUsage(usage);

@@ -15,10 +15,10 @@ public final class ReloadCommand extends SubCommand {
 			boolean allowConsole, int minArgs) {
 		super(plugin, parent, name, permission, allowConsole, minArgs);
 		String[] usage = {
-			Messages.COLOR_SUCCESS + "/rewards reload",
-			Messages.COLOR_INFO + "Reloads the plugin configuration and data tables."
+			Messages.COLOR_SUCCESS + "/rewards reload" +
+			Messages.COLOR_INFO + " - Reloads the plugin configuration and data tables."
 		};
-		this.setDescription("Reloads the plugin config and data")
+		this.setDescription("Reloads the plugin config and data.")
 		.setUsage(usage);
 	}
 	
