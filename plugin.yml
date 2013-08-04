@@ -9,19 +9,24 @@ commands:
     description: "Main command for BOSRewards"
     permission: BOSRewards.user.*
     permission-message: You do not have permission to use rewards.
-    usage:
-    - "/rewards [command] [args]"
-    - "Aliases: /rw"
-    - "Try /rewards help or /rewards help [command] for more info."
+    usage: |
+      BOSRewards 0.0.8.9
+      -------------------
+      §a/rewards [command] [args]
+      §7Aliases: /rw
+      §7Try §a/rewards help §7or §a/rewards help [command] §7for more info.
+       
   rw:
     aliases: bosrw
     description: "Shorthand version of main command for BOSRewards"
     permission: BOSRewards.user.*
     permission-message: You do not have permissions to use rewards.
-    usage:
-    - "/rw [command] [args]"
-    - "Alias for /rewards"
-    - "Try /rw help or /rw help [command] for more info."
+    usage: |
+      BOSRewards 0.0.8.9
+      -------------------
+      §a/rw [command] [args] §7- Alias for /rewards.
+      §7Try §a/rw help §7or §a/rw help [command] §7for more info.
+       
 permissions:
   BOSRewards.*:
     description: All BOSRewards permissions
