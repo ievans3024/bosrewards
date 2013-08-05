@@ -159,22 +159,26 @@ Format:
 <id>:
   summary: <summary>
   cost: <cost>
-  permission: <permission>
+  permissions: 
+    - <permission1>
+    - <permission2>
+    - etc.
   commands:
-        - <command1>
-        - <command2>
-        - etc.
+    - <command1>
+    - <command2>
+    - etc.
 
 
 Example:
-example:
+examplereward:
   summary: A Compliment
   cost: 1
-  permission: example.reward
+  permissions: 
+    - example.reward
   commands:
-        -"say ${user} bought a compliment!"
-        -"say ${user} is awesome!"
-        -"give ${user} 38 1”
+    - "say ${user} bought a compliment!"
+    - "say ${user} is awesome!"
+    - "give ${user} 38 1”
 
 
 Note that commands are not preceded by a forward slash (“/”)
@@ -186,9 +190,9 @@ it. if necessary, you may escape this behavior like so: \$\{user\}
 of the username. you would only need this if another plugin's command 
 uses ${user} for something else.
 
-The permission node, if supplied, determines if the reward can be seen in
+The permission section, if supplied, determines if the reward can be seen in
 /rewards list, and if the reward can be purchased with points. If no permission
-node is specified, the reward is automatically visible/purchasable for everyone.
+nodes are specified, the reward is automatically visible/purchasable for everyone.
 
 If the cost of the reward is a negative number, the reward is disabled
 and requires the BOSRewards.admin.bypass permission to see/purchase. If
@@ -237,13 +241,23 @@ IV. Commands
       -commands (alias -cmds)
 		-requires a number
 		-removes the command at the index supplied
-		-use /rewards info <id> to find the index of a command
+		-use /rewards info <id> to find the index of a command (number on the left of the command)
 	  
       summary
 	  	-sets the summary of the reward
 	  	
 	  permission (alias perm)
-	  	-sets the permission node
+	  	-sets the permission nodes
+	  	-multiple nodes may be supplied, separated by spaces
+	  
+	  +permission (alias +perm)
+	  	-adds a permission node
+	  	-only one may be supplied
+	  
+	  -permission (alias -perm)
+	  	-requires a number
+	  	-removes the node at the index supplied
+	  	-use /rewards info <id> to find the index of a node (number on the left of the node)
     
 /rewards give 
   -gives a user points
