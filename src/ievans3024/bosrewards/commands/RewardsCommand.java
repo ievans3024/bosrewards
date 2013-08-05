@@ -105,7 +105,7 @@ public final class RewardsCommand implements CommandExecutor {
 				subcommand = this.aliasMap.get(args[0]);
 			} else {
 				sender.sendMessage(Messages.NOT_A_SUBCMD);
-				return false;
+				return true;
 			}
 			String[] subargs;
 			if (args.length > 1) {

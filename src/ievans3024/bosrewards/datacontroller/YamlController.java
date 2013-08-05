@@ -122,7 +122,7 @@ public final class YamlController extends DataController {
 		.setSummary(rewardSection.getString("summary"))
 		.setCost(rewardSection.getInt("cost"))
 		.setCommands(rewardSection.getStringList("commands"))
-		.setPermNode(rewardSection.getString("permission"));
+		.setPermNodes(rewardSection.getStringList("permission"));
 	}
 	
 	@Override
@@ -151,11 +151,12 @@ public final class YamlController extends DataController {
 	}
 	
 	@Override
-	public String getRewardPermNode(String id){
+	public List<String> getRewardPermNodes(String id){
 		if (!this.getRewardExists(id)){
-			return "";
+			List<String> emptyList = new ArrayList<String>();
+			return emptyList;
 		}
-		return this.getRewardById(id).getPermNode();
+		return this.getRewardById(id).getPerms();
 	}
 	
     // Users table load, reload, create
@@ -299,7 +300,7 @@ public final class YamlController extends DataController {
 		this.getRewardsTable().set(idnode + "summary", reward.getSummary());
 		this.getRewardsTable().set(idnode + "cost",reward.getCost());
 		this.getRewardsTable().set(idnode + "commands",reward.getCommands());
-		this.getRewardsTable().set(idnode + "permission", reward.getPermNode());
+		this.getRewardsTable().set(idnode + "permission", reward.getPerms());
 	}
 	
 	@Override // writes loaded rewards table to disk

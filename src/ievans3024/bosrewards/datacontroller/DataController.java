@@ -147,11 +147,11 @@ public abstract class DataController {
 	public abstract List<String> getRewardCommands(String id);
 	
 	/**
-	 * Fetches the permission node string for a reward by id.
+	 * Fetches list of permission nodes for a reward by id.
 	 * @param id the id of the reward in question.
-	 * @return A permission node string
+	 * @return A list of permission node strings
 	 */
-	public abstract String getRewardPermNode(String id);
+	public abstract List<String> getRewardPermNodes(String id);
 	
 	/**
 	 * writeReward

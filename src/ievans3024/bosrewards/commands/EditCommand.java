@@ -5,11 +5,15 @@ import ievans3024.bosrewards.main.Messages;
 import ievans3024.bosrewards.main.Reward;
 import ievans3024.bosrewards.main.ToolBox;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+
+import com.google.common.collect.Lists;
 
 
 
@@ -30,6 +34,10 @@ public final class EditCommand extends SubCommand {
 		this.editFlags.put("-cmds", new RemoveCommandsFlag());
 		this.editFlags.put("permission", new PermissionFlag());
 		this.editFlags.put("perm", new PermissionFlag());
+		this.editFlags.put("+permission", new AddPermissionFlag());
+		this.editFlags.put("+perm", new AddPermissionFlag());
+		this.editFlags.put("-permission", new RemovePermissionFlag());
+		this.editFlags.put("-perm", new RemovePermissionFlag());
 		
 		String[] usage = {
 			Messages.COLOR_SUCCESS + "/rewards edit [id] [flag] [value]" +
@@ -66,7 +74,7 @@ public final class EditCommand extends SubCommand {
 
 	private final class AddCommandsFlag implements EditFlag {
 		public void change(String[] args, Reward reward) {
-			reward.addCommands(ToolBox.arrayToString(args, 2, args.length));
+			reward.addCommand(ToolBox.arrayToString(args, 2, args.length));
 		}
 	}
 	
@@ -79,7 +87,7 @@ public final class EditCommand extends SubCommand {
 				throw ex;
 			}
 			try {
-				reward.removeCommands(index);
+				reward.removeCommand(index);
 			} catch (IndexOutOfBoundsException ex) {
 				throw ex;
 			}			
@@ -91,17 +99,31 @@ public final class EditCommand extends SubCommand {
 			reward.setSummary(ToolBox.arrayToString(args, 2, args.length));
 		}
 	}
-	
-	/*TODO:
-	 * make the permission setting a list
-	 * make three classes for PermissionFlag:
-	 *     AddPermissionFlag
-	 *     RemPermissionFlag
-	 *     PermissionFlag
-	 */
+	private final class AddPermissionFlag implements EditFlag {
+		public void change(String[] args, Reward reward){
+			reward.addPermNode(args[2]);
+		}
+	}
+	private final class RemovePermissionFlag implements EditFlag {
+		public void change(String[]args, Reward reward) {
+			int index;
+			try {
+				index = Integer.parseInt(args[2]);
+			} catch (NumberFormatException ex) {
+				throw ex;
+			}
+			try {
+				reward.remPermNode(index);
+			} catch (IndexOutOfBoundsException ex) {
+				throw ex;
+			}			
+		}
+	}
 	private final class PermissionFlag implements EditFlag {
 		public void change(String[] args, Reward reward){
-			reward.setPermNode(args[2]);
+			String[] subargs = Arrays.copyOfRange(args,2,args.length);
+			List<String> subarglist = Lists.newArrayList(subargs);
+			reward.setPermNodes(subarglist);
 		}
 	}
 	

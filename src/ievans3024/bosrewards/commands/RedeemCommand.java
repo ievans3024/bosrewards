@@ -37,7 +37,7 @@ public class RedeemCommand extends SubCommand {
 		}
 		if (plugin.getDataController().getRewardExists(args[0])){
 			Reward reward = plugin.getDataController().getRewardById(args[0]);
-			boolean hasPermission = (reward.getPermNode() == null) ? true : sender.hasPermission(reward.getPermNode());
+			boolean hasPermission = reward.hasPerms(sender);
 			if (hasByPass || hasPermission){
 				if (hasByPass || reward.getCost() >= 0){
 					if (hasByPass || user.getPoints() >= reward.getCost()){
