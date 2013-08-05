@@ -1,7 +1,7 @@
 example:
   summary: A Compliment
   cost: 1
-  permission: 
+  permissions: 
     - example.reward
   commands:
     - "say ${user} bought a compliment!"

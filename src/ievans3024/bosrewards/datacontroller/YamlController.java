@@ -122,7 +122,7 @@ public final class YamlController extends DataController {
 		.setSummary(rewardSection.getString("summary"))
 		.setCost(rewardSection.getInt("cost"))
 		.setCommands(rewardSection.getStringList("commands"))
-		.setPermNodes(rewardSection.getStringList("permission"));
+		.setPermNodes(rewardSection.getStringList("permissions"));
 	}
 	
 	@Override
@@ -300,7 +300,7 @@ public final class YamlController extends DataController {
 		this.getRewardsTable().set(idnode + "summary", reward.getSummary());
 		this.getRewardsTable().set(idnode + "cost",reward.getCost());
 		this.getRewardsTable().set(idnode + "commands",reward.getCommands());
-		this.getRewardsTable().set(idnode + "permission", reward.getPerms());
+		this.getRewardsTable().set(idnode + "permissions", reward.getPerms());
 	}
 	
 	@Override // writes loaded rewards table to disk
