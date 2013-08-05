@@ -1,6 +1,6 @@
 name: BOSRewards
 main: ievans3024.bosrewards.main.BOSRewards
-version: 0.0.8.9
+version: 0.0.9.0
 author: ievans3024
 website: http://www.bhslaughter.com/
 commands:
@@ -10,7 +10,7 @@ commands:
     permission: BOSRewards.user.*
     permission-message: You do not have permission to use rewards.
     usage: |
-      BOSRewards 0.0.8.9
+      BOSRewards 0.0.9.0
       -------------------
       §a/rewards [command] [args]
       §7Aliases: /rw
@@ -22,7 +22,7 @@ commands:
     permission: BOSRewards.user.*
     permission-message: You do not have permissions to use rewards.
     usage: |
-      BOSRewards 0.0.8.9
+      BOSRewards 0.0.9.0
       -------------------
       §a/rw [command] [args] §7- Alias for /rewards.
       §7Try §a/rw help §7or §a/rw help [command] §7for more info.
