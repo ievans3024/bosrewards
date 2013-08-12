@@ -37,7 +37,7 @@ public abstract class DataController {
 	/**
 	 * getUserPoints
 	 * 
-	 * Fetches the number of points a user has accumulated from the Users table.
+	 * Fetches the number of points a user has.
 	 * 
 	 * @param user username of a player on the server or in the Users table.
 	 * @return less than zero if the user does not exist in the Users table, otherwise, the number of points the user has.

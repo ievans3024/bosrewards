@@ -15,6 +15,13 @@ public final class User {
 		this.receipts = new ArrayList<Receipt>();
 	}
 	
+	public User(String name, int points, List<Receipt> receipts, String date){
+		this.name = name;
+		this.points = points;
+		this.receipts = receipts;
+		this.lastOnline = date;
+	}
+	
 	//Getters
 	
 	public String getName() {

@@ -52,31 +52,42 @@ public final class YamlController extends DataController {
     // Users table getters
     
     @Override
-	public boolean getUserExists(String username){
-		if (this.getUsersTable().getConfigurationSection(username) != null){
+	public boolean getUserExists(String username) {
+		if (this.getUsersTable().getConfigurationSection(username) != null) {
 			return true;
 		}
 		return false;
 	}
     
     @Override
-	public User getUserByName(String username){
-		if (!this.getUserExists(username)){
+	public User getUserByName(String username) {
+		if (!this.getUserExists(username)) {
 			return null;
 		}
-		//ConfigurationSection userSection = this.getUsersTable().getConfigurationSection(username);
-		String usernode = username + ".";
-		User user = new User(username)
-		.setPoints(this.getUsersTable().getInt(usernode + "points"))
-		.setLastOnline(this.getUsersTable().getString(usernode + "last-online"));
-		List<Map<?,?>> rlist = this.getUsersTable().getMapList(usernode + "receipts");
+		ConfigurationSection userSection = this.getUsersTable().getConfigurationSection(username);
+		List<Map<?,?>> rlist = userSection.getMapList("receipts");
 		Iterator<Map<?,?>> iter = rlist.iterator();
-		while (iter.hasNext()) {
+		List<Receipt> receipts = new ArrayList<Receipt>();
+		while (iter.hasNext()){
 			Map<?,?> r = iter.next();
-			Receipt receipt = new Receipt((String) r.get("date"),(String) r.get("summary"),Integer.parseInt((String) r.get("cost")));
-			user.addReceipt(receipt);			
+			String date = "";
+			String summary = "";
+			int cost = -1;
+			try {
+				date = (String) r.get("date");
+				summary = (String) r.get("summary");
+				cost = Integer.parseInt((String) r.get("cost"));
+			} catch (NumberFormatException ex) {
+				cost = -1;
+			}
+			receipts.add(new Receipt(date,summary,cost));
 		}
-		return user;
+		return new User(
+				userSection.getName(),
+				userSection.getInt("points"),
+				receipts,
+				userSection.getString("last-online")
+				);
 	}
 	
 	@Override
