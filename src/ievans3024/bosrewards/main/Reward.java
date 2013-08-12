@@ -12,6 +12,21 @@ public final class Reward {
 	private List<String> commands;
 	private List<String> permissions;
 	
+	// Constructors
+	
+	public Reward(String id, String summary, int cost, List<String> commands, List<String> permissions){
+		this.id = id;
+		this.summary = summary;
+		this.cost = cost;
+		this.commands = commands;
+		this.permissions = permissions;
+	}
+	
+	public Reward(String id, String summary){
+		this.id = id;
+		this.summary = summary;
+	}
+	
 	// Getters
 
 	public String getId(){

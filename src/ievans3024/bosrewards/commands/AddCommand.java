@@ -24,11 +24,8 @@ public final class AddCommand extends SubCommand {
 	}
 	
 	public boolean run(CommandSender sender, Command command, String label, String[] args){
-		Reward newReward = new Reward();
-		newReward.setId(args[0]);
-		newReward.setSummary(ToolBox.arrayToString(args,1,args.length));
-		plugin.getDataController().writeReward(newReward);
-		sender.sendMessage(Messages.SUCCESS_ADD + newReward.getId());
+		plugin.getDataController().writeReward(new Reward(args[0],ToolBox.arrayToString(args, 1, args.length)));
+		sender.sendMessage(Messages.SUCCESS_ADD + args[0]);
 		return true;
 	};
 

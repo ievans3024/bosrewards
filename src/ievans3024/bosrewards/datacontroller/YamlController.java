@@ -117,12 +117,13 @@ public final class YamlController extends DataController {
 			return null;
 		}
 		ConfigurationSection rewardSection = getRewardsTable().getConfigurationSection(id);
-		return new Reward()
-		.setId(rewardSection.getName())
-		.setSummary(rewardSection.getString("summary"))
-		.setCost(rewardSection.getInt("cost"))
-		.setCommands(rewardSection.getStringList("commands"))
-		.setPermNodes(rewardSection.getStringList("permissions"));
+		return new Reward(
+				rewardSection.getName(),
+				rewardSection.getString("summary"),
+				rewardSection.getInt("cost"),
+				rewardSection.getStringList("commands"),
+				rewardSection.getStringList("permissions")
+				);
 	}
 	
 	@Override
