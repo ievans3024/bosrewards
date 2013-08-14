@@ -12,7 +12,7 @@ import java.util.List;
  * 
  * Extending classes should handle database specifics, interacting with the plugin through these methods.
  * 
- * @author arpinity3024
+ * @author ievans3024
  */
 public abstract class DataController {
 	
